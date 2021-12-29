@@ -16,8 +16,8 @@ local options = {
   splitbelow = true,                       -- force all horizontal splits to go below current window
   splitright = true,                       -- force all vertical splits to go to the right of current window
   swapfile = false,                        -- creates a swapfile
-  -- termguicolors = true,                    -- set term gui colors (most terminals support this)
-  timeoutlen = 100,                        -- time to wait for a mapped sequence to complete (in milliseconds)
+  termguicolors = true,                    -- set term gui colors (most terminals support this)
+  timeoutlen = 200,                        -- time to wait for a mapped sequence to complete (in milliseconds)
   undofile = true,                         -- enable persistent undo
   updatetime = 300,                        -- faster completion (4000ms default)
   writebackup = false,                     -- if a file is being edited by another program (or was written to file while editing with another program), it is not allowed to be edited
@@ -29,10 +29,15 @@ local options = {
   relativenumber = false,                  -- set relative numbered lines
   numberwidth = 4,                         -- set number column width to 2 {default 4}
   signcolumn = "yes",                      -- always show the sign column, otherwise it would shift the text each time
-  wrap = false,                            -- display lines as one long line
+  wrap = true,                             -- display lines as one long line
   scrolloff = 8,                           -- is one of my fav
   sidescrolloff = 8,
   guifont = "monospace:h17",               -- the font used in graphical neovim applications
+  foldmethod = "manual",                   -- folding set to "expr" for treesitter based folding
+  foldexpr = "",                           -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
+  hidden = true,                           -- required to keep multiple buffers and open multiple buffers
+  title = true,                            -- set the title of window to the value of the titlestring
+  titlestring = "Neovim",     -- what the title of the window will be set to
 }
 
 vim.opt.shortmess:append "c"
