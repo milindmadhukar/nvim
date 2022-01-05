@@ -34,7 +34,7 @@ null_ls.setup {
     },
     formatting.black.with { extra_args = { "--fast" } },
     formatting.stylua,
-    formatting.gofmt,
-    formatting.goimports,
+
+    diagnostics.flake8,
   },
 }
