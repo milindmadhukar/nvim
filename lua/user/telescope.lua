@@ -96,3 +96,4 @@ telescope.setup {
     },
   },
 }
+

@@ -58,9 +58,9 @@ return packer.startup(function(use)
   use "goolord/alpha-nvim"
   use "antoinemadec/FixCursorHold.nvim" -- This is needed to fix lsp doc highlight
   use "folke/which-key.nvim"
-  use "unblevable/quick-scope"
+  use "unblevable/quick-scope" -- Use f and F, shows unique char in each word
   use "phaazon/hop.nvim"
-  use "andymass/vim-matchup"
+  use "andymass/vim-matchup" -- Use % to move around if-else blocks and stuff
   use "monaqa/dial.nvim"
   use "norcalli/nvim-colorizer.lua"
   use "windwp/nvim-spectre"
@@ -74,11 +74,7 @@ return packer.startup(function(use)
   }
   use "folke/todo-comments.nvim"
   use "kevinhwang91/nvim-bqf"
-  -- use "ThePrimeagen/harpoon"
-  -- use "MattesGroeger/vim-bookmarks"
-  -- use "lunarvim/vim-solidity"
   use "blackCauldron7/surround.nvim"
-  use "Shatur/neovim-session-manager"
   use {
     "iamcco/markdown-preview.nvim",
     run = "cd app && npm install",
@@ -129,9 +125,6 @@ return packer.startup(function(use)
       -- cmd = {"Spotify", "SpotifyDevices"}
   }
 
-  -- Java
-  -- use "mfussenegger/nvim-jdtls"
-
   -- Telescope
   use "nvim-telescope/telescope.nvim"
   use "tom-anders/telescope-vim-bookmarks.nvim"
@@ -153,6 +146,25 @@ return packer.startup(function(use)
   use "ruifm/gitlinker.nvim"
   use "mattn/vim-gist"
   use "mattn/webapi-vim"
+  use {
+    "tpope/vim-fugitive",
+    cmd = {
+      "G",
+      "Git",
+      "Gdiffsplit",
+      "Gread",
+      "Gwrite",
+      "Ggrep",
+      "GMove",
+      "GDelete",
+      "GBrowse",
+      "GRemove",
+      "GRename",
+      "Glgrep",
+      "Gedit"
+    },
+    ft = {"fugitive"}
+  }
 
   -- DAP
   use "mfussenegger/nvim-dap"
@@ -160,9 +172,20 @@ return packer.startup(function(use)
   use "rcarriga/nvim-dap-ui"
   use "Pocco81/DAPInstall.nvim"
 
+  -- Golang
+  use "fatih/vim-go"
+
+  -- Sessions
+  use {
+    "folke/persistence.nvim",
+    event = "BufReadPre", -- this will only start session saving when an actual file was opened
+    module = "persistence",
+  }
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
 end)
+

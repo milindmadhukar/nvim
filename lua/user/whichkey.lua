@@ -106,7 +106,7 @@ local mappings = {
   ["a"] = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
-  -- ["h"] = { "<cmd>nohlsearch<CR>", "No HL" },
+  ["T"] = {"<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics"},
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   [";"] = {"<cmd>Alpha<CR>", "Dashboard"},
   ["/"] = { "<cmd>lua require(\"Comment.api\").toggle_current_linewise()<CR>", "Comment" },
@@ -184,17 +184,6 @@ local mappings = {
       "Diff",
     },
 
-
-    T = {
-      name = "Trouble Diagnostics",
-      t = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
-      T = { "<cmd>TodoTrouble<cr>", "Toggle Todo Trouble Menu" },
-      w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
-      d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" },
-      q = { "<cmd>TroubleToggle quickfix<cr>", "Show Quickfix(s)" },
-      l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
-      r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
-    }
     -- G = {
     --   name = "Gist",
     --   a = { "<cmd>Gist -b -a<cr>", "Create Anon" },
@@ -253,44 +242,34 @@ local mappings = {
     C = { "<cmd>Telescope commands<cr>", "Commands" },
   },
 
-  S = {
-    name = "Session",
-    s = { "<cmd>SaveSession<cr>", "Save" },
-    l = { "<cmd>LoadLastSession!<cr>", "Load Last" },
-    d = { "<cmd>LoadCurrentDirSession!<cr>", "Load Last Dir" },
-    f = { "<cmd>Telescope sessions save_current=false<cr>", "Find Session" },
-  },
+  -- S = {
+  --   name = "Session",
+  --   s = { "<cmd>SaveSession<cr>", "Save" },
+  --   l = { "<cmd>LoadLastSession!<cr>", "Load Last" },
+  --   d = { "<cmd>LoadCurrentDirSession!<cr>", "Load Last Dir" },
+  -- f = { "<cmd>Telescope sessions save_current=false<cr>", "Find Session" },
+  -- },
 
-  T = {
-    name = "Trouble Diagnostics",
+  t = {
+    name = "Trouble & Terminal",
     t = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
     T = { "<cmd>TodoTrouble<cr>", "Toggle Todo Trouble Menu" },
     w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
-    d = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" },
+    D = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" },
     q = { "<cmd>TroubleToggle quickfix<cr>", "Show Quickfix(s)" },
     l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
     r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+
+    n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
+    H = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
+    p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
+    g = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazy Git"},
+    d = { "<cmd>lua _LAZYDOCKER_TOGGLE()<cr>", "Lazy Docker"},
+    f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
+    h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
+    v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   }
 
-  -- t = {
-  --   name = "Terminal",
-  --   -- ["1"] = { ":1ToggleTerm<cr>", "1" },
-  --   -- ["2"] = { ":2ToggleTerm<cr>", "2" },
-  --   -- ["3"] = { ":3ToggleTerm<cr>", "3" },
-  --   -- ["4"] = { ":4ToggleTerm<cr>", "4" },
-  --   n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-  --   u = { "<cmd>lua _NCDU_TOGGLE()<cr>", "NCDU" },
-  --   t = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
-  --   p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
-  --   f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-  --   h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
-  --   v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
-  -- },
-  -- T = {
-  --   name = "Treesitter",
-  --   h = { "<cmd>TSHighlightCapturesUnderCursor<cr>", "Highlight" },
-  --   p = { "<cmd>TSPlaygroundToggle<cr>", "Playground" },
-  -- },
 }
 
 local vopts = {
@@ -310,3 +289,4 @@ which_key.setup(setup)
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
 which_key.register(m_mappings, m_opts)
+

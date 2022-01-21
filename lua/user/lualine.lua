@@ -134,3 +134,4 @@ lualine.setup {
 	tabline = {},
 	extensions = {},
 }
+

@@ -16,24 +16,28 @@ dashboard.section.header.val = {
 "      +:::::+        x:::::x    x:::::x ",
 "      +++++++       xxxxxxx      xxxxxxx",
 }
+
+
+-- TODO: Add some way for sessions (persistence.nvim)
 dashboard.section.buttons.val = {
-	dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
-	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
-	dashboard.button("p", "  Find project", ":Telescope projects <CR>"),
-	dashboard.button("r", "  Recent files", ":Telescope oldfiles <CR>"),
-	dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
-	dashboard.button("s", "  Find Session", ":Telescope sessions save_current=false <CR>"),
-	dashboard.button("c", "  Config", ":e ~/.config/nvim/init.lua <CR>"),
-	dashboard.button("q", "  Quit", ":qa<CR>"),
+	dashboard.button("p", "  Find Project", ":Telescope projects <CR>"),
+	dashboard.button("r", "  Recent Files", ":Telescope oldfiles <CR>"),
+	dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
+	dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
+	dashboard.button("t", "  Find Text", ":Telescope live_grep <CR>"),
+  dashboard.button("C", "  Restore Session For Current Directory", "<cmd>lua require('persistence').load()<cr>"),
+  dashboard.button("l", "  Restore Last Session", "<cmd>lua require('persistence').load({ last = true })<cr>"),
+	dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+	dashboard.button("q", "  Quit", ":qa<CR>"),
 }
--- 
+
 local function footer()
 -- NOTE: requires the fortune-mod package to work
 	-- local handle = io.popen("fortune")
 	-- local fortune = handle:read("*a")
 	-- handle:close()
 	-- return fortune
-	return "keep rockin\', keep rollin\', keep dreamin\', keep goin\'."
+	return "Hold on, hold on, we're almost there"
 end
 
 dashboard.section.footer.val = footer()

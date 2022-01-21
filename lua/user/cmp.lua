@@ -10,11 +10,6 @@ end
 
 require("luasnip/loaders/from_vscode").lazy_load()
 
-local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-end
-
 -- https://github.com/microsoft/vscode/blob/main/src/vs/base/common/codicons.ts
 -- go to the above and then enter <c-v>u<unicode> and the symbold should appear
 -- or go here and upload the font file: https://mathew-kurian.github.io/CharacterMap/
@@ -50,6 +45,12 @@ end
 --   number
 --   symbol misc
 --   telescope
+
+local check_backspace = function()
+  local col = vim.fn.col "." - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+end
+
 
 --   פּ ﯟ   蘒練 some other good icons
 -- local kind_icons = {
@@ -204,3 +205,4 @@ cmp.setup {
     native_menu = false,
   },
 }
+
