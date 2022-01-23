@@ -20,7 +20,7 @@ local setup = {
       windows = true, -- default bindings on <c-w>
       nav = true, -- misc bindings to work with windows
       z = true, -- bindings for folds, spelling and others prefixed with z
-      g = true, -- bindings for prefixed with g
+      g = false, -- bindings for prefixed with g
     },
   },
   -- add operators that will trigger motion and text object completion
@@ -103,7 +103,7 @@ local m_mappings = {
 }
 
 local mappings = {
-  ["a"] = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+  ["a"] = {"<cmd>Lspsaga code_action<cr>", "Code Action" },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["T"] = {"<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics"},
@@ -112,15 +112,13 @@ local mappings = {
   ["/"] = { "<cmd>lua require(\"Comment.api\").toggle_current_linewise()<CR>", "Comment" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" }, -- PE
   ["f"] = {
-    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{previewer = false})<cr>",
+    "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{winblend = 10, previewer = false})<cr>",
     "Find files",
   },
-  ["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
+  ["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
   ["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
   ["P"] = { "<cmd><cmd>lua require('telescope').extensions.projects.projects()<cr><cr>", "Projects" },
   ["z"] = { "<cmd>ZenMode<cr>", "Zen" },
-  ["gy"] = "Link",
-
 
   b = {
     name = "Buffers",
@@ -223,8 +221,7 @@ local mappings = {
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
     o = { "<cmd>SymbolsOutline<cr>", "Outline" },
-    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
-    r = { "<cmd>lua require('renamer').rename{empty=true,}<cr>", "Rename" },
+    r = { "<cmd>Lspsaga rename<cr>", "Rename" },
     R = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = {
@@ -286,6 +283,7 @@ local vopts = {
   noremap = true, -- use `noremap` when creating keymaps
   nowait = true, -- use `nowait` when creating keymaps
 }
+
 local vmappings = {
   ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
   r = {
@@ -299,9 +297,23 @@ local vmappings = {
   },
 }
 
+local g_mappings = {
+  ["l"] = {"<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics"},
+  ["r"] = {"<cmd>Lspsaga lsp_finder<CR>", "Show References"}
+}
+
+local g_opts = {
+  mode = "n", -- NORMAL mode
+  prefix = "g",
+  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
+  silent = true, -- use `silent` when creating keymaps
+  noremap = false, -- use `noremap` when creating keymaps
+  nowait = true, -- use `nowait` when creating keymaps
+}
 
 which_key.setup(setup)
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
 which_key.register(m_mappings, m_opts)
+which_key.register(g_mappings, g_opts)
 
