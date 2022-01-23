@@ -149,6 +149,12 @@ local mappings = {
   },
 
   r = {
+    name = "Refactoring",
+    p = {"<cmd>lua require('refactoring').debug.printf({below = true})<CR>", "Printf"},
+    c = {"<cmd>lua require('refactoring').debug.cleanup({})<CR>", "Cleanup"}
+  },
+
+  R = {
     name = "Replace",
     r = { "<cmd>lua require('spectre').open()<cr>", "Replace" },
     w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
@@ -282,6 +288,15 @@ local vopts = {
 }
 local vmappings = {
   ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
+  r = {
+    name = "Refactoring",
+    e = {"<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract Function"},
+    f = {"<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>", "Extract function to file"},
+    v = {"<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>", "Extract Variable"},
+    i = {"<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>", "Inline Variable"},
+    r = {"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Telescope Refactor"},
+    V = {"<cmd>lua require('refactoring').debug.print_var({})<CR>", "Print Debug Variables"},
+  },
 }
 
 

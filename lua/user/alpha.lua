@@ -25,9 +25,9 @@ dashboard.section.buttons.val = {
 	dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
 	dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
 	dashboard.button("t", "  Find Text", ":Telescope live_grep <CR>"),
-  dashboard.button("C", "  Restore Session For Current Directory", "<cmd>lua require('persistence').load()<cr>"),
+  dashboard.button("c", "  Restore Session For Current Directory", "<cmd>lua require('persistence').load()<cr>"),
   dashboard.button("l", "  Restore Last Session", "<cmd>lua require('persistence').load({ last = true })<cr>"),
-	dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+	dashboard.button("C", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
 	dashboard.button("q", "  Quit", ":qa<CR>"),
 }
 

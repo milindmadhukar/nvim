@@ -129,6 +129,7 @@ return packer.startup(function(use)
   use "nvim-telescope/telescope.nvim"
   use "tom-anders/telescope-vim-bookmarks.nvim"
   use "nvim-telescope/telescope-media-files.nvim"
+  -- use "nvim-telescope/telescope-ui-select.nvim"
 
   -- Treesitter
   use {
@@ -180,6 +181,20 @@ return packer.startup(function(use)
     "folke/persistence.nvim",
     event = "BufReadPre", -- this will only start session saving when an actual file was opened
     module = "persistence",
+  }
+
+  use {
+    "Shatur/neovim-session-manager",
+    cmd = {"SessionManager"}
+  }
+
+  -- Refactoring
+  use {
+      "ThePrimeagen/refactoring.nvim",
+      requires = {
+          {"nvim-lua/plenary.nvim"},
+          {"nvim-treesitter/nvim-treesitter"}
+      }
   }
 
   -- Automatically set up your configuration after cloning packer.nvim
