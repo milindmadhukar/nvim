@@ -297,23 +297,8 @@ local vmappings = {
   },
 }
 
-local g_mappings = {
-  ["l"] = {"<cmd>Lspsaga show_line_diagnostics<CR>", "Show Line Diagnostics"},
-  ["r"] = {"<cmd>Lspsaga lsp_finder<CR>", "Show References"}
-}
-
-local g_opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "g",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = false, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
-}
-
 which_key.setup(setup)
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
 which_key.register(m_mappings, m_opts)
-which_key.register(g_mappings, g_opts)
 
