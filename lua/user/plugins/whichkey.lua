@@ -265,6 +265,7 @@ local mappings = {
 
     n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
     H = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
+    V = { "<cmd>lua _VTOP_TOGGLE()<cr>", "Vtop" },
     p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
     g = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazy Git"},
     d = { "<cmd>lua _LAZYDOCKER_TOGGLE()<cr>", "Lazy Docker"},

@@ -8,6 +8,20 @@ if not snip_status_ok then
   return
 end
 
+local neogen_ok, neogen = pcall(require, "neogen")
+if not neogen_ok then
+  return
+end
+
+local t = function(str)
+    return vim.api.nvim_replace_termcodes(str, true, true, true)
+end
+
+local check_backspace = function()
+  local col = vim.fn.col "." - 1
+  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
+end
+
 require("luasnip/loaders/from_vscode").lazy_load()
 
 -- https://github.com/microsoft/vscode/blob/main/src/vs/base/common/codicons.ts
@@ -46,10 +60,6 @@ require("luasnip/loaders/from_vscode").lazy_load()
 --   symbol misc
 --   telescope
 
-local check_backspace = function()
-  local col = vim.fn.col "." - 1
-  return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
-end
 
 
 --   פּ ﯟ   蘒練 some other good icons
@@ -139,6 +149,8 @@ cmp.setup {
         luasnip.expand_or_jump()
       elseif check_backspace() then
         fallback()
+      elseif neogen.jumpable() then
+        vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_next()<CR>"), "")
       else
         fallback()
       end
@@ -151,6 +163,8 @@ cmp.setup {
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
+      elseif neogen.jumpable(-1) then
+				vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
       else
         fallback()
       end

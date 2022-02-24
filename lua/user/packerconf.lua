@@ -19,7 +19,7 @@ end
 vim.cmd [[
   augroup packer_user_config
     autocmd!
-    autocmd BufWritePost plugins.lua source <afile> | PackerSync
+    autocmd BufWritePost packerconf.lua source <afile> | PackerSync
   augroup end
 ]]
 
@@ -97,6 +97,8 @@ return packer.startup(function(use)
   use "hrsh7th/cmp-emoji"
   use "hrsh7th/cmp-nvim-lua"
   -- use 'David-Kunz/cmp-npm' -- doesn't seem to work
+
+  use "github/copilot.vim"
 
   -- snippets
   use "L3MON4D3/LuaSnip" --snippet engine
@@ -198,10 +200,17 @@ return packer.startup(function(use)
       }
   }
 
+use {
+    "danymat/neogen",
+    config = function()
+        require('neogen').setup {}
+    end,
+    requires = "nvim-treesitter/nvim-treesitter"
+}
+
   -- Automatically set up your configuration after cloning packer.nvim
   -- Put this at the end after all plugins
   if PACKER_BOOTSTRAP then
     require("packer").sync()
   end
 end)
-

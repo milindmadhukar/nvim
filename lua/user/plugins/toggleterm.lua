@@ -70,6 +70,13 @@ function _HTOP_TOGGLE()
 	htop:toggle()
 end
 
+
+local vtop = Terminal:new({ cmd = "vtop --theme wizard", hidden = true })
+
+function _VTOP_TOGGLE()
+	vtop:toggle()
+end
+
 local python = Terminal:new({ cmd = "python", hidden = true })
 
 function _PYTHON_TOGGLE()
