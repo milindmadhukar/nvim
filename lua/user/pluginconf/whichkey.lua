@@ -79,8 +79,7 @@ local opts = {
 }
 
 local mappings = {
-
-["a"] = {"<cmd>Lspsaga code_action<cr>", "Code Action" },
+  ["a"] = {"<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["T"] = {"<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics"},
@@ -95,7 +94,7 @@ local mappings = {
   ["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
   ["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
   ["P"] = { "<cmd><cmd>lua require('telescope').extensions.projects.projects()<cr><cr>", "Projects" },
-  ["z"] = { "<cmd>ZenMode<cr>", "Zen" }, -- TODO: Install Zen Mode
+  ["z"] = { "<cmd>ZenMode<cr>", "Zen" },
 
   p = {
     name = "Packer",

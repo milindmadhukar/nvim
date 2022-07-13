@@ -38,22 +38,24 @@ hi DiagnosticWarning guibg=none ctermbg=none
 hi DiagnosticInformation guibg=none ctermbg=none
 hi DiagnosticHint	guibg=none ctermbg=none
 hi DefinitionPreviewTitle	guibg=none ctermbg=none
-hi LspSagaShTruncateLine guibg=none ctermbg=none
-hi LspSagaDocTruncateLine	guibg=none ctermbg=none
-hi LineDiagTuncateLine guibg=none ctermbg=none
-hi LspSagaCodeActionTitle	guibg=none ctermbg=none
-hi LspSagaCodeActionTruncateLine guibg=none ctermbg=none
-hi LspSagaCodeActionContent	guibg=none ctermbg=none
-hi LspSagaRenamePromptPrefix guibg=none ctermbg=none
-hi LspSagaRenameBorder guibg=none ctermbg=none
-hi LspSagaHoverBorder guibg=none ctermbg=none
-hi LspSagaSignatureHelpBorder	guibg=none ctermbg=none
-hi LspSagaCodeActionBorder guibg=none ctermbg=none
-hi LspSagaAutoPreview	guibg=none ctermbg=none
-hi LspSagaDefPreviewBorder guibg=none ctermbg=none
-hi LspLinesDiagBorder guibg=none ctermbg=none
+hi NormalFloat guibg=none ctermbg=none
 ]]
 
+
+-- hi LspSagaShTruncateLine guibg=none ctermbg=none
+-- hi LspSagaDocTruncateLine	guibg=none ctermbg=none
+-- hi LineDiagTuncateLine guibg=none ctermbg=none
+-- hi LspSagaCodeActionTitle	guibg=none ctermbg=none
+-- hi LspSagaCodeActionTruncateLine guibg=none ctermbg=none
+-- hi LspSagaCodeActionContent	guibg=none ctermbg=none
+-- hi LspSagaRenamePromptPrefix guibg=none ctermbg=none
+-- hi LspSagaRenameBorder guibg=none ctermbg=none
+-- hi LspSagaHoverBorder guibg=none ctermbg=none
+-- hi LspSagaSignatureHelpBorder	guibg=none ctermbg=none
+-- hi LspSagaCodeActionBorder guibg=none ctermbg=none
+-- hi LspSagaAutoPreview	guibg=none ctermbg=none
+-- hi LspSagaDefPreviewBorder guibg=none ctermbg=none
+-- hi LspLinesDiagBorder guibg=none ctermbg=none
 -- hi TelescopeSelection guibg=none ctermbg=none
 -- hi TelescopeMatching guibg=none ctermbg=none
 -- hi TelescopeBorder guibg=none ctermbg=none
