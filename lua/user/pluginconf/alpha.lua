@@ -18,9 +18,7 @@ dashboard.section.header.val = {
 }
 
 
--- TODO: Add some way for sessions (persistence.nvim)
 dashboard.section.buttons.val = {
-	dashboard.button("p", "  Find Project", ":Telescope projects <CR>"),
 	dashboard.button("r", "  Recent Files", ":Telescope oldfiles <CR>"),
 	dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
 	dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
@@ -31,21 +29,15 @@ dashboard.section.buttons.val = {
 	dashboard.button("q", "  Quit", ":qa<CR>"),
 }
 
-
-local spotify_status = require'nvim-spotify'.status
-spotify_status:start()
-
-local now_playing = function()
-  local np = spotify_status.listen()
-  if np == "" then
-    return "Hold on, hold on, we're almost there"
-  end
-  local value = string.sub(np, 4)
-  if string.len(np) >= 50 then
-    value = string.sub(value, 0, 50) .. "..."
-  end
-  return "阮" .. value
-end
+dashboard.section.buttons.val = {
+	dashboard.button("p", "  Find Project", ":Telescope projects <CR>"),
+	dashboard.button("f", "  Find file", ":Telescope find_files <CR>"),
+	dashboard.button("r", "  Recently used files", ":Telescope oldfiles <CR>"),
+	dashboard.button("t", "  Find text", ":Telescope live_grep <CR>"),
+	dashboard.button("e", "  New file", ":ene <BAR> startinsert <CR>"),
+	dashboard.button("c", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
+	dashboard.button("q", "  Quit Neovim", ":qa<CR>"),
+}
 
 local function footer()
 -- NOTE: requires the fortune-mod package to work
@@ -53,7 +45,7 @@ local function footer()
 	-- local fortune = handle:read("*a")
 	-- handle:close()
 	-- return fortune
-	return now_playing()
+	return "And It Goes Something Like... 👀"
 end
 
 dashboard.section.footer.val = footer()

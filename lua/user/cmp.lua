@@ -8,115 +8,40 @@ if not snip_status_ok then
   return
 end
 
-local neogen_ok, neogen = pcall(require, "neogen")
-if not neogen_ok then
-  return
-end
-
-local t = function(str)
-    return vim.api.nvim_replace_termcodes(str, true, true, true)
-end
+require("luasnip/loaders/from_vscode").lazy_load()
 
 local check_backspace = function()
   local col = vim.fn.col "." - 1
   return col == 0 or vim.fn.getline("."):sub(col, col):match "%s"
 end
 
-require("luasnip/loaders/from_vscode").lazy_load()
-
--- https://github.com/microsoft/vscode/blob/main/src/vs/base/common/codicons.ts
--- go to the above and then enter <c-v>u<unicode> and the symbold should appear
--- or go here and upload the font file: https://mathew-kurian.github.io/CharacterMap/
---   project
---   bug
---   dashboard
---   history
---   comment
---   code
---   git add
---   git mod
---   git remove
---   git ignore
---   git rename
---   error
---   info
---   question
---   warning
---   lightbulb
---   diff
---   file
---   files
---   folder
---   open folder
---  circle
---   big circle
---   big unfilled
---  close
---   lock
---   new file
---   search
---   array
---   number
---   symbol misc
---   telescope
-
-
-
---   פּ ﯟ   蘒練 some other good icons
--- local kind_icons = {
---   Text = "",
---   Method = "m",
---   Function = "",
---   Constructor = "",
---   Field = "",
---   Variable = "",
---   Class = "",
---   Interface = "",
---   Module = "",
---   Property = "",
---   Unit = "",
---   Value = "",
---   Enum = "",
---   Keyword = "",
---   Snippet = "",
---   Color = "",
---   File = "",
---   Reference = "",
---   Folder = "",
---   EnumMember = "",
---   Constant = "",
---   Struct = "",
---   Event = "",
---   Operator = "",
---   TypeParameter = "",
--- }
-
+--   פּ ﯟ   some other good icons
 local kind_icons = {
-  Text = " ",
-  Method = " ",
-  Function = " ",
-  Constructor = " ",
-  Field = " ",
-  Variable = " ",
-  Class = " ",
-  Interface = " ",
-  Module = " ",
-  Property = " ",
-  Unit = " ",
-  Value = " ",
-  Enum = " ",
-  Keyword = " ",
-  Snippet = " ",
-  Color = " ",
-  File = " ",
-  Reference = " ",
-  Folder = " ",
-  EnumMember = " ",
-  Constant = " ",
-  Struct = " ",
-  Event = " ",
-  Operator = " ",
-  TypeParameter = " ",
+  Text = "",
+  Method = "m",
+  Function = "",
+  Constructor = "",
+  Field = "",
+  Variable = "",
+  Class = "",
+  Interface = "",
+  Module = "",
+  Property = "",
+  Unit = "",
+  Value = "",
+  Enum = "",
+  Keyword = "",
+  Snippet = "",
+  Color = "",
+  File = "",
+  Reference = "",
+  Folder = "",
+  EnumMember = "",
+  Constant = "",
+  Struct = "",
+  Event = "",
+  Operator = "",
+  TypeParameter = "",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
@@ -128,7 +53,7 @@ cmp.setup {
   },
   mapping = {
     ["<C-k>"] = cmp.mapping.select_prev_item(),
-    ["<C-j>"] = cmp.mapping.select_next_item(),
+		["<C-j>"] = cmp.mapping.select_next_item(),
     ["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-1), { "i", "c" }),
     ["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(1), { "i", "c" }),
     ["<C-Space>"] = cmp.mapping(cmp.mapping.complete(), { "i", "c" }),
@@ -149,8 +74,6 @@ cmp.setup {
         luasnip.expand_or_jump()
       elseif check_backspace() then
         fallback()
-      elseif neogen.jumpable() then
-        vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_next()<CR>"), "")
       else
         fallback()
       end
@@ -163,8 +86,6 @@ cmp.setup {
         cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
         luasnip.jump(-1)
-      elseif neogen.jumpable(-1) then
-				vim.fn.feedkeys(t("<cmd>lua require('neogen').jump_prev()<CR>"), "")
       else
         fallback()
       end
@@ -179,44 +100,32 @@ cmp.setup {
       -- Kind icons
       vim_item.kind = string.format("%s", kind_icons[vim_item.kind])
       -- vim_item.kind = string.format('%s %s', kind_icons[vim_item.kind], vim_item.kind) -- This concatonates the icons with the name of the item kind
-      -- NOTE: order matters
       vim_item.menu = ({
-        -- nvim_lsp = "[LSP]",
-        -- nvim_lua = "[Nvim]",
-        -- luasnip = "[Snippet]",
-        -- buffer = "[Buffer]",
-        -- path = "[Path]",
-        -- emoji = "[Emoji]",
-
-        nvim_lsp = "",
-        nvim_lua = "",
-        luasnip = "",
-        buffer = "",
-        path = "",
-        emoji = "",
+        nvim_lsp = "[LSP]",
+        luasnip = "[Snippet]",
+        buffer = "[Buffer]",
+        path = "[Path]",
       })[entry.source.name]
       return vim_item
     end,
   },
   sources = {
     { name = "nvim_lsp" },
-    { name = "nvim_lua" },
     { name = "luasnip" },
     { name = "buffer" },
     { name = "path" },
-    { name = "emoji" },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
     select = false,
   },
-  documentation = false,
-  -- documentation = {
-  -- 	border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
-  -- },
+  window = {
+    documentation = {
+      border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+    },
+  },
   experimental = {
-    ghost_text = true,
+    ghost_text = false,
     native_menu = false,
   },
 }
-

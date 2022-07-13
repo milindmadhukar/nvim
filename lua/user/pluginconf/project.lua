@@ -1,6 +1,5 @@
 local status_ok, project = pcall(require, "project_nvim")
 if not status_ok then
-  print("Could not load project_nvim")
 	return
 end
 project.setup({
@@ -47,4 +46,3 @@ if not tele_status_ok then
 end
 
 telescope.load_extension('projects')
-local status_ok, project = pcall(require, "project_nvim")

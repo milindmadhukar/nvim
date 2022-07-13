@@ -61,3 +61,4 @@ hi LspLinesDiagBorder guibg=none ctermbg=none
 -- ]]
 
 vim.cmd "let &fcs='eob: '"
+

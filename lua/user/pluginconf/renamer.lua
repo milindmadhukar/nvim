@@ -30,4 +30,3 @@ renamer.setup {
     ["<c-r>"] = mappings_utils.redo,
   },
 }
-

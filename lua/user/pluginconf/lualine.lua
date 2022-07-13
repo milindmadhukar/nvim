@@ -7,16 +7,16 @@ local hide_in_width = function()
 	return vim.fn.winwidth(0) > 80
 end
 
---   git add
---   git mod
---   git remove
---   git ignore
---   git rename
---   error
---   info
---   question
---   warning
---   lightbulb
+local status = {
+  ["NORMAL"]  = "am very normal :)",
+  ["INSERT"]  = " inserting shit  ",
+  ["COMMAND"] = " i command thee  ",
+  ["VISUAL"]  = "   soo visual    ",
+  ["V-LINE"]  = "very visual line ",
+  ["V-BLOCK"] = "very visual block",
+  ["REPLACE"] = " replacing stuff ",
+  ["SELECT"]  = " selecting stuff ",
+}
 
 local diagnostics = {
 	"diagnostics",
@@ -30,33 +30,21 @@ local diagnostics = {
 
 local diff = {
 	"diff",
+	colored = true,
 	symbols = { added = " ", modified = " ", removed = " " }, -- changes diff symbols
-  colored = true,
   cond = hide_in_width
-}
-
-local status = {
-  ["NORMAL"]  = "am very normal :)",
-  ["INSERT"]  = " inserting shit  ",
-  ["COMMAND"] = " i command thee  ",
-  ["VISUAL"]  = "   soo visual    ",
-  ["V-LINE"]  = "very visual line ",
-  ["V-BLOCK"] = "very visual block",
-  ["REPLACE"] = " replacing stuff ",
-  ["SELECT"]  = " selecting stuff ",
 }
 
 local mode = {
     "mode",
     fmt = function(mode)
-          -- local status_val = status[mode]
+         -- local status_val = status[mode]
           -- if status_val == nil then
           --   return mode
           -- end
           return status[mode]
      end,
 }
-
 local filetype = {
 	"filetype",
 	icons_enabled = false,
@@ -66,6 +54,7 @@ local filetype = {
 local branch = {
 	"branch",
 	icons_enabled = true,
+  colored = true,
 	icon = "",
 }
 
@@ -73,7 +62,6 @@ local location = {
 	"location",
 	padding = 0,
 }
-
 
 -- cool function for progress
 local progress = function()
@@ -86,23 +74,9 @@ local progress = function()
 end
 
 local spaces = function()
-	return "Spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
 end
 
--- local spotify_status = require'nvim-spotify'.status
--- spotify_status:start()
---
--- local now_playing = function()
---   local np = spotify_status.listen()
---   if np == "" then
---     return ""
---   end
---   local value = string.sub(np, 4)
---   if string.len(np) >= 50 then
---     value = string.sub(value, 0, 50) .. "..."
---   end
---   return "阮" .. value
--- end
 
 lualine.setup {
 	options = {

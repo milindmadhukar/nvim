@@ -20,7 +20,7 @@ local setup = {
       windows = true, -- default bindings on <c-w>
       nav = true, -- misc bindings to work with windows
       z = true, -- bindings for folds, spelling and others prefixed with z
-      g = false, -- bindings for prefixed with g
+      g = true, -- bindings for prefixed with g
     },
   },
   -- add operators that will trigger motion and text object completion
@@ -58,13 +58,13 @@ local setup = {
   ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
   hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
   show_help = true, -- show help message on the command line when the popup is visible
-  -- triggers = "auto", -- automatically setup triggers
+  triggers = "auto", -- automatically setup triggers
   -- triggers = {"<leader>"} -- or specify a list manually
   triggers_blacklist = {
     -- list of mode / prefixes that should never be hooked by WhichKey
     -- this is mostly relevant for key maps that start with a native binding
-    i = { "j", "k" },
     -- most people should not need to change this
+    i = { "j", "k" },
     v = { "j", "k" },
   },
 }
@@ -78,32 +78,9 @@ local opts = {
   nowait = true, -- use `nowait` when creating keymaps
 }
 
-local m_opts = {
-  mode = "n", -- NORMAL mode
-  prefix = "m",
-  buffer = nil, -- Global mappings. Specify a buffer number for buffer local mappings
-  silent = true, -- use `silent` when creating keymaps
-  noremap = true, -- use `noremap` when creating keymaps
-  nowait = true, -- use `nowait` when creating keymaps
-}
-
-local m_mappings = {
-  a = { "<cmd>BookmarkAnnotate<cr>", "Annotate" },
-  c = { "<cmd>BookmarkClear<cr>", "Clear" },
-  m = { "<cmd>BookmarkToggle<cr>", "Toggle" },
-  h = { '<cmd>lua require("harpoon.mark").add_file()<cr>', "Harpoon" },
-  j = { "<cmd>BookmarkNext<cr>", "Next" },
-  k = { "<cmd>BookmarkPrev<cr>", "Prev" },
-  s = {
-    "<cmd>lua require('telescope').extensions.vim_bookmarks.all({ hide_filename=false, prompt_title=\"bookmarks\", shorten_path=false })<cr>",
-    "Show",
-  },
-  x = { "<cmd>BookmarkClearAll<cr>", "Clear All" },
-  u = { '<cmd>lua require("harpoon.ui").toggle_quick_menu()<cr>', "Harpoon UI" },
-}
-
 local mappings = {
-  ["a"] = {"<cmd>Lspsaga code_action<cr>", "Code Action" },
+
+["a"] = {"<cmd>Lspsaga code_action<cr>", "Code Action" },
   ["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
   ["w"] = { "<cmd>w!<CR>", "Save" },
   ["T"] = {"<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics"},
@@ -118,24 +95,7 @@ local mappings = {
   ["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
   ["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
   ["P"] = { "<cmd><cmd>lua require('telescope').extensions.projects.projects()<cr><cr>", "Projects" },
-  ["z"] = { "<cmd>ZenMode<cr>", "Zen" },
-
-  b = {
-    name = "Buffers",
-    j = { "<cmd>BufferPick<cr>", "Jump" },
-    f = { "<cmd>Telescope buffers<cr>", "Find" },
-    b = { "<cmd>b#<cr>", "Previous" },
-    w = { "<cmd>BufferWipeout<cr>", "Wipeout" },
-    e = {
-      "<cmd>BufferCloseAllButCurrent<cr>",
-      "Close all but current",
-    },
-    h = { "<cmd>BufferCloseBuffersLeft<cr>", "Close all to the left" },
-    l = {
-      "<cmd>BufferCloseBuffersRight<cr>",
-      "Close all to the right",
-    },
-  },
+  ["z"] = { "<cmd>ZenMode<cr>", "Zen" }, -- TODO: Install Zen Mode
 
   p = {
     name = "Packer",
@@ -147,23 +107,9 @@ local mappings = {
   },
 
   r = {
-    name = "Refactoring",
-    p = {"<cmd>lua require('refactoring').debug.printf({below = true})<CR>", "Printf"},
-    c = {"<cmd>lua require('refactoring').debug.cleanup({})<CR>", "Cleanup"}
-  },
-
-  R = {
-    name = "Replace",
-    r = { "<cmd>lua require('spectre').open()<cr>", "Replace" },
-    w = { "<cmd>lua require('spectre').open_visual({select_word=true})<cr>", "Replace Word" },
-    f = { "<cmd>lua require('spectre').open_file_search()<cr>", "Replace Buffer" },
-  },
-
-  h = {
-    name = "Hop",
-    l = { "<cmd>HopLine<cr>", "Hop to Line" },
-    w = { "<cmd>HopWord<cr>", "Hop to Word" },
-    c = { "<cmd>HopChar1<cr>", "Hop to Character" }
+      name = "Refactoring",
+      p = {"<cmd>lua require('refactoring').debug.printf({below = true})<CR>", "Printf"},
+      c = {"<cmd>lua require('refactoring').debug.cleanup({})<CR>", "Cleanup"}
   },
 
   g = {
@@ -171,7 +117,7 @@ local mappings = {
     g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
-    l = { "<cmd>GitBlameToggle<cr>", "Blame" },
+    l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
     p = { "<cmd>lua require 'gitsigns'.preview_hunk()<cr>", "Preview Hunk" },
     r = { "<cmd>lua require 'gitsigns'.reset_hunk()<cr>", "Reset Hunk" },
     R = { "<cmd>lua require 'gitsigns'.reset_buffer()<cr>", "Reset Buffer" },
@@ -187,28 +133,27 @@ local mappings = {
       "<cmd>Gitsigns diffthis HEAD<cr>",
       "Diff",
     },
+  },
 
-    -- G = {
-    --   name = "Gist",
-    --   a = { "<cmd>Gist -b -a<cr>", "Create Anon" },
-    --   d = { "<cmd>Gist -d<cr>", "Delete" },
-    --   f = { "<cmd>Gist -f<cr>", "Fork" },
-    --   g = { "<cmd>Gist -b<cr>", "Create" },
-    --   l = { "<cmd>Gist -l<cr>", "List" },
-    --   p = { "<cmd>Gist -b -p<cr>", "Create Private" },
-    -- },
+  h = {
+      name = "Hop",
+      l = { "<cmd>HopLine<cr>", "Hop to Line" },
+      w = { "<cmd>HopWord<cr>", "Hop to Word" },
+      c = { "<cmd>HopChar1<cr>", "Hop to Character" }
   },
 
   l = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
-    d = { "<cmd>TroubleToggle<cr>", "Diagnostics" },
+    d = {
+      "<cmd>Telescope lsp_document_diagnostics<cr>",
+      "Document Diagnostics",
+    },
     w = {
       "<cmd>Telescope lsp_workspace_diagnostics<cr>",
       "Workspace Diagnostics",
     },
-    f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
-    F = { "<cmd>LspToggleAutoFormat<cr>", "Toggle Autoformat" },
+    f = { "<cmd>lua vim.lsp.buf.format{async=true}<cr>", "Format" },
     i = { "<cmd>LspInfo<cr>", "Info" },
     I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
     j = {
@@ -220,16 +165,14 @@ local mappings = {
       "Prev Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-    o = { "<cmd>SymbolsOutline<cr>", "Outline" },
-    r = { "<cmd>Lspsaga rename<cr>", "Rename" },
-    R = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
+    r = { "<cmd>lua require('renamer').rename{empty=true,}<cr>", "Rename" },
     s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
     S = {
       "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
       "Workspace Symbols",
     },
   },
-
   s = {
     name = "Search",
     b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
@@ -245,35 +188,26 @@ local mappings = {
     C = { "<cmd>Telescope commands<cr>", "Commands" },
   },
 
-  -- S = {
-  --   name = "Session",
-  --   s = { "<cmd>SaveSession<cr>", "Save" },
-  --   l = { "<cmd>LoadLastSession!<cr>", "Load Last" },
-  --   d = { "<cmd>LoadCurrentDirSession!<cr>", "Load Last Dir" },
-  -- f = { "<cmd>Telescope sessions save_current=false<cr>", "Find Session" },
-  -- },
-
   t = {
-    name = "Trouble & Terminal",
-    t = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
-    T = { "<cmd>TodoTrouble<cr>", "Toggle Todo Trouble Menu" },
-    w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
-    D = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" },
-    q = { "<cmd>TroubleToggle quickfix<cr>", "Show Quickfix(s)" },
-    l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
-    r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
+      name = "Trouble & Terminal",
+      t = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
+      T = { "<cmd>TodoTrouble<cr>", "Toggle Todo Trouble Menu" },
+      w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
+      D = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" },
+      q = { "<cmd>TroubleToggle quickfix<cr>", "Show Quickfix(s)" },
+      l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
+      r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },
 
-    n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
-    H = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
-    V = { "<cmd>lua _VTOP_TOGGLE()<cr>", "Vtop" },
-    p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
-    g = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazy Git"},
-    d = { "<cmd>lua _LAZYDOCKER_TOGGLE()<cr>", "Lazy Docker"},
-    f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
-    h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
-    v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
+      n = { "<cmd>lua _NODE_TOGGLE()<cr>", "Node" },
+      H = { "<cmd>lua _HTOP_TOGGLE()<cr>", "Htop" },
+      V = { "<cmd>lua _VTOP_TOGGLE()<cr>", "Vtop" },
+      p = { "<cmd>lua _PYTHON_TOGGLE()<cr>", "Python" },
+      g = { "<cmd>lua _LAZYGIT_TOGGLE()<cr>", "Lazy Git"},
+      d = { "<cmd>lua _LAZYDOCKER_TOGGLE()<cr>", "Lazy Docker"},
+      f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
+      h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
+      v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
   }
-
 }
 
 local vopts = {
@@ -296,10 +230,11 @@ local vmappings = {
     r = {"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Telescope Refactor"},
     V = {"<cmd>lua require('refactoring').debug.print_var({})<CR>", "Print Debug Variables"},
   },
+
+  -- TODO: Install Refactor
 }
 
 which_key.setup(setup)
 which_key.register(mappings, opts)
 which_key.register(vmappings, vopts)
-which_key.register(m_mappings, m_opts)
 
