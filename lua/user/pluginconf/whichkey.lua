@@ -206,6 +206,17 @@ local mappings = {
       f = { "<cmd>ToggleTerm direction=float<cr>", "Float" },
       h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
       v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
+  },
+  d = {
+    name = "Debug",
+    c = { "<cmd>lua require 'dap'.continue()<cr>", "Continue" },
+    o = { "<cmd>lua require 'dap'.step_over()<cr>", "Step Over" },
+    i = { "<cmd>lua require 'dap'.step_into()<cr>", "Step Into" },
+    O = { "<cmd>lua require 'dap'.step_out()<cr>", "Step Out" },
+    b = { "<cmd>lua require 'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+    -- B = {},
+    r = { "<cmd>lua require 'dap'.repl.open()<cr>", "Open in REPL" },
+    g = {"<cmd>lua require('dap-go').debug_test()<CR>", "Golang Debug Test"},
   }
 }
 
