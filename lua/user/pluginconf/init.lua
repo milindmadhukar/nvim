@@ -17,5 +17,3 @@ require "user.pluginconf.renamer"
 require "user.pluginconf.todocomments"
 require "user.pluginconf.zenmode"
 require "user.pluginconf.copilot"
-
--- Add Copilot plugin
