@@ -16,7 +16,6 @@ require "user.pluginconf.colorizer"
 require "user.pluginconf.renamer"
 require "user.pluginconf.todocomments"
 require "user.pluginconf.zenmode"
-require "user.pluginconf.copilot"
+require "user.pluginconf.copilotvim"
 require "user.pluginconf.dap"
 require "user.pluginconf.presence"
-

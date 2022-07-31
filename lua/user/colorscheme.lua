@@ -26,10 +26,10 @@ hi Pmenu guibg=none ctermbg=none
 hi Directory guibg=none ctermbg=none
 hi Debug guibg=none ctermbg=none
 hi NonText guibg=none ctermbg=none
-hi Pmenu guibg=none ctermbg=none
-hi PmenuSbar guibg=none ctermbg=none
-hi PmenuSel guibg=none ctermbg=none
-hi PmenuThumb guibg=none ctermbg=none
+" hi Pmenu guibg=none ctermbg=none
+" hi PmenuSbar guibg=none ctermbg=none
+" hi PmenuSel guibg=none ctermbg=none
+" hi PmenuThumb guibg=none ctermbg=none
 ]]
 
 

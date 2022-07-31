@@ -88,6 +88,10 @@ return packer.startup(function(use)
   use({ "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }) -- snippet completions
   use({ "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" })
   use({ "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" })
+  use {
+    "zbirenbaum/copilot-cmp",
+    module = "copilot_cmp",
+  }
 
   -- snippets
   use({ "L3MON4D3/LuaSnip", commit = "79b2019c68a2ff5ae4d732d50746c901dd45603a" }) --snippet engine
@@ -103,6 +107,16 @@ return packer.startup(function(use)
        requires = { {'nvim-lua/plenary.nvim'} },
   }
   use {"github/copilot.vim"}
+  -- TODO: This is under early development, it will replace copilot.vim
+  use {
+    "zbirenbaum/copilot.lua",
+    event = {"VimEnter"},
+    config = function()
+      vim.defer_fn(function()
+        require("copilot").setup()
+      end, 100)
+    end,
+  }
 
   -- Telescope
   use({ "nvim-telescope/telescope.nvim", commit = "d96eaa914aab6cfc4adccb34af421bdd496468b0" })
