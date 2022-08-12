@@ -64,7 +64,8 @@ return packer.startup(function(use)
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
 	})
-	use("folke/zen-mode.nvim")
+	use("Pocco81/true-zen.nvim")
+	-- use("folke/zen-mode.nvim")
 	use({
 		"ThePrimeagen/refactoring.nvim",
 		requires = {
@@ -79,6 +80,26 @@ return packer.startup(function(use)
 	})
 
 	use({ "andweeb/presence.nvim" })
+	use({
+		"nvim-neorg/neorg",
+		-- ft = "norg",
+		-- after = "nvim-treesitter", -- You may want to specify Telescope here as well
+	})
+
+	use({
+		"iamcco/markdown-preview.nvim",
+		run = "cd app && npm install",
+		setup = function()
+			vim.g.mkdp_filetypes = { "markdown" }
+		end,
+		ft = { "markdown" },
+	})
+
+  use({
+    "wfxr/minimap.vim",
+    run = "cargo install --locked code-minimap",
+    cmd = "MinimapToggle",
+  })
 
 	-- Colorschemes
 	use({ "folke/tokyonight.nvim" })
@@ -136,9 +157,9 @@ return packer.startup(function(use)
 	use("mfussenegger/nvim-dap")
 	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
 	use({
-    "leoluz/nvim-dap-go",
-    ft = { "go" },
-  })
+		"leoluz/nvim-dap-go",
+		ft = { "go" },
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins

@@ -93,8 +93,14 @@ local mappings = {
   },
   ["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
   ["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
-  ["P"] = { "<cmd><cmd>lua require('telescope').extensions.projects.projects()<cr><cr>", "Projects" },
-  ["z"] = { "<cmd>ZenMode<cr>", "Zen" },
+  ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
+
+  z = {
+    ["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
+    ["m"] = { "<cmd>TZMinimalist<cr>", "Toggle minimalist mode" },
+    ["f"] = { "<cmd>TZFocus<cr>", "Toggle focus mode" },
+    ["z"] = { "<cmd>TZNarrow<cr>", "Toggle narrow mode" },
+  },
 
   p = {
     name = "Packer",
@@ -240,6 +246,7 @@ local vmappings = {
     r = {"<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", "Telescope Refactor"},
     V = {"<cmd>lua require('refactoring').debug.print_var({})<CR>", "Print Debug Variables"},
   },
+  z = { "<cmd>'<,'>TZNarrow<cr>", "Toggle narrow mode" },
 
   -- TODO: Install Refactor
 }

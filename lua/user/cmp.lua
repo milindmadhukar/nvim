@@ -106,6 +106,7 @@ cmp.setup {
         buffer = "[Buffer ]",
         path = "[Path ]",
         copilot = "[Copilot ]",
+        neorg = "[Neorg]",
       })[entry.source.name]
       return vim_item
     end,
@@ -117,6 +118,7 @@ cmp.setup {
     { name = "buffer" },
     { name = "path" },
     { name = "emoji" },
+    { name = "neorg" },
   },
   confirm_opts = {
     behavior = cmp.ConfirmBehavior.Replace,
