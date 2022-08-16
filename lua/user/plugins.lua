@@ -80,11 +80,6 @@ return packer.startup(function(use)
 	})
 
 	use({ "andweeb/presence.nvim" })
-	-- use({
-	--	"nvim-neorg/neorg",
-	--	-- ft = "norg",
-	--	-- after = "nvim-treesitter", -- You may want to specify Telescope here as well
-	-- })
 
 	use({
 		"iamcco/markdown-preview.nvim",
