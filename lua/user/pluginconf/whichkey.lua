@@ -85,7 +85,7 @@ local mappings = {
   ["T"] = {"<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics"},
   ["q"] = { "<cmd>q!<CR>", "Quit" },
   [";"] = {"<cmd>Alpha<CR>", "Dashboard"},
-  ["/"] = { "<cmd>lua require(\"Comment.api\").toggle_current_linewise()<CR>", "Comment" },
+  ["/"] = { "<cmd>lua require(\"Comment.api\").locked('toggle.linewise.current')()<CR>", "Comment" },
   ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" }, -- PE
   ["f"] = {
     "<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{winblend = 10, previewer = false})<cr>",
@@ -236,7 +236,7 @@ local vopts = {
 }
 
 local vmappings = {
-  ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").toggle_linewise_op(vim.fn.visualmode())<CR>", "Comment" },
+  ["/"] = { "<ESC><CMD>lua require(\"Comment.api\").locked('comment.linewise')(vim.fn.visualmode())<CR>", "Comment" },
   r = {
     name = "Refactoring",
     e = {"<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract Function"},

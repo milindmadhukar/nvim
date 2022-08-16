@@ -45,11 +45,11 @@ return packer.startup(function(use)
 	use({ "wbthomason/packer.nvim" }) -- Have packer manage itself
 	use({ "nvim-lua/plenary.nvim" }) -- Useful lua functions used by lots of plugins
 	use({ "windwp/nvim-autopairs" }) -- Autopairs, integrates with both cmp and treesitter
-	use({ "numToStr/Comment.nvim" })
+	use({ "numToStr/Comment.nvim"})
 	use({ "JoosepAlviste/nvim-ts-context-commentstring" })
 	use({ "kyazdani42/nvim-web-devicons" })
 	use({ "kyazdani42/nvim-tree.lua" })
-	use({ "akinsho/bufferline.nvim" })
+	use({ "akinsho/bufferline.nvim", commit = "c78b3ecf9539a719828bca82fc7ddb9b3ba0c353" })
 	use({ "moll/vim-bbye" })
 	use({ "nvim-lualine/lualine.nvim" })
 	use({ "akinsho/toggleterm.nvim" })
@@ -80,11 +80,11 @@ return packer.startup(function(use)
 	})
 
 	use({ "andweeb/presence.nvim" })
-	use({
-		"nvim-neorg/neorg",
-		-- ft = "norg",
-		-- after = "nvim-treesitter", -- You may want to specify Telescope here as well
-	})
+	-- use({
+	--	"nvim-neorg/neorg",
+	--	-- ft = "norg",
+	--	-- after = "nvim-treesitter", -- You may want to specify Telescope here as well
+	-- })
 
 	use({
 		"iamcco/markdown-preview.nvim",
@@ -95,11 +95,11 @@ return packer.startup(function(use)
 		ft = { "markdown" },
 	})
 
-  use({
-    "wfxr/minimap.vim",
-    run = "cargo install --locked code-minimap",
-    cmd = "MinimapToggle",
-  })
+	use({
+		"wfxr/minimap.vim",
+		run = "cargo install --locked code-minimap",
+		cmd = "MinimapToggle",
+	})
 
 	-- Colorschemes
 	use({ "folke/tokyonight.nvim" })
