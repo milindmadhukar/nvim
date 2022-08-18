@@ -100,6 +100,7 @@ return packer.startup(function(use)
 	use({ "folke/tokyonight.nvim" })
 	use("lunarvim/darkplus.nvim")
 	use("Shadorain/shadotheme")
+  use("LunarVim/synthwave84.nvim")
 
 	-- cmp plugins
 	use({ "hrsh7th/nvim-cmp" }) -- The completion plugin
