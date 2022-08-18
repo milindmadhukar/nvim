@@ -48,4 +48,5 @@ ftdetect/
 ftplugin/
 spell/
 .stylua.toml
-
+java-debug/
+vscode-java-test/

@@ -1,16 +1,42 @@
-# Neovim
+# A Basic Stable IDE config for Neovim
 
-## Try out this config
+> Why does this repo exist?
+
+This config attempts to provide a rock solid fully featured starting point for someone new to Neovim, or just tired of maintaining the basic IDE components of their config. 
+
+> What makes it "rock solid"?
+
+All of the included plugins are pinned to a version that ensures they are compatible and will not update potentially introducing errors into your config. For every Neovim release I will update this repo along with the community to keep it up to date with the newest versions.
+
+As I mentioned, this config is meant as a starting point for people new to Neovim who want a familiar IDE experience. The config has a very simple structure that makes it easy to add new plugins. 
+
+## Install Neovim 0.7
+
+You can install Neovim with your package manager e.g. brew, apt, pacman etc.. but remember that when you update your packages Neovim may be upgraded to a newer version.
+
+If you would like to make sure Neovim only updates when you want it to than I recommend installing from source:
+
+```sh
+git clone https://github.com/neovim/neovim.git
+cd neovim
+git checkout release-0.7
+make CMAKE_BUILD_TYPE=Release
+sudo make install
+```
+
+## Install the config
 
 Make sure to remove or move your current `nvim` directory
 
-```
-git clone https://github.com/milindmadhukar/nvim.git ~/.config/nvim
+```sh
+git clone https://github.com/LunarVim/nvim-basic-ide.git ~/.config/nvim
 ```
 
 Run `nvim` and wait for the plugins to be installed 
 
 **NOTE** (You will notice treesitter pulling in a bunch of parsers the next time you open Neovim) 
+
+**NOTE** Checkout this file for some predefined keymaps: [keymaps](https://github.com/LunarVim/nvim-basic-ide/blob/master/lua/user/keymaps.lua)
 
 ## Get healthy
 
@@ -30,36 +56,58 @@ First we'll fix copy/paste
 
 - On Ubuntu
 
-  ```
-  sudo apt install xsel
-  ```
-
-- On Arch Linux
-
-  ```
-  sudo pacman -S xsel
+  ```sh
+  sudo apt install xsel # for X11
+  sudo apt install wl-clipboard # for wayland
   ```
 
 Next we need to install python support (node is optional)
 
 - Neovim python support
 
-  ```
+  ```sh
   pip install pynvim
   ```
 
 - Neovim node support
 
-  ```
+  ```sh
   npm i -g neovim
   ```
 
+We will also need `ripgrep` for Telescope to work: 
+
+- Ripgrep
+
+  ```sh
+  sudo apt install ripgrep
+  ```
+---
+
+**NOTE** make sure you have [node](https://nodejs.org/en/) installed, I recommend a node manager like [fnm](https://github.com/Schniz/fnm).
+
 ## Fonts
 
-- [A nerd font](https://github.com/ryanoasis/nerd-fonts)
+I recommend using the following repo to get a "Nerd Font" (Font that supports icons)
 
-- [codicon](https://github.com/microsoft/vscode-codicons/raw/main/dist/codicon.ttf)
-- [An emoji font](https://github.com/googlefonts/noto-emoji/blob/main/fonts/NotoColorEmoji.ttf)
-After moving fonts to `~/.local/share/fonts/`
+[getnf](https://github.com/ronniedroid/getnf)
 
-Run: `$ fc-cache -f -v`
+## Configuration
+
+### LSP
+
+To add a new LSP
+
+First Enter:
+
+```
+:LspInstallInfo
+```
+
+and press `i` on the Language Server you wish to install
+
+Next you will need to add the server to this list: [servers](https://github.com/LunarVim/nvim-basic-ide/blob/8b9ec3bffe8c8577042baf07c75408532a733fea/lua/user/lsp/lsp-installer.lua#L6)
+
+### Formatters and linters
+
+Make sure the formatter or linter is installed and add it to this setup function: [null-ls](https://github.com/LunarVim/nvim-basic-ide/blob/8b9ec3bffe8c8577042baf07c75408532a733fea/lua/user/lsp/null-ls.lua#L13)
