@@ -4,13 +4,16 @@ if not status_ok then
 end
 
 local servers = {
-  "sumneko_lua",
-  "cssls",
-  "html",
-  "tsserver",
-  "pyright",
-  "bashls",
   "jsonls",
+  "sumneko_lua",
+  "gopls",
+  "clangd",
+  "cssls",
+  "emmet_ls",
+  "html",
+  "pyright",
+  "sqls",
+  "tsserver",
   "yamlls",
 }
 

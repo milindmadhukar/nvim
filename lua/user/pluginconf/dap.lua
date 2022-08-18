@@ -102,6 +102,9 @@ end
 
 dap_go.setup()
 
+
+vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+
 dap.listeners.after.event_initialized["dapui_config"] = function()
 	dap_ui.open()
 end

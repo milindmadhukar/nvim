@@ -222,6 +222,9 @@ local mappings = {
     b = { "<cmd>lua require 'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
     -- B = {},
     r = { "<cmd>lua require 'dap'.repl.open()<cr>", "Open in REPL" },
+    l = { "<cmd> lua require'dap'.run_last()<cr>", "Run Last" },
+    u = { "<cmd>lua require'dapui'.toggle()<cr>", "DAP UI Toggle" },
+    t = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate"},
     g = {"<cmd>lua require('dap-go').debug_test()<CR>", "Golang Debug Test"},
   }
 }
