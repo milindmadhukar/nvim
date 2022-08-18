@@ -1,14 +1,14 @@
-# A Basic Stable IDE config for Neovim
+# Neovim
 
 > Why does this repo exist?
 
-This config attempts to provide a rock solid fully featured starting point for someone new to Neovim, or just tired of maintaining the basic IDE components of their config. 
+This config attempts to provide a rock solid fully featured IDE like experience with complete stability. 
 
 > What makes it "rock solid"?
 
 All of the included plugins are pinned to a version that ensures they are compatible and will not update potentially introducing errors into your config. For every Neovim release I will update this repo along with the community to keep it up to date with the newest versions.
 
-As I mentioned, this config is meant as a starting point for people new to Neovim who want a familiar IDE experience. The config has a very simple structure that makes it easy to add new plugins. 
+The config has a very simple structure that makes it easy to add new plugins, very easy to use for beginners
 
 ## Install Neovim 0.7
 
@@ -29,14 +29,14 @@ sudo make install
 Make sure to remove or move your current `nvim` directory
 
 ```sh
-git clone https://github.com/LunarVim/nvim-basic-ide.git ~/.config/nvim
+git clone https://github.com/milindmadhukar/nvim.git ~/.config/nvim
 ```
 
 Run `nvim` and wait for the plugins to be installed 
 
 **NOTE** (You will notice treesitter pulling in a bunch of parsers the next time you open Neovim) 
 
-**NOTE** Checkout this file for some predefined keymaps: [keymaps](https://github.com/LunarVim/nvim-basic-ide/blob/master/lua/user/keymaps.lua)
+**NOTE** Checkout this file for some predefined keymaps: [keymaps](https://github.com/milindmadhukar/nvim/blob/master/lua/user/keymaps.lua)
 
 ## Get healthy
 
@@ -106,8 +106,8 @@ First Enter:
 
 and press `i` on the Language Server you wish to install
 
-Next you will need to add the server to this list: [servers](https://github.com/LunarVim/nvim-basic-ide/blob/8b9ec3bffe8c8577042baf07c75408532a733fea/lua/user/lsp/lsp-installer.lua#L6)
+Next you will need to add the server to this list: [servers](https://github.com/milindmadhukar/nvim/blob/master/lua/user/lsp/lsp-installer.lua)
 
 ### Formatters and linters
 
-Make sure the formatter or linter is installed and add it to this setup function: [null-ls](https://github.com/LunarVim/nvim-basic-ide/blob/8b9ec3bffe8c8577042baf07c75408532a733fea/lua/user/lsp/null-ls.lua#L13)
+Make sure the formatter or linter is installed and add it to this setup function: [null-ls](https://github.com/milindmadhukar/nvim/blob/master/lua/user/lsp/null-ls.lua)
