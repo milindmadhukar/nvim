@@ -79,7 +79,7 @@ local opts = {
 }
 
 local mappings = {
-	["a"] = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+	["a"] = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
 	["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["T"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics" },
@@ -149,7 +149,7 @@ local mappings = {
 
 	l = {
 		name = "LSP",
-		a = { "<cmd>lua vim.lsp.buf.code_action()<cr>", "Code Action" },
+		a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
 		d = {
 			"<cmd>Telescope lsp_document_diagnostics<cr>",
 			"Document Diagnostics",
@@ -162,16 +162,17 @@ local mappings = {
 		i = { "<cmd>LspInfo<cr>", "Info" },
 		I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
 		j = {
-			"<cmd>lua vim.lsp.diagnostic.goto_next()<CR>",
-			"Next Diagnostic",
+			"<cmd>lua require('lspsaga.diagnostic').goto_next({ severity = vim.diagnostic.severity.ERROR })<cr>",
+			"Prev Diagnostic",
 		},
 		k = {
-			"<cmd>lua vim.lsp.diagnostic.goto_prev()<cr>",
-			"Prev Diagnostic",
+			"<cmd>lua require('lspsaga.diagnostic').goto_prev({ severity = vim.diagnostic.severity.ERROR })<CR>",
+			"Previous Diagnostic",
 		},
 		l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
 		q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
-		r = { "<cmd>lua require('renamer').rename{empty=true,}<cr>", "Rename" },
+		--[[ r = { "<cmd>lua require('renamer').rename{empty=true,}<cr>", "Rename" }, ]]
+    r = { "<cmd>Lspsaga rename<cr>", "Rename" },
 		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
 		S = {
 			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
@@ -181,7 +182,7 @@ local mappings = {
 	s = {
 		name = "Search",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-		C = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+		c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
 		-- f = { "<cmd>Telescope find_files<cr>", "Find File" },
 		h = { "<cmd>Telescope help_tags<cr>", "Help" },
 		i = { "<cmd>Telescope media_files<cr>", "Media" },
@@ -190,7 +191,7 @@ local mappings = {
 		r = { "<cmd>Telescope oldfiles<cr>", "Recent File" },
 		R = { "<cmd>Telescope registers<cr>", "Registers" },
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
-		c = { "<cmd>Telescope commands<cr>", "Commands" },
+		C = { "<cmd>Telescope commands<cr>", "Commands" },
 	},
 
 	t = {
@@ -198,7 +199,7 @@ local mappings = {
 		t = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
 		T = { "<cmd>TodoTrouble<cr>", "Toggle Todo Trouble Menu" },
 		w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
-		D = { "<cmd>TroubleToggle lsp_document_diagnostics<cr>", "Document" },
+		D = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document" },
 		q = { "<cmd>TroubleToggle quickfix<cr>", "Show Quickfix(s)" },
 		l = { "<cmd>TroubleToggle loclist<cr>", "Loclist" },
 		r = { "<cmd>TroubleToggle lsp_references<cr>", "References" },

@@ -2,7 +2,7 @@
 
 > Why does this repo exist?
 
-This config attempts to provide a rock solid fully featured IDE like experience with complete stability. 
+This config attempts to provide a rock solid fully featured IDE like experience with complete stability.
 
 > What makes it "rock solid"?
 
@@ -32,9 +32,9 @@ Make sure to remove or move your current `nvim` directory
 git clone https://github.com/milindmadhukar/nvim.git ~/.config/nvim
 ```
 
-Run `nvim` and wait for the plugins to be installed 
+Run `nvim` and wait for the plugins to be installed
 
-**NOTE** (You will notice treesitter pulling in a bunch of parsers the next time you open Neovim) 
+**NOTE** (You will notice treesitter pulling in a bunch of parsers the next time you open Neovim)
 
 **NOTE** Checkout this file for some predefined keymaps: [keymaps](https://github.com/milindmadhukar/nvim/blob/master/lua/user/keymaps.lua)
 
@@ -75,13 +75,14 @@ Next we need to install python support (node is optional)
   npm i -g neovim
   ```
 
-We will also need `ripgrep` for Telescope to work: 
+We will also need `ripgrep` for Telescope to work:
 
 - Ripgrep
 
   ```sh
   sudo apt install ripgrep
   ```
+
 ---
 
 **NOTE** make sure you have [node](https://nodejs.org/en/) installed, I recommend a node manager like [fnm](https://github.com/Schniz/fnm).

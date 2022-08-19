@@ -86,9 +86,10 @@ return packer.startup(function(use)
 	use({ "williamboman/nvim-lsp-installer", commit = "e9f13d7acaa60aff91c58b923002228668c8c9e6" }) -- simple to use language server installer
 	use({ "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" }) -- for formatters and linters
 	use({
-		"filipdutescu/renamer.nvim",
-		branch = "master",
-		requires = { { "nvim-lua/plenary.nvim" } },
+		"glepnir/lspsaga.nvim",
+		branch = "main",
+    commit = "11eff5fef43c6aa4205f0fd9bc7aa84ee4c419b7",
+    cmd = { "Lspsaga" }
 	})
 
 	-- Telescope
@@ -118,7 +119,10 @@ return packer.startup(function(use)
 		"folke/trouble.nvim",
 		cmd = "TroubleToggle",
 	})
-	use("Pocco81/true-zen.nvim")
+	use({
+		"Pocco81/true-zen.nvim",
+		cmd = { "TZFocus", "TZNarriw", "TZAtaraxis", "TZMinimalist" },
+	})
 	-- use("folke/zen-mode.nvim")
 	use({
 		"ThePrimeagen/refactoring.nvim",
