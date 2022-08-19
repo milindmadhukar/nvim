@@ -140,12 +140,14 @@ local mappings = {
 		},
 	},
 
-	h = {
-		name = "Hop",
-		l = { "<cmd>HopLine<cr>", "Hop to Line" },
-		w = { "<cmd>HopWord<cr>", "Hop to Word" },
-		c = { "<cmd>HopChar1<cr>", "Hop to Character" },
-	},
+	--[[ h = { ]]
+	--[[ 	name = "Hop", ]]
+	--[[ 	l = { "<cmd>HopLine<cr>", "Hop to Line" }, ]]
+	--[[ 	w = { "<cmd>HopWord<cr>", "Hop to Word" }, ]]
+	--[[ 	c = { "<cmd>HopChar1<cr>", "Hop to Character" }, ]]
+	--[[ }, ]]
+
+  ["h"] = {"<cmd>nohlsearch<CR>", "Clear highlighting"},
 
 	l = {
 		name = "LSP",
