@@ -54,7 +54,11 @@ return packer.startup(function(use)
 	use({ "akinsho/toggleterm.nvim", commit = "aaeed9e02167c5e8f00f25156895a6fd95403af8" })
 	use({ "ahmedkhalf/project.nvim", commit = "541115e762764bc44d7d3bf501b6e367842d3d4f" })
 	use({ "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350" })
-	use({ "lukas-reineke/indent-blankline.nvim", commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2" })
+	use({
+    "lukas-reineke/indent-blankline.nvim",
+    commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2",
+    event = "BufEnter"
+  })
 	use({ "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" })
 	use("folke/which-key.nvim")
 
@@ -76,6 +80,7 @@ return packer.startup(function(use)
 		"zbirenbaum/copilot-cmp",
 		module = "copilot_cmp",
 	})
+  -- TODO: Add commit hashes?
 
 	-- snippets
 	use({ "L3MON4D3/LuaSnip" }) --snippet engine
@@ -104,8 +109,15 @@ return packer.startup(function(use)
 	use({ "tpope/vim-fugitive" })
 
 	-- DAP
-	use({ "mfussenegger/nvim-dap", commit = "014ebd53612cfd42ac8c131e6cec7c194572f21d" })
-	use({ "rcarriga/nvim-dap-ui", commit = "d76d6594374fb54abf2d94d6a320f3fd6e9bb2f7" })
+	use({
+    "mfussenegger/nvim-dap", commit = "014ebd53612cfd42ac8c131e6cec7c194572f21d",
+    event = "BufEnter"
+  })
+	use({
+    "rcarriga/nvim-dap-ui",
+    commit = "d76d6594374fb54abf2d94d6a320f3fd6e9bb2f7",
+    event = "BufEnter"
+  })
 	use({ "ravenxrz/DAPInstall.nvim", commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de" })
 	use({
 		"leoluz/nvim-dap-go",
@@ -130,6 +142,7 @@ return packer.startup(function(use)
 			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-treesitter/nvim-treesitter" },
 		},
+    event = "BufEnter",
 	})
 	use({
 		"windwp/nvim-ts-autotag",
