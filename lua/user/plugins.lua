@@ -59,10 +59,10 @@ return packer.startup(function(use)
 	use("folke/which-key.nvim")
 
 	-- Colorschemes
-	use("folke/tokyonight.nvim")
-	use("lunarvim/darkplus.nvim")
-	use("Shadorain/shadotheme")
-	use("LunarVim/synthwave84.nvim")
+	use({ "folke/tokyonight.nvim" })
+	use({ "lunarvim/darkplus.nvim" })
+	use({ "Shadorain/shadotheme" })
+	use({ "LunarVim/synthwave84.nvim" })
 
 	-- cmp plugins
 	use({ "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" }) -- The completion plugin
@@ -100,6 +100,7 @@ return packer.startup(function(use)
 	})
 	-- Git
 	use({ "lewis6991/gitsigns.nvim" })
+	use({ "tpope/vim-fugitive" })
 
 	-- DAP
 	use({ "mfussenegger/nvim-dap", commit = "014ebd53612cfd42ac8c131e6cec7c194572f21d" })

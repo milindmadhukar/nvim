@@ -8,26 +8,25 @@ local num_plugins_loaded = #vim.fn.globpath(packer_path, "*", 0, 1)
 
 local dashboard = require("alpha.themes.dashboard")
 dashboard.section.header.val = {
-"      +++++++       xxxxxxx      xxxxxxx",
-"      +:::::+        x:::::x    x:::::x ",
-"      +:::::+         x:::::x  x:::::x  ",
-"+++++++:::::+++++++    x:::::xx:::::x   ",
-"+:::::::::::::::::+     x::::::::::x    ",
-"+:::::::::::::::::+     x::::::::::x    ",
-"+++++++:::::+++++++    x:::::xx:::::x   ",
-"      +:::::+         x:::::x  x:::::x  ",
-"      +:::::+        x:::::x    x:::::x ",
-"      +++++++       xxxxxxx      xxxxxxx",
+	"      +++++++       xxxxxxx      xxxxxxx",
+	"      +:::::+        x:::::x    x:::::x ",
+	"      +:::::+         x:::::x  x:::::x  ",
+	"+++++++:::::+++++++    x:::::xx:::::x   ",
+	"+:::::::::::::::::+     x::::::::::x    ",
+	"+:::::::::::::::::+     x::::::::::x    ",
+	"+++++++:::::+++++++    x:::::xx:::::x   ",
+	"      +:::::+         x:::::x  x:::::x  ",
+	"      +:::::+        x:::::x    x:::::x ",
+	"      +++++++       xxxxxxx      xxxxxxx",
 }
-
 
 dashboard.section.buttons.val = {
 	dashboard.button("r", "  Recent Files", ":Telescope oldfiles <CR>"),
 	dashboard.button("f", "  Find File", ":Telescope find_files <CR>"),
 	dashboard.button("e", "  New File", ":ene <BAR> startinsert <CR>"),
 	dashboard.button("t", "  Find Text", ":Telescope live_grep <CR>"),
-  dashboard.button("c", "  Restore Session For Current Directory", "<cmd>lua require('persistence').load()<cr>"),
-  dashboard.button("l", "  Restore Last Session", "<cmd>lua require('persistence').load({ last = true })<cr>"),
+	dashboard.button("c", "  Restore Session For Current Directory", "<cmd>lua require('persistence').load()<cr>"),
+	dashboard.button("l", "  Restore Last Session", "<cmd>lua require('persistence').load({ last = true })<cr>"),
 	dashboard.button("C", "  Configuration", ":e ~/.config/nvim/init.lua <CR>"),
 	dashboard.button("q", "  Quit", ":qa<CR>"),
 }
@@ -43,7 +42,7 @@ dashboard.section.buttons.val = {
 }
 
 local function footer()
--- NOTE: requires the fortune-mod package to work
+	-- NOTE: requires the fortune-mod package to work
 	-- local handle = io.popen("fortune")
 	-- local fortune = handle:read("*a")
 	-- handle:close()

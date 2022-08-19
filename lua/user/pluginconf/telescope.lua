@@ -106,7 +106,7 @@ telescope.setup({
 				["<PageUp>"] = actions.results_scrolling_up,
 				["<PageDown>"] = actions.results_scrolling_down,
 
-        ["q"] = actions.close,
+				["q"] = actions.close,
 				["?"] = actions.which_key,
 			},
 		},
