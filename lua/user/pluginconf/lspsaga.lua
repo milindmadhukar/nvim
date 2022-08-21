@@ -11,7 +11,7 @@ saga.init_lsp_saga({
 	--transparent background. Values between 0-30 are typically most useful.
 	saga_winblend = 5,
 	-- when cursor in saga window you config these to move
-	move_in_saga = { prev = "<Tab>", next = "<S-Tab>" },
+	move_in_saga = { prev = "<S-Tab>", next = "<Tab>" },
 	-- Error, Warn, Info, Hint
 	-- use emoji like
 	-- { "🙀", "😿", "😾", "😺" }
@@ -57,8 +57,8 @@ saga.init_lsp_saga({
 		split = "i",
 		tabe = "t",
 		quit = "q",
-		scroll_down = "<C-f>",
-		scroll_up = "<C-b>", -- quit can be a table
+		scroll_down = "<S-Tab>",
+		scroll_up = "<Tab>", -- quit can be a table
 	},
 	code_action_keys = {
 		quit = "q",
@@ -100,10 +100,10 @@ saga.init_lsp_saga({
 
 local action = require("lspsaga.action")
 -- scroll in hover doc or  definition preview window
-vim.keymap.set("n", "<C-f>", function()
+vim.keymap.set("n", "<Tab>", function()
     action.smart_scroll_with_saga(1)
 end, { silent = true })
 -- scroll in hover doc or  definition preview window
-vim.keymap.set("n", "<C-b>", function()
+vim.keymap.set("n", "<S-Tab>", function()
     action.smart_scroll_with_saga(-1)
 end, { silent = true })
