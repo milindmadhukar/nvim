@@ -19,6 +19,6 @@ require("user.pluginconf.todocomments")
 require("user.pluginconf.zenmode")
 require("user.pluginconf.copilotvim")
 require("user.pluginconf.presence")
+require("user.pluginconf.dap")
 
---[[ require("user.pluginconf.dap") -- NOTE: Toggle only when needed. ]]
 -- require "user.pluginconf.neorg" -- TODO: I'll try it later.

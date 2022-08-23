@@ -47,7 +47,7 @@ local setup = {
 		position = "bottom", -- bottom, top
 		margin = { 1, 0, 1, 0 }, -- extra window margin [top, right, bottom, left]
 		padding = { 2, 2, 2, 2 }, -- extra window padding [top, right, bottom, left]
-		winblend = 0,
+		winblend = 10,
 	},
 	layout = {
 		height = { min = 4, max = 25 }, -- min and max height of the columns
@@ -88,7 +88,7 @@ local mappings = {
 	["/"] = { "<cmd>lua require(\"Comment.api\").locked('toggle.linewise.current')()<CR>", "Comment" },
 	["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" }, -- PE
 	["f"] = {
-		"<cmd>lua require('telescope.builtin').find_files(require('telescope.themes').get_dropdown{winblend = 10, previewer = false})<cr>",
+		"<cmd>Telescope find_files winblend=10<cr>",
 		"Find files",
 	},
 	["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
@@ -147,7 +147,7 @@ local mappings = {
 	--[[ 	c = { "<cmd>HopChar1<cr>", "Hop to Character" }, ]]
 	--[[ }, ]]
 
-  ["h"] = {"<cmd>nohlsearch<CR>", "Clear highlighting"},
+	["h"] = { "<cmd>nohlsearch<CR>", "Clear highlighting" },
 
 	l = {
 		name = "LSP",
@@ -174,7 +174,7 @@ local mappings = {
 		l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
 		q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
 		--[[ r = { "<cmd>lua require('renamer').rename{empty=true,}<cr>", "Rename" }, ]]
-    r = { "<cmd>Lspsaga rename<cr>", "Rename" },
+		r = { "<cmd>Lspsaga rename<cr>", "Rename" },
 		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
 		S = {
 			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
@@ -218,17 +218,45 @@ local mappings = {
 	},
 	d = {
 		name = "Debug",
-		c = { "<cmd>lua require 'dap'.continue()<cr>", "Continue" },
-		o = { "<cmd>lua require 'dap'.step_over()<cr>", "Step Over" },
-		i = { "<cmd>lua require 'dap'.step_into()<cr>", "Step Into" },
-		O = { "<cmd>lua require 'dap'.step_out()<cr>", "Step Out" },
-		b = { "<cmd>lua require 'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
-		-- B = {},
-		r = { "<cmd>lua require 'dap'.repl.open()<cr>", "Open in REPL" },
-		l = { "<cmd> lua require'dap'.run_last()<cr>", "Run Last" },
-		u = { "<cmd>lua require'dapui'.toggle()<cr>", "DAP UI Toggle" },
-		t = { "<cmd>lua require'dap'.terminate()<cr>", "Terminate" },
+		b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
+		B = { "<cmd>lua require'dap'.step_back()<cr>", "Step Back" },
+		c = { "<cmd>lua require'dap'.continue()<cr>", "Continue" },
+		C = { "<cmd>lua require'dap'.run_to_cursor()<cr>", "Run To Cursor" },
+		d = { "<cmd>lua require'dap'.disconnect()<cr>", "Disconnect" },
+		S = { "<cmd>lua require'dap'.session()<cr>", "Get Session" },
+		i = { "<cmd>lua require'dap'.step_into()<cr>", "Step Into" },
+		o = { "<cmd>lua require'dap'.step_over()<cr>", "Step Over" },
+		O = { "<cmd>lua require'dap'.step_out()<cr>", "Step Out" },
+		p = { "<cmd>lua require'dap'.pause()<cr>", "Pause" },
+		r = { "<cmd>lua require'dap'.repl.toggle()<cr>", "Toggle Repl" },
+		s = { "<cmd>lua require'dap'.continue()<cr>", "Start" },
+		q = { "<cmd>lua require'dap'.close()<cr>", "Quit" },
 		g = { "<cmd>lua require('dap-go').debug_test()<CR>", "Golang Debug Test" },
+	},
+	b = {
+		name = "Buffers",
+		j = { "<cmd>BufferLinePick<cr>", "Jump" },
+		f = { "<cmd>Telescope buffers<cr>", "Find" },
+		b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
+		n = { "<cmd>BufferLineCycleNext<cr>", "Next" },
+		-- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
+		e = {
+			"<cmd>BufferLinePickClose<cr>",
+			"Pick which buffer to close",
+		},
+		h = { "<cmd>BufferLineCloseLeft<cr>", "Close all to the left" },
+		l = {
+			"<cmd>BufferLineCloseRight<cr>",
+			"Close all to the right",
+		},
+		D = {
+			"<cmd>BufferLineSortByDirectory<cr>",
+			"Sort by directory",
+		},
+		L = {
+			"<cmd>BufferLineSortByExtension<cr>",
+			"Sort by language",
+		},
 	},
 }
 
