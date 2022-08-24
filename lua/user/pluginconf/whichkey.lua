@@ -94,6 +94,7 @@ local mappings = {
 	["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
 	["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
+  ["C"] = {"<cmd>CodiNew javascript<CR>", "Kodi"},
 
 	z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
@@ -162,8 +163,7 @@ local mappings = {
 		},
 		f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
 		i = { "<cmd>LspInfo<cr>", "Info" },
-    m = { "<cmd>Mason<cr>", "Mason" },
-		-- I = { "<cmd>LspInstallInfo<cr>", "Installer Info" },
+        m = { "<cmd>Mason<cr>", "Mason" },
 		j = {
 			"<cmd>lua require('lspsaga.diagnostic').goto_next({ severity = vim.diagnostic.severity.ERROR })<cr>",
 			"Prev Diagnostic",
