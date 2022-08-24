@@ -37,14 +37,14 @@ M.setup = function()
 			source = "always",
 			header = "",
 			prefix = "",
-      format = function(d)
-        local t = vim.deepcopy(d)
-        local code = d.code or (d.user_data and d.user_data.lsp.code)
-        if code then
-          t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
-        end
-        return t.message
-      end,
+			format = function(d)
+				local t = vim.deepcopy(d)
+				local code = d.code or (d.user_data and d.user_data.lsp.code)
+				if code then
+					t.message = string.format("%s [%s]", t.message, code):gsub("1. ", "")
+				end
+				return t.message
+			end,
 		},
 	}
 
@@ -69,12 +69,12 @@ local function lsp_keymaps(bufnr)
 	--[[ keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts) ]]
 	--[[ keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts) ]]
 
-  -- LspSaga
-  keymap(bufnr, "n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
-  --[[ keymap(bufnr, "n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts) ]]
-  keymap(bufnr, "n", "gl", "<cmd>Lspsaga show_line_diagnostics<CR>" , opts)
-  keymap(bufnr, "n", "gr", "<cmd>Lspsaga lsp_finder<CR>", opts)
-  keymap(bufnr, "n", "gs", "<cmd>Lspsaga signature_help<CR>", opts)
+	-- LspSaga
+	keymap(bufnr, "n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
+	--[[ keymap(bufnr, "n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts) ]]
+	keymap(bufnr, "n", "gl", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
+	keymap(bufnr, "n", "gr", "<cmd>Lspsaga lsp_finder<CR>", opts)
+	keymap(bufnr, "n", "gs", "<cmd>Lspsaga signature_help<CR>", opts)
 end
 
 M.on_attach = function(client, bufnr)

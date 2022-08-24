@@ -15,12 +15,16 @@ if fn.empty(fn.glob(install_path)) > 0 then
 	vim.cmd([[packadd packer.nvim]])
 end
 
---[[ local au_packer = vim.api.nvim_create_augroup("packer_autoconf", {clear = true}) ]]
---[[ vim.api.nvim_create_autocmd( ]]
---[[ 	"BufWritePost", {group = au_packer, pattern = "plugins.lua", ]]
---[[ 	command = "source <afile> | PackerSync", ]]
---[[ 	desc = "Reloads nvim when you save plugins.lua"} ]]
---[[ ) ]]
+local au_packer = vim.api.nvim_create_augroup("packer_autoconf", { clear = true })
+vim.api.nvim_create_autocmd(
+	"BufWritePost",
+	{
+		group = au_packer,
+		pattern = "plugins.lua",
+		command = "source <afile> | PackerSync",
+		desc = "Reloads nvim when you save plugins.lua",
+	}
+)
 
 -- Use a protected call so we don't error out on first use
 local status_ok, packer = pcall(require, "packer")
@@ -92,7 +96,9 @@ return packer.startup(function(use)
 
 	-- LSP
 	use({ "neovim/nvim-lspconfig", commit = "148c99bd09b44cf3605151a06869f6b4d4c24455" }) -- enable LSP
-	use({ "williamboman/nvim-lsp-installer", commit = "e9f13d7acaa60aff91c58b923002228668c8c9e6" }) -- simple to use language server installer
+	use({ "williamboman/mason.nvim" }) -- LSP/DAP/Format/Lint manager
+	use({ "williamboman/mason-lspconfig.nvim" })
+	-- use({ "williamboman/nvim-lsp-installer", commit = "e9f13d7acaa60aff91c58b923002228668c8c9e6" }) -- simple to use language server installer
 	use({ "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" }) -- for formatters and linters
 	use({
 		"glepnir/lspsaga.nvim",
@@ -143,7 +149,6 @@ return packer.startup(function(use)
 		commit = "d76d6594374fb54abf2d94d6a320f3fd6e9bb2f7",
 		event = "BufEnter",
 	})
-	use({ "ravenxrz/DAPInstall.nvim", commit = "8798b4c36d33723e7bba6ed6e2c202f84bb300de" })
 	use({
 		"leoluz/nvim-dap-go",
 		ft = { "go" },
