@@ -102,12 +102,10 @@ To add a new LSP
 First Enter:
 
 ```
-:LspInstallInfo
+Mason
 ```
 
 and press `i` on the Language Server you wish to install
-
-Next you will need to add the server to this list: [servers](https://github.com/milindmadhukar/nvim/blob/master/lua/user/lsp/lsp-installer.lua)
 
 ### Formatters and linters
 
