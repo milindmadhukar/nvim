@@ -3,7 +3,40 @@ if not status_ok then
   return
 end
 
-bufferline.setup {
+local function is_ft(b, ft)
+  return vim.bo[b].filetype == ft
+end
+
+local function diagnostics_indicator(num, _, diagnostics, _)
+  local result = {}
+  local symbols = { error = "", warning = "", info = "" }
+  for name, count in pairs(diagnostics) do
+    if symbols[name] and count > 0 then
+      table.insert(result, symbols[name] .. " " .. count)
+    end
+  end
+  result = table.concat(result, " ")
+  return #result > 0 and result or ""
+end
+
+local function custom_filter(buf, buf_nums)
+  local logs = vim.tbl_filter(function(b)
+    return is_ft(b, "log")
+  end, buf_nums)
+  if vim.tbl_isempty(logs) then
+    return true
+  end
+  local tab_num = vim.fn.tabpagenr()
+  local last_tab = vim.fn.tabpagenr("$")
+  local is_log = is_ft(buf, "log")
+  if last_tab == 1 then
+    return true
+  end
+  -- only show log buffers in secondary tabs
+  return (tab_num == last_tab and is_log) or (tab_num ~= last_tab and not is_log)
+end
+
+bufferline.setup({
   options = {
     numbers = "none", -- | "ordinal" | "buffer_id" | "both" | function({ ordinal, id, lower, raise }): string,
     close_command = "Bdelete! %d", -- can be a string | function, see "Mouse actions"
@@ -20,8 +53,7 @@ bufferline.setup {
     close_icon = "",
     -- close_icon = '',
     left_trunc_marker = "",
-    right_trunc_marker = "",
-    --- name_formatter can be used to change the buffer's label in the bufferline.
+    right_trunc_marker = "", --- name_formatter can be used to change the buffer's label in the bufferline.
     --- Please note some names can/will break the
     --- bufferline so use this at your discretion knowing that it has
     --- some limitations that will *NOT* be fixed.
@@ -34,28 +66,46 @@ bufferline.setup {
     max_name_length = 30,
     max_prefix_length = 30, -- prefix used when a buffer is de-duplicated
     tab_size = 21,
-    diagnostics = false, -- | "nvim_lsp" | "coc",
+    diagnostics = "nvim_lsp", -- | "nvim_lsp" | "coc",
     diagnostics_update_in_insert = false,
+    diagnostics_indicator = diagnostics_indicator,
+    -- NOTE: this will be called a lot so don't do any heavy processing here
+    custom_filter = custom_filter,
     -- diagnostics_indicator = function(count, level, diagnostics_dict, context)
     --   return "("..count..")"
     -- end,
     -- NOTE: this will be called a lot so don't do any heavy processing here
-    -- custom_filter = function(buf_number)
-    --   -- filter out filetypes you don't want to see
-    --   if vim.bo[buf_number].filetype ~= "<i-dont-want-to-see-this>" then
-    --     return true
-    --   end
-    --   -- filter out by buffer name
-    --   if vim.fn.bufname(buf_number) ~= "<buffer-name-I-dont-want>" then
-    --     return true
-    --   end
-    --   -- filter out based on arbitrary rules
-    --   -- e.g. filter out vim wiki buffer from tabline in your work repo
-    --   if vim.fn.getcwd() == "<work-repo>" and vim.bo[buf_number].filetype ~= "wiki" then
-    --     return true
-    --   end
-    -- end,
-    offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
+    offsets = {
+      {
+        filetype = "undotree",
+        text = "Undotree",
+        highlight = "PanelHeading",
+        padding = 1,
+      },
+      {
+        filetype = "NvimTree",
+        text = "Explorer",
+        highlight = "PanelHeading",
+        padding = 1,
+      },
+      {
+        filetype = "DiffviewFiles",
+        text = "Diff View",
+        highlight = "PanelHeading",
+        padding = 1,
+      },
+      {
+        filetype = "flutterToolsOutline",
+        text = "Flutter Outline",
+        highlight = "PanelHeading",
+      },
+      {
+        filetype = "packer",
+        text = "Packer",
+        highlight = "PanelHeading",
+        padding = 1,
+      },
+    },
     show_buffer_icons = true,
     show_buffer_close_icons = true,
     show_close_icon = true,
@@ -164,4 +214,4 @@ bufferline.setup {
       guibg = { attribute = "bg", highlight = "Normal" },
     },
   },
-}
+})

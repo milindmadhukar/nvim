@@ -16,7 +16,8 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
       set nobuflisted 
     ]])
 	end,
-})
+}) 
+
 
 -- Remove statusline and tabline when in Alpha
 vim.api.nvim_create_autocmd({ "User" }, {
