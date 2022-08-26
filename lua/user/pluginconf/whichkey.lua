@@ -94,7 +94,7 @@ local mappings = {
 	["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
 	["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
-  ["C"] = {"<cmd>CodiNew javascript<CR>", "Kodi"},
+  ["C"] = {"<cmd>CodiNew javascript<CR>", "Codi"},
 
 	z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },

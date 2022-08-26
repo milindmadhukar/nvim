@@ -3,6 +3,9 @@ if not status_ok then
 	return
 end
 
+-- TODO: Horizontal and vertical terminals are not transparent
+-- TODO: See docs for other features.
+
 toggleterm.setup({
 	size = 20,
 	open_mapping = [[<c-\>]],

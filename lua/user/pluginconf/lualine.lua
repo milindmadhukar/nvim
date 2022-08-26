@@ -38,12 +38,10 @@ local diff = {
 local mode = {
 	"mode",
 	fmt = function(mode)
-		-- local status_val = status[mode]
-		-- if status_val == nil then
-		--   return mode
-		-- end
 		return status[mode]
 	end,
+	separator = { left = "" },
+	right_padding = 2,
 }
 local filetype = {
 	"filetype",
@@ -61,6 +59,8 @@ local branch = {
 local location = {
 	"location",
 	padding = 0,
+	separator = { right = "" },
+	left_padding = 2,
 }
 
 -- cool function for progress
@@ -79,11 +79,11 @@ end
 
 lualine.setup({
 	options = {
-		component_separators = { left = "", right = "" },
-		section_separators = { left = "", right = "" },
+		component_separators = "|",
+		section_separators = { left = "", right = "" },
 		icons_enabled = true,
 		theme = "tokyonight",
-		disabled_filetypes = { "alpha", "dashboard", "NvimTree", "Outline", "toggleterm" },
+		disabled_filetypes = { "alpha", "dashboard", "Outline" },
 		always_divide_middle = true,
 	},
 	sections = {
