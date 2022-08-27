@@ -28,7 +28,7 @@ local setup = {
 	-- operators = { gc = "Comments" },
 	key_labels = {
 		-- override the label used to display some keys. It doesn't effect WK in any other way.
-		-- For example:
+		-- For example<cmd>
 		-- ["<space>"] = "SPC",
 		-- ["<cr>"] = "RET",
 		-- ["<tab>"] = "TAB",
@@ -56,7 +56,7 @@ local setup = {
 		align = "left", -- align columns left, center or right
 	},
 	ignore_missing = true, -- enable this to hide mappings for which you didn't specify a label
-	hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^:", "^ " }, -- hide mapping boilerplate
+	hidden = { "<silent>", "<cmd>", "<Cmd>", "<CR>", "call", "lua", "^<cmd>", "^ " }, -- hide mapping boilerplate
 	show_help = true, -- show help message on the command line when the popup is visible
 	triggers = "auto", -- automatically setup triggers
 	-- triggers = {"<leader>"} -- or specify a list manually
@@ -83,7 +83,7 @@ local mappings = {
 	["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["T"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics" },
-	["q"] = { "<cmd>q!<CR>", "Quit" },
+	["q"] = { "<cmd>lua require('user.functions').smart_quit()<CR>", "Quit" },
 	[";"] = { "<cmd>Alpha<CR>", "Dashboard" },
 	["/"] = { "<cmd>lua require(\"Comment.api\").locked('toggle.linewise.current')()<CR>", "Comment" },
 	["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" }, -- PE
@@ -94,7 +94,7 @@ local mappings = {
 	["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
 	["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
-  ["C"] = {"<cmd>CodiNew javascript<CR>", "Codi"},
+	["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
 
 	z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
@@ -148,7 +148,7 @@ local mappings = {
 	--[[ 	c = { "<cmd>HopChar1<cr>", "Hop to Character" }, ]]
 	--[[ }, ]]
 
-	["h"] = { "<cmd>nohlsearch<CR>", "Clear highlighting" },
+	["H"] = { "<cmd>nohlsearch<CR>", "Clear highlighting" },
 
 	l = {
 		name = "LSP",
@@ -163,7 +163,7 @@ local mappings = {
 		},
 		f = { "<cmd>lua vim.lsp.buf.formatting()<cr>", "Format" },
 		i = { "<cmd>LspInfo<cr>", "Info" },
-        m = { "<cmd>Mason<cr>", "Mason" },
+		m = { "<cmd>Mason<cr>", "Mason" },
 		j = {
 			"<cmd>lua require('lspsaga.diagnostic').goto_next({ severity = vim.diagnostic.severity.ERROR })<cr>",
 			"Prev Diagnostic",
@@ -240,7 +240,7 @@ local mappings = {
 		f = { "<cmd>Telescope buffers<cr>", "Find" },
 		b = { "<cmd>BufferLineCyclePrev<cr>", "Previous" },
 		n = { "<cmd>BufferLineCycleNext<cr>", "Next" },
-		-- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO: implement this for bufferline
+		-- w = { "<cmd>BufferWipeout<cr>", "Wipeout" }, -- TODO<cmd> implement this for bufferline
 		e = {
 			"<cmd>BufferLinePickClose<cr>",
 			"Pick which buffer to close",
@@ -259,6 +259,26 @@ local mappings = {
 			"Sort by language",
 		},
 	},
+
+	h = {
+		name = "Harpoon",
+    a = {"<cmd>lua require('harpoon.mark').add_file()<CR>", "Add file"},
+    m = {"<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Menu Toggle"},
+    t = {"<cmd>Telescope harpoon marks<CR>", "Telescope Marks"},
+		n = { '<cmd>lua require("harpoon.ui").nav_next()<CR>', "Next Harpoon Mark" },
+		p = { '<cmd>lua require("harpoon.ui").nav_prev()<CR>', "Prev Harpoon Mark"},
+		["1"] = { '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', "Go to file 1"},
+		["2"] = { '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', "Go to file 2" },
+		["3"] = { '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', "Go to file 3" },
+		["4"] = { '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', "Go to file 4" },
+		["5"] = { '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', "Go to file 5" },
+		["6"] = { '<cmd>lua require("harpoon.ui").nav_file(6)<CR>', "Go to file 6" },
+		["7"] = { '<cmd>lua require("harpoon.ui").nav_file(7)<CR>', "Go to file 7" },
+		["8"] = { '<cmd>lua require("harpoon.ui").nav_file(8)<CR>', "Go to file 8" },
+		["9"] = { '<cmd>lua require("harpoon.ui").nav_file(9)<CR>', "Go to file 9" },
+		["0"] = { '<cmd>lua require("harpoon.ui").nav_file(0)<CR>', "Go to file 0" },
+	},
+  -- NOTE: Maybe terminal support?
 }
 
 local vopts = {
@@ -288,8 +308,6 @@ local vmappings = {
 		V = { "<cmd>lua require('refactoring').debug.print_var({})<CR>", "Print Debug Variables" },
 	},
 	z = { "<cmd>'<,'>TZNarrow<cr>", "Toggle narrow mode" },
-
-	-- TODO: Install Refactor
 }
 
 which_key.setup(setup)

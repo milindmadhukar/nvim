@@ -50,3 +50,5 @@ spell/
 .stylua.toml
 java-debug/
 vscode-java-test/
+
+notes.md

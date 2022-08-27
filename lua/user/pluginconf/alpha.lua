@@ -8,6 +8,9 @@ local num_plugins_loaded = #vim.fn.globpath(packer_path, "*", 0, 1)
 
 local dashboard = require("alpha.themes.dashboard")
 dashboard.section.header.val = {
+  "                                        ",
+  "                                        ",
+  "                                        ",
 	"      +++++++       xxxxxxx      xxxxxxx",
 	"      +:::::+        x:::::x    x:::::x ",
 	"      +:::::+         x:::::x  x:::::x  ",
@@ -18,6 +21,9 @@ dashboard.section.header.val = {
 	"      +:::::+         x:::::x  x:::::x  ",
 	"      +:::::+        x:::::x    x:::::x ",
 	"      +++++++       xxxxxxx      xxxxxxx",
+  "                                        ",
+  "                                        ",
+  "                                        ",
 }
 
 dashboard.section.buttons.val = {

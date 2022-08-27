@@ -106,6 +106,7 @@ cmp.setup({
 				buffer = "[Buffer ]",
 				path = "[Path ]",
 				copilot = "[Copilot ]",
+        nvim_lua = "[Nvim Lua ]",
 			})[entry.source.name]
 			return vim_item
 		end,
@@ -114,6 +115,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "copilot" },
 		{ name = "luasnip" },
+		{ name = "nvim_lua" },
 		{ name = "buffer" },
 		{ name = "path" },
 		{ name = "emoji" },
