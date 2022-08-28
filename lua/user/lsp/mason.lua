@@ -20,6 +20,7 @@ local opts = {
 
 mason.setup({
 	ui = {
+    border = "rounded",
 		keymaps = {
 			toggle_package_expand = "<CR>",
 			install_package = "i",

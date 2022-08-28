@@ -14,11 +14,12 @@ require("user.pluginconf.alpha")
 require("user.pluginconf.whichkey")
 require("user.pluginconf.colorizer")
 require("user.pluginconf.lspsaga")
-require("user.pluginconf.renamer")
 require("user.pluginconf.todocomments")
 require("user.pluginconf.zenmode")
 require("user.pluginconf.copilotvim")
 require("user.pluginconf.presence")
 require("user.pluginconf.dap")
+require("user.pluginconf.harpoon")
+require("user.pluginconf.auto-session")
 
 -- require "user.pluginconf.neorg" -- TODO: I'll try it later.
