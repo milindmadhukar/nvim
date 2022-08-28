@@ -195,12 +195,13 @@ local mappings = {
 		R = { "<cmd>Telescope registers<cr>", "Registers" },
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
+    s = { "<cmd>Telescope session-lens search_session<cr>", "Sessions" },
 	},
 
 	t = {
 		name = "Trouble & Terminal",
-		t = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
-		T = { "<cmd>TodoTrouble<cr>", "Toggle Todo Trouble Menu" },
+    t = {"<cmd>ToggleTermToggleAll<CR>", "Toggle All Terminals"},
+		T = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
 		w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
 		D = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document" },
 		q = { "<cmd>TroubleToggle quickfix<cr>", "Show Quickfix(s)" },
