@@ -172,13 +172,12 @@ return packer.startup(function(use)
 		event = "BufEnter",
 	})
 
-  use({
-    "ThePrimeagen/harpoon",
+	use({
+		"ThePrimeagen/harpoon",
 		requires = {
 			{ "nvim-lua/plenary.nvim" },
 		},
-  })
-
+	})
 
 	use({
 		"windwp/nvim-ts-autotag",
@@ -209,6 +208,7 @@ return packer.startup(function(use)
 
 	use({ "github/copilot.vim", disable = true })
 	-- TODO: This is under early development, it will replace copilot.vim
+
 	use({
 		"zbirenbaum/copilot.lua",
 		event = { "VimEnter" },
@@ -219,13 +219,22 @@ return packer.startup(function(use)
 		end,
 	})
 
-	use({ 
-    "phaazon/mind.nvim",
-    config = function()
-      require("mind").setup()
-    end,
-    cmd = {"MindOpenMain", "MindOpenProject", "MindReloadState"} -- TODO: Try it out when 0.8, doesn't seem to be working yet
-  })
+	use({
+		"phaazon/mind.nvim",
+		config = function()
+			require("mind").setup()
+		end,
+		cmd = { "MindOpenMain", "MindOpenProject", "MindReloadState" }, -- TODO: Try it out when 0.8, doesn't seem to be working yet
+	})
+
+	-- Session management
+	use({
+		"rmagatti/auto-session",
+	})
+	use({
+		"rmagatti/session-lens",
+		requires = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
+	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
 	-- Put this at the end after all plugins
