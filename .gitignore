@@ -43,7 +43,7 @@ luac.out
 plugin/packer_compiled.lua
 session/
 after/
-fonts/
+# fonts/
 ftdetect/
 ftplugin/
 spell/

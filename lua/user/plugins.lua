@@ -230,10 +230,12 @@ return packer.startup(function(use)
 	-- Session management
 	use({
 		"rmagatti/auto-session",
+    disable = true,
 	})
 	use({
 		"rmagatti/session-lens",
 		requires = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
+    disable = true,
 	})
 
 	-- Automatically set up your configuration after cloning packer.nvim
