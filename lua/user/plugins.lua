@@ -206,7 +206,7 @@ return packer.startup(function(use)
 		cmd = { "Codi", "CodiNew", "CodiSelect", "CodiExpand" },
 	}) -- Interactive scratchpad
 
-	use({ "github/copilot.vim", disable = true })
+	use({ "github/copilot.vim" })
 	-- TODO: This is under early development, it will replace copilot.vim
 
 	use({
