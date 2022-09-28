@@ -79,7 +79,8 @@ local opts = {
 }
 
 local mappings = {
-	["a"] = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
+	-- ["a"] = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
+	["a"] = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
 	["e"] = { "<cmd>NvimTreeToggle<cr>", "Explorer" },
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["T"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics" },
@@ -88,14 +89,14 @@ local mappings = {
 	["/"] = { "<cmd>lua require(\"Comment.api\").locked('toggle.linewise.current')()<CR>", "Comment" },
 	["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" }, -- PE
 	["f"] = {
-		"<cmd>Telescope find_files winblend=10<cr>",
+		"<cmd>Telescope find_files<cr>",
 		"Find files",
 	},
-	["F"] = { "<cmd>Telescope live_grep theme=ivy winblend=10<cr>", "Find Text" },
+	["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
 	["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
-  ["z"] = { "<cmd>TZNarrow<cr>", "Toggle narrow mode" },
+	["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
 
 	Z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
@@ -153,7 +154,7 @@ local mappings = {
 
 	l = {
 		name = "LSP",
-		a = { "<cmd>Lspsaga code_action<CR>", "Code Action" },
+		a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
 		d = {
 			"<cmd>Telescope lsp_document_diagnostics<cr>",
 			"Document Diagnostics",
@@ -176,7 +177,8 @@ local mappings = {
 		l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
 		q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
 		--[[ r = { "<cmd>lua require('renamer').rename{empty=true,}<cr>", "Rename" }, ]]
-		r = { "<cmd>Lspsaga rename<cr>", "Rename" },
+		-- r = { "<cmd>Lspsaga rename<cr>", "Rename" },
+		r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },
 		s = { "<cmd>Telescope lsp_document_symbols<cr>", "Document Symbols" },
 		S = {
 			"<cmd>Telescope lsp_dynamic_workspace_symbols<cr>",
@@ -196,12 +198,12 @@ local mappings = {
 		R = { "<cmd>Telescope registers<cr>", "Registers" },
 		k = { "<cmd>Telescope keymaps<cr>", "Keymaps" },
 		C = { "<cmd>Telescope commands<cr>", "Commands" },
-    s = { "<cmd>Telescope session-lens search_session<cr>", "Sessions" },
+		s = { "<cmd>Telescope session-lens search_session<cr>", "Sessions" },
 	},
 
 	t = {
 		name = "Trouble & Terminal",
-    t = {"<cmd>ToggleTermToggleAll<CR>", "Toggle All Terminals"},
+		t = { "<cmd>ToggleTermToggleAll<CR>", "Toggle All Terminals" },
 		T = { "<cmd>TodoTelescope<cr>", "Toggle Todo Telescope Menu" },
 		w = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Workspace" },
 		D = { "<cmd>TroubleToggle document_diagnostics<cr>", "Document" },
@@ -264,12 +266,12 @@ local mappings = {
 
 	h = {
 		name = "Harpoon",
-    a = {"<cmd>lua require('harpoon.mark').add_file()<CR>", "Add file"},
-    m = {"<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Menu Toggle"},
-    t = {"<cmd>Telescope harpoon marks<CR>", "Telescope Marks"},
+		a = { "<cmd>lua require('harpoon.mark').add_file()<CR>", "Add file" },
+		m = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Menu Toggle" },
+		t = { "<cmd>Telescope harpoon marks<CR>", "Telescope Marks" },
 		n = { '<cmd>lua require("harpoon.ui").nav_next()<CR>', "Next Harpoon Mark" },
-		p = { '<cmd>lua require("harpoon.ui").nav_prev()<CR>', "Prev Harpoon Mark"},
-		["1"] = { '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', "Go to file 1"},
+		p = { '<cmd>lua require("harpoon.ui").nav_prev()<CR>', "Prev Harpoon Mark" },
+		["1"] = { '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', "Go to file 1" },
 		["2"] = { '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', "Go to file 2" },
 		["3"] = { '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', "Go to file 3" },
 		["4"] = { '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', "Go to file 4" },
@@ -280,7 +282,7 @@ local mappings = {
 		["9"] = { '<cmd>lua require("harpoon.ui").nav_file(9)<CR>', "Go to file 9" },
 		["0"] = { '<cmd>lua require("harpoon.ui").nav_file(0)<CR>', "Go to file 0" },
 	},
-  -- NOTE: Maybe terminal support?
+	-- NOTE: Maybe terminal support?
 }
 
 local vopts = {

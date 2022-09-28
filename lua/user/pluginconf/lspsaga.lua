@@ -9,7 +9,7 @@ saga.init_lsp_saga({
 	border_style = "rounded",
 	--the range of 0 for fully opaque window (disabled) to 100 for fully
 	--transparent background. Values between 0-30 are typically most useful.
-	saga_winblend = 5,
+	-- saga_winblend = 5,
 	-- when cursor in saga window you config these to move
 	move_in_saga = { prev = "<S-Tab>", next = "<Tab>" },
 	-- Error, Warn, Info, Hint
@@ -42,6 +42,7 @@ saga.init_lsp_saga({
 		virtual_text = true,
 	},
 	-- finder icons
+
 	finder_icons = {
 		def = "  ",
 		ref = "諭 ",

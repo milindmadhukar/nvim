@@ -43,6 +43,7 @@ local mode = {
 	separator = { left = "" },
 	right_padding = 2,
 }
+
 local filetype = {
 	"filetype",
 	icons_enabled = false,
@@ -62,7 +63,6 @@ local location = {
 	separator = { right = "" },
 	left_padding = 2,
 }
-
 -- cool function for progress
 local progress = function()
 	local current_line = vim.fn.line(".")
@@ -75,6 +75,22 @@ end
 
 local spaces = function()
 	return "spaces: " .. vim.api.nvim_buf_get_option(0, "shiftwidth")
+end
+
+local lsp_client = function()
+	local msg = "No Active Lsp"
+	local buf_ft = vim.api.nvim_buf_get_option(0, "filetype")
+	local clients = vim.lsp.get_active_clients()
+	if next(clients) == nil then
+		return msg
+	end
+	for _, client in ipairs(clients) do
+		local filetypes = client.config.filetypes
+		if filetypes and vim.fn.index(filetypes, buf_ft) ~= -1 then
+			return " " .. client.name
+		end
+	end
+	return msg
 end
 
 lualine.setup({
@@ -92,7 +108,7 @@ lualine.setup({
 		-- lualine_c = { now_playing },
 		lualine_c = { "filename" },
 		-- lualine_x = { diff }, -- , spaces}, -- , "encoding", "fileformat", filetype},
-		lualine_x = { diff, spaces, "encoding", "fileformat", filetype },
+		lualine_x = { diff, spaces, lsp_client, filetype },
 		lualine_y = { progress },
 		lualine_z = { location },
 	},

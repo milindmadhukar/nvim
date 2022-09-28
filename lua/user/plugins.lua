@@ -72,6 +72,7 @@ return packer.startup(function(use)
 	use({ "lunarvim/darkplus.nvim" })
 	use({ "Shadorain/shadotheme" })
 	use({ "LunarVim/synthwave84.nvim" })
+	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	-- cmp plugins
 	use({ "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" }) -- The completion plugin
@@ -97,6 +98,7 @@ return packer.startup(function(use)
 	use({ "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" }) -- for formatters and linters
 	use({
 		"glepnir/lspsaga.nvim",
+		disable = true,
 		branch = "main",
 		commit = "11eff5fef43c6aa4205f0fd9bc7aa84ee4c419b7",
 		cmd = { "Lspsaga" },
@@ -106,32 +108,54 @@ return packer.startup(function(use)
 		commit = "c82e6d04f27a41d7fdcad9be0bce5bb59fcb78e5",
 		event = "BufEnter",
 		-- disable = true, -- TODO: Enable when good performance
-		config = function()
-			vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
-			vim.api.nvim_set_keymap(
-				"n",
-				"<a-n>",
-				'<cmd>lua require"illuminate".next_reference{wrap=true}<cr>',
-				{ noremap = true }
-			)
-			vim.api.nvim_set_keymap(
-				"n",
-				"<a-p>",
-				'<cmd>lua require"illuminate".next_reference{reverse=true,wrap=true}<cr>',
-				{ noremap = true }
-			)
-		end,
+	})
+
+	use({
+		"kosayoda/nvim-lightbulb",
+		requires = "antoinemadec/FixCursorHold.nvim",
 	})
 
 	-- Telescope
 	use({ "nvim-telescope/telescope.nvim", commit = "d96eaa914aab6cfc4adccb34af421bdd496468b0" })
+
+	use({
+		"nvim-telescope/telescope-ui-select.nvim",
+		opt = true,
+	})
+
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
 		commit = "518e27589c0463af15463c9d675c65e464efc2fe",
 	})
 	-- Git
-	use({ "lewis6991/gitsigns.nvim" })
+	use({
+		"lewis6991/gitsigns.nvim",
+		opt = true,
+		setup = function()
+			vim.api.nvim_create_autocmd({ "BufAdd", "VimEnter" }, {
+				callback = function()
+					local function onexit(code, _)
+						if code == 0 then
+							vim.schedule(function()
+								require("packer").loader("gitsigns.nvim")
+							end)
+						end
+					end
+					local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+					if lines ~= { "" } then
+						vim.loop.spawn("git", {
+							args = {
+								"ls-files",
+								"--error-unmatch",
+								vim.fn.expand("%"),
+							},
+						}, onexit)
+					end
+				end,
+			})
+		end,
+	})
 	use({ "tpope/vim-fugitive" })
 
 	-- DAP
@@ -151,6 +175,7 @@ return packer.startup(function(use)
 	})
 
 	-- Misc
+	use({ "stevearc/dressing.nvim" })
 	use({ "norcalli/nvim-colorizer.lua" })
 	use("folke/todo-comments.nvim") -- NOTE: Not actively maintained
 	use({
@@ -230,12 +255,12 @@ return packer.startup(function(use)
 	-- Session management
 	use({
 		"rmagatti/auto-session",
-    disable = true,
+		disable = true,
 	})
 	use({
 		"rmagatti/session-lens",
 		requires = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
-    disable = true,
+		disable = true,
 	})
 
 	-- Automatically set up your configuration after cloning packer.nvim

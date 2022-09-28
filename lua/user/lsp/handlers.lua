@@ -64,17 +64,17 @@ local function lsp_keymaps(bufnr)
 	local keymap = vim.api.nvim_buf_set_keymap
 	--[[ keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts) ]]
 	keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-	--[[ keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts) ]]
-	--[[ keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) ]]
-	--[[ keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts) ]]
-	--[[ keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts) ]]
+	keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+	keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+	keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+	keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
 	-- LspSaga
-	keymap(bufnr, "n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
-	--[[ keymap(bufnr, "n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts) ]]
-	keymap(bufnr, "n", "gl", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
-	keymap(bufnr, "n", "gr", "<cmd>Lspsaga lsp_finder<CR>", opts)
-	keymap(bufnr, "n", "gs", "<cmd>Lspsaga signature_help<CR>", opts)
+	-- keymap(bufnr, "n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
+	-- keymap(bufnr, "n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts
+	-- keymap(bufnr, "n", "gl", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
+	-- keymap(bufnr, "n", "gr", "<cmd>Lspsaga lsp_finder<CR>", opts)
+	-- keymap(bufnr, "n", "gs", "<cmd>Lspsaga signature_help<CR>", opts)
 end
 
 M.on_attach = function(client, bufnr)
