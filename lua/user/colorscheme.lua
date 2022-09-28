@@ -1,9 +1,29 @@
-local colorscheme = "tokyonight"
+local colorscheme = "catppuccin"
+-- local colorscheme = "tokyonight"
+
+local is_transparent = true
+
+if colorscheme == "catppuccin" then
+	vim.g.catppuccin_flavour = "mocha" --latte, frappe, macchiato, mocha
+	require("catppuccin").setup()
+	is_transparent = false
+end
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
 	return
 end
+
+local lualine_status_ok, lualine = pcall(require, "lualine")
+if not lualine_status_ok then
+	return
+end
+
+lualine.setup({
+	options = {
+		theme = colorscheme,
+	},
+})
 
 vim.cmd("let &fcs='eob: '")
 
@@ -13,7 +33,7 @@ if not transparent_status_ok then
 end
 
 transparent.setup({
-	enable = true,
+	enable = is_transparent,
 	extra_groups = {
 		"MsgArea",
 		"NvimTreeNormal",
@@ -28,10 +48,8 @@ transparent.setup({
 		"Directory",
 		"Debug",
 		"NonText",
-		"LspSagaFinderSelection",
 		"LspFloatWinNormal",
 		"LspFloatWinBorder",
-		"LspSagaBorderTitle",
 		"TargetWord",
 		"ReferencesCount",
 		"DefinitionCount",
@@ -39,33 +57,39 @@ transparent.setup({
 		"DefinitionIcon",
 		"ReferencesIcon",
 		"ProviderTruncateLine",
-		"SagaShadow",
-		"LspSagaFinderSelection",
 		"DiagnosticTruncateLine",
 		"DiagnosticError",
 		"DiagnosticWarning",
 		"DiagnosticInformation",
 		"DiagnosticHint",
 		"DefinitionPreviewTitle",
-		"LspSagaShTruncateLine",
-		"LspSagaDocTruncateLine",
 		"LineDiagTuncateLine",
-		"LspSagaCodeActionTitle",
-		"LspSagaCodeActionTruncateLine",
-		"LspSagaCodeActionContent",
-		"LspSagaRenamePromptPrefix",
-    -- "TelescopeNormal",
-    -- "TelescopeBorder",
-		"LspSagaRenameBorder",
-		"LspSagaHoverBorder",
-		"LspSagaSignatureHelpBorder",
-		"LspSagaCodeActionBorder",
-		"LspSagaAutoPreview",
-		"LspSagaDefPreviewBorder",
 		"LspLinesDiagBorder",
 		"Normal",
 		"SignColumn",
 		"NormalNC",
+		"TelescopeNormal",
+		"TelescopeNormalNC",
+		"TelescopeBorder",
+		"TelescopeBorderNC",
+		"TelescopePromptBorder",
+		"WinSeparator",
+		-- "LspSagaFinderSelection",
+		-- "LspSagaBorderTitle",
+		-- "SagaShadow",
+		-- "LspSagaFinderSelection",
+		-- "LspSagaShTruncateLine",
+		-- "LspSagaDocTruncateLine",
+		-- "LspSagaCodeActionTitle",
+		-- "LspSagaCodeActionTruncateLine",
+		-- "LspSagaCodeActionContent",
+		-- "LspSagaRenamePromptPrefix",
+		-- "LspSagaRenameBorder",
+		-- "LspSagaHoverBorder",
+		-- "LspSagaSignatureHelpBorder",
+		-- "LspSagaCodeActionBorder",
+		-- "LspSagaAutoPreview",
+		-- "LspSagaDefPreviewBorder",
 	},
 	exclude = {},
 })

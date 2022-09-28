@@ -128,3 +128,12 @@ telescope.setup({
 		-- please take a look at the readme of the extension you want to configure
 	},
 })
+
+vim.ui.select = function(items, opts, on_choice)
+	vim.cmd([[
+                PackerLoad telescope.nvim
+                PackerLoad telescope-ui-select.nvim
+            ]])
+	telescope.load_extension("ui-select")
+	vim.ui.select(items, opts, on_choice)
+end
