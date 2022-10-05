@@ -36,6 +36,9 @@ packer.init({
 			return require("packer.util").float({ border = "rounded" })
 		end,
 	},
+	git = {
+		clone_timeout = 300,
+	},
 })
 -- Install your plugins here
 return packer.startup(function(use)
@@ -51,7 +54,7 @@ return packer.startup(function(use)
 		event = "BufReadPost",
 	})
 	use({ "kyazdani42/nvim-web-devicons", commit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e" })
-	use({ "kyazdani42/nvim-tree.lua", commit = "bdb6d4a25410da35bbf7ce0dbdaa8d60432bc243" })
+	use({ "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c" })
 	use({ "akinsho/bufferline.nvim", commit = "c78b3ecf9539a719828bca82fc7ddb9b3ba0c353" })
 	use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
 	use({ "nvim-lualine/lualine.nvim", commit = "3362b28f917acc37538b1047f187ff1b5645ecdd" })
@@ -126,7 +129,7 @@ return packer.startup(function(use)
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
-		commit = "518e27589c0463af15463c9d675c65e464efc2fe",
+		-- commit = "518e27589c0463af15463c9d675c65e464efc2fe",
 	})
 	-- Git
 	use({
@@ -246,6 +249,8 @@ return packer.startup(function(use)
 
 	use({
 		"phaazon/mind.nvim",
+    branch = 'v2.2',
+  requires = { 'nvim-lua/plenary.nvim' },
 		config = function()
 			require("mind").setup()
 		end,

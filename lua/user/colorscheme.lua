@@ -1,11 +1,17 @@
-local colorscheme = "catppuccin"
--- local colorscheme = "tokyonight"
+-- local colorscheme = "catppuccin"
+local colorscheme = "tokyonight"
+-- local colorscheme = "templeos"
 
 local is_transparent = true
 
 if colorscheme == "catppuccin" then
 	vim.g.catppuccin_flavour = "mocha" --latte, frappe, macchiato, mocha
-	require("catppuccin").setup()
+	local catppuccin_status_ok, catppuccin = pcall (require, "catppuccin")
+  if not catppuccin_status_ok then
+    print("Catpucchin is not installed, can't set colorscheme")
+    return
+  end
+  catppuccin.setup()
 	is_transparent = false
 end
 
