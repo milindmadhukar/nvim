@@ -1,3 +1,14 @@
+local servers = {
+	"sumneko_lua",
+	"cssls",
+	"html",
+	"tsserver",
+	"pyright",
+	"bashls",
+	"jsonls",
+	"yamlls",
+}
+
 local status_ok, mason = pcall(require, "mason")
 if not status_ok then
 	return
@@ -8,19 +19,19 @@ if not mason_lsp_ok then
 	return
 end
 
+mason_lsp_config.setup({
+	ensure_installed = servers,
+	automatic_installation = true,
+})
+
 local handlers_ok, lsp_handlers = pcall(require, "user.lsp.handlers")
 if not handlers_ok then
 	return
 end
 
-local opts = {
-	on_attach = lsp_handlers.on_attach,
-	capabilities = lsp_handlers.capabilities,
-}
-
 mason.setup({
 	ui = {
-    border = "rounded",
+		border = "rounded",
 		keymaps = {
 			toggle_package_expand = "<CR>",
 			install_package = "i",
@@ -46,24 +57,25 @@ mason.setup({
 	},
 })
 
-mason_lsp_config.setup_handlers({
-	-- Automatically invoke lspconfig setup for every installed LSP server
-	function(server_name)
-		require("lspconfig")[server_name].setup(opts)
-	end,
+local lspconfig_status_ok, lspconfig = pcall(require, "lspconfig")
+if not lspconfig_status_ok then
+	return
+end
 
-	sumneko_lua = function()
-		local lua_opts = vim.tbl_deep_extend("force", require("user.lsp.settings.sumneko_lua"), opts)
-		require("lspconfig").sumneko_lua.setup(lua_opts)
-	end,
+local opts = {}
 
-	jsonls = function()
-		local json_opts = vim.tbl_deep_extend("force", require("user.lsp.settings.jsonls"), opts)
-		require("lspconfig").jsonls.setup(json_opts)
-	end,
+for _, server in pairs(servers) do
+	opts = {
+		on_attach = lsp_handlers.on_attach,
+		capabilities = lsp_handlers.capabilities,
+	}
 
-  pyright = function()
-    local pyright_opts = vim.tbl_deep_extend("force", require("user.lsp.settings.pyright"), opts)
-    require("lspconfig").pyright.setup(pyright_opts)
-  end,
-})
+	server = vim.split(server, "@")[1]
+
+	local require_ok, conf_opts = pcall(require, "user.lsp.settings." .. server)
+	if require_ok then
+		opts = vim.tbl_deep_extend("force", conf_opts, opts)
+	end
+
+	lspconfig[server].setup(opts)
+end

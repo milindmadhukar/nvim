@@ -44,29 +44,29 @@ packer.init({
 return packer.startup(function(use)
 	-- My plugins here
 
-	use({ "wbthomason/packer.nvim", commit = "00ec5adef58c5ff9a07f11f45903b9dbbaa1b422" }) -- Have packer manage itself
-	use({ "nvim-lua/plenary.nvim", commit = "968a4b9afec0c633bc369662e78f8c5db0eba249" }) -- Useful lua functions used by lots of plugins
-	use({ "windwp/nvim-autopairs", commit = "fa6876f832ea1b71801c4e481d8feca9a36215ec" }) -- Autopairs, integrates with both cmp and treesitter
-	use({ "numToStr/Comment.nvim", commit = "ae8c440fe98c65f3a941d6fc6de75538c5c1ecde", event = "BufRead" })
+	use({ "wbthomason/packer.nvim", commit = "6afb67460283f0e990d35d229fd38fdc04063e0a" }) -- Have packer manage itself
+	use({ "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }) -- Useful lua functions used by lots of plugins
+	use({ "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }) -- Autopairs, integrates with both cmp and treesitter
+	use({ "numToStr/Comment.nvim", commit = "97a188a98b5a3a6f9b1b850799ac078faa17ab67", event = "BufRead" })
 	use({
 		"JoosepAlviste/nvim-ts-context-commentstring",
-		commit = "88343753dbe81c227a1c1fd2c8d764afb8d36269",
+		commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08",
 		event = "BufReadPost",
 	})
-	use({ "kyazdani42/nvim-web-devicons", commit = "8d2c5337f0a2d0a17de8e751876eeb192b32310e" })
+	use({ "kyazdani42/nvim-web-devicons", commit = "563f3635c2d8a7be7933b9e547f7c178ba0d4352" })
 	use({ "kyazdani42/nvim-tree.lua", commit = "7282f7de8aedf861fe0162a559fc2b214383c51c" })
-	use({ "akinsho/bufferline.nvim", commit = "c78b3ecf9539a719828bca82fc7ddb9b3ba0c353" })
+	use({ "akinsho/bufferline.nvim", commit = "83bf4dc7bff642e145c8b4547aa596803a8b4dc4" })
 	use({ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" })
-	use({ "nvim-lualine/lualine.nvim", commit = "3362b28f917acc37538b1047f187ff1b5645ecdd" })
-	use({ "akinsho/toggleterm.nvim", tag = "v2.*" })
-	use({ "ahmedkhalf/project.nvim", commit = "541115e762764bc44d7d3bf501b6e367842d3d4f" })
-	use({ "lewis6991/impatient.nvim", commit = "969f2c5c90457612c09cf2a13fee1adaa986d350" })
+	use({ "nvim-lualine/lualine.nvim", commit = "a52f078026b27694d2290e34efa61a6e4a690621" })
+	use({ "akinsho/toggleterm.nvim", commit = "2a787c426ef00cb3488c11b14f5dcf892bbd0bda" })
+	use({ "ahmedkhalf/project.nvim", commit = "628de7e433dd503e782831fe150bb750e56e55d6" })
+	use({ "lewis6991/impatient.nvim", commit = "b842e16ecc1a700f62adb9802f8355b99b52a5a6" })
 	use({
 		"lukas-reineke/indent-blankline.nvim",
-		commit = "6177a59552e35dfb69e1493fd68194e673dc3ee2",
+		commit = "db7cbcb40cc00fc5d6074d7569fb37197705e7f6",
 		event = "BufEnter",
 	})
-	use({ "goolord/alpha-nvim", commit = "ef27a59e5b4d7b1c2fe1950da3fe5b1c5f3b4c94" })
+	use({ "goolord/alpha-nvim", commit = "0bb6fc0646bcd1cdb4639737a1cee8d6e08bcc31" })
 	use({ "folke/which-key.nvim" })
 
 	-- Colorschemes
@@ -78,9 +78,9 @@ return packer.startup(function(use)
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
 	-- cmp plugins
-	use({ "hrsh7th/nvim-cmp", commit = "df6734aa018d6feb4d76ba6bda94b1aeac2b378a" }) -- The completion plugin
-	use({ "hrsh7th/cmp-buffer", commit = "62fc67a2b0205136bc3e312664624ba2ab4a9323" }) -- buffer completions
-	use({ "hrsh7th/cmp-path", commit = "466b6b8270f7ba89abd59f402c73f63c7331ff6e" }) -- path completions
+	use({ "hrsh7th/nvim-cmp", commit = "b0dff0ec4f2748626aae13f011d1a47071fe9abc" }) -- The completion plugin
+	use({ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }) -- buffer completions
+	use({ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }) -- path completions
 	use({ "saadparwaiz1/cmp_luasnip", commit = "a9de941bcbda508d0a45d28ae366bb3f08db2e36" }) -- snippet completions
 	use({ "hrsh7th/cmp-nvim-lsp", commit = "affe808a5c56b71630f17aa7c38e15c59fd648a8" })
 	use({ "hrsh7th/cmp-nvim-lua", commit = "d276254e7198ab7d00f117e88e223b4bd8c02d21" })
@@ -95,20 +95,13 @@ return packer.startup(function(use)
 	use({ "rafamadriz/friendly-snippets" }) -- a bunch of snippets to use
 
 	-- LSP
-	use({ "neovim/nvim-lspconfig", commit = "148c99bd09b44cf3605151a06869f6b4d4c24455" }) -- enable LSP
-	use({ "williamboman/mason.nvim" }) -- LSP/DAP/Format/Lint manager
-	use({ "williamboman/mason-lspconfig.nvim" })
-	use({ "jose-elias-alvarez/null-ls.nvim", commit = "ff40739e5be6581899b43385997e39eecdbf9465" }) -- for formatters and linters
-	use({
-		"glepnir/lspsaga.nvim",
-		disable = true,
-		branch = "main",
-		commit = "11eff5fef43c6aa4205f0fd9bc7aa84ee4c419b7",
-		cmd = { "Lspsaga" },
-	})
+	use({ "neovim/nvim-lspconfig", commit = "f11fdff7e8b5b415e5ef1837bdcdd37ea6764dda" }) -- enable LSP
+	use({ "williamboman/mason.nvim", commit = "c2002d7a6b5a72ba02388548cfaf420b864fbc12" }) -- LSP/DAP/Format/Lint manager
+	use({ "williamboman/mason-lspconfig.nvim", commit = "0051870dd728f4988110a1b2d47f4a4510213e31" })
+	use({ "jose-elias-alvarez/null-ls.nvim", commit = "c0c19f32b614b3921e17886c541c13a72748d450" }) -- for formatters and linters
 	use({
 		"RRethy/vim-illuminate",
-		commit = "c82e6d04f27a41d7fdcad9be0bce5bb59fcb78e5",
+		commit = "a2e8476af3f3e993bb0d6477438aad3096512e42",
 		event = "BufEnter",
 		-- disable = true, -- TODO: Enable when good performance
 	})
@@ -118,8 +111,16 @@ return packer.startup(function(use)
 		requires = "antoinemadec/FixCursorHold.nvim",
 	})
 
+	use({
+		"glepnir/lspsaga.nvim",
+		disable = true,
+		branch = "main",
+		commit = "11eff5fef43c6aa4205f0fd9bc7aa84ee4c419b7",
+		cmd = { "Lspsaga" },
+	})
+
 	-- Telescope
-	use({ "nvim-telescope/telescope.nvim", commit = "d96eaa914aab6cfc4adccb34af421bdd496468b0" })
+	use({ "nvim-telescope/telescope.nvim", commit = "76ea9a898d3307244dce3573392dcf2cc38f340f" })
 
 	use({
 		"nvim-telescope/telescope-ui-select.nvim",
@@ -129,11 +130,12 @@ return packer.startup(function(use)
 	-- Treesitter
 	use({
 		"nvim-treesitter/nvim-treesitter",
-		-- commit = "518e27589c0463af15463c9d675c65e464efc2fe",
+		commit = "8e763332b7bf7b3a426fd8707b7f5aa85823a5ac",
 	})
 	-- Git
 	use({
 		"lewis6991/gitsigns.nvim",
+		commit = "f98c85e7c3d65a51f45863a34feb4849c82f240f",
 		opt = true,
 		setup = function()
 			vim.api.nvim_create_autocmd({ "BufAdd", "VimEnter" }, {
@@ -145,6 +147,7 @@ return packer.startup(function(use)
 							end)
 						end
 					end
+
 					local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
 					if lines ~= { "" } then
 						vim.loop.spawn("git", {
@@ -249,8 +252,8 @@ return packer.startup(function(use)
 
 	use({
 		"phaazon/mind.nvim",
-    branch = 'v2.2',
-  requires = { 'nvim-lua/plenary.nvim' },
+		branch = "v2.2",
+		requires = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("mind").setup()
 		end,
