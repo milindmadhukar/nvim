@@ -9,8 +9,8 @@ local servers = {
 	"yamlls",
 }
 
-local status_ok, mason = pcall(require, "mason")
-if not status_ok then
+local mason_status_ok, mason = pcall(require, "mason")
+if not mason_status_ok then
 	return
 end
 
@@ -79,3 +79,4 @@ for _, server in pairs(servers) do
 
 	lspconfig[server].setup(opts)
 end
+

@@ -1,7 +1,7 @@
 -- local colorscheme = "catppuccin"
 local colorscheme = "tokyonight-moon"
--- local colorscheme = "templeos"
 
+local lualine_theme = colorscheme
 local is_transparent = true
 
 if colorscheme == "catppuccin" then
@@ -15,6 +15,13 @@ if colorscheme == "catppuccin" then
 	is_transparent = false
 end
 
+
+-- Check if a string starts with "tokyonight"
+if colorscheme:sub(1, 10) == "tokyonight" then
+  lualine_theme = "tokyonight"
+end
+
+
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
 	return
@@ -27,7 +34,7 @@ end
 
 lualine.setup({
 	options = {
-		theme = colorscheme,
+		theme = lualine_theme,
 	},
 })
 

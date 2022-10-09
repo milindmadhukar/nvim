@@ -98,7 +98,6 @@ lualine.setup({
 		component_separators = "|",
 		section_separators = { left = "", right = "" },
 		icons_enabled = true,
-		theme = "tokyonight",
 		disabled_filetypes = { "alpha", "dashboard", "Outline" },
 		always_divide_middle = true,
 	},

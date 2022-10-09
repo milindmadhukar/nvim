@@ -10,7 +10,7 @@ All of the included plugins are pinned to a version that ensures they are compat
 
 The config has a very simple structure that makes it easy to add new plugins, very easy to use for beginners
 
-## Install Neovim 0.7
+## Install Neovim 0.8
 
 You can install Neovim with your package manager e.g. brew, apt, pacman etc.. but remember that when you update your packages Neovim may be upgraded to a newer version.
 
@@ -19,7 +19,7 @@ If you would like to make sure Neovim only updates when you want it to than I re
 ```sh
 git clone https://github.com/neovim/neovim.git
 cd neovim
-git checkout release-0.7
+git checkout release-0.8
 make CMAKE_BUILD_TYPE=Release
 sudo make install
 ```
@@ -104,8 +104,11 @@ First Enter:
 ```
 Mason
 ```
-
 and press `i` on the Language Server you wish to install
+
+or
+
+Add the server name to the `servers` in the mason config file: [mason](https://github.com/milindmadhukar/nvim/blob/master/lua/user/lsp/mason.lua)
 
 ### Formatters and linters
 
