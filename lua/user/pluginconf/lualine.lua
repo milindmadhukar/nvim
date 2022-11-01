@@ -104,7 +104,6 @@ lualine.setup({
 	sections = {
 		lualine_a = { mode },
 		lualine_b = { branch, diagnostics },
-		-- lualine_c = { now_playing },
 		lualine_c = { "filename" },
 		-- lualine_x = { diff }, -- , spaces}, -- , "encoding", "fileformat", filetype},
 		lualine_x = { diff, spaces, lsp_client, filetype },

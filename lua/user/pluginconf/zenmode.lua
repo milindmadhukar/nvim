@@ -1,6 +1,7 @@
 local status_ok, truezen = pcall(require, "true-zen")
 if not status_ok then
-	return
+  vim.notify("TrueZen not found", "error")
+  return
 end
 
 truezen.setup({

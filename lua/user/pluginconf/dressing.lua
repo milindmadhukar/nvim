@@ -1,5 +1,6 @@
 local status_ok, dressing = pcall(require, "dressing")
 if not status_ok then
+  vim.notify("Dressing not found", "error")
 	return
 end
 

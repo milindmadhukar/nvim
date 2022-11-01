@@ -1,5 +1,6 @@
 local status_ok, presence = pcall(require, "presence")
 if not status_ok then
+  vim.notify("Presence not found", "error")
 	return
 end
 

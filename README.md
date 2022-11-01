@@ -104,6 +104,7 @@ First Enter:
 ```
 Mason
 ```
+
 and press `i` on the Language Server you wish to install
 
 or

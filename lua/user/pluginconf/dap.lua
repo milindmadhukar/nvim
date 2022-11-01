@@ -1,10 +1,12 @@
 local dap_status_ok, dap = pcall(require, "dap")
 if not dap_status_ok then
+  vim.notify("DAP not found", "error")
 	return
 end
 
 local dap_ui_status_ok, dap_ui = pcall(require, "dapui")
 if not dap_ui_status_ok then
+  vim.notify("DAP UI not found", "error")
 	return
 end
 
@@ -131,12 +133,22 @@ dap.configurations.cpp = {
 
 local dap_go_status_ok, dap_go = pcall(require, "dap-go")
 if not dap_go_status_ok then
+  vim.notify("DAP Go not found", "error")
 	return
 end
 
 dap_go.setup()
 
-vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" })
+
+local dap_python_status_ok, dap_python = pcall(require, "dap-python")
+if not dap_python_status_ok then
+  vim.notify("DAP Python not found", "error")
+  return
+end
+
+dap_python.setup("/home/milind/.local/share/nvim/mason/packages/debugpy/venv/bin/python")
+
+vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" }) -- NOTE: Doesn't work, idk why
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
 	dap_ui.open()
