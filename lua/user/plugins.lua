@@ -47,7 +47,7 @@ return packer.startup(function(use)
   use({ "wbthomason/packer.nvim", commit = "6afb67460283f0e990d35d229fd38fdc04063e0a" }) -- Have packer manage itself
   use({ "nvim-lua/plenary.nvim", commit = "4b7e52044bbb84242158d977a50c4cbcd85070c7" }) -- Useful lua functions used by lots of plugins
   use({ "windwp/nvim-autopairs", commit = "4fc96c8f3df89b6d23e5092d31c866c53a346347" }) -- Autopairs, integrates with both cmp and treesitter
-  use({ "numToStr/Comment.nvim", commit = "97a188a98b5a3a6f9b1b850799ac078faa17ab67", event = "BufRead" })
+  use({ "numToStr/Comment.nvim", commit = "97a188a98b5a3a6f9b1b850799ac078faa17ab67" })
   use({
     "JoosepAlviste/nvim-ts-context-commentstring",
     commit = "4d3a68c41a53add8804f471fcc49bb398fe8de08",
@@ -139,31 +139,7 @@ return packer.startup(function(use)
   use({
     "lewis6991/gitsigns.nvim",
     commit = "f98c85e7c3d65a51f45863a34feb4849c82f240f",
-    opt = true,
-    setup = function()
-      vim.api.nvim_create_autocmd({ "BufAdd", "VimEnter" }, {
-        callback = function()
-          local function onexit(code, _)
-            if code == 0 then
-              vim.schedule(function()
-                require("packer").loader("gitsigns.nvim")
-              end)
-            end
-          end
-
-          local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-          if lines ~= { "" } then
-            vim.loop.spawn("git", {
-              args = {
-                "ls-files",
-                "--error-unmatch",
-                vim.fn.expand("%"),
-              },
-            }, onexit)
-          end
-        end,
-      })
-    end,
+    -- opt = true,
   })
   use({ "tpope/vim-fugitive" })
 
@@ -184,7 +160,7 @@ return packer.startup(function(use)
   })
   use({
     "mfussenegger/nvim-dap-python",
-    -- ft = { "python" },
+    ft = { "python" },
     -- event = "BufEnter",
   })
 
