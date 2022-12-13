@@ -140,28 +140,43 @@ return packer.startup(function(use)
     commit = "f98c85e7c3d65a51f45863a34feb4849c82f240f",
     -- opt = true,
   })
-  use({ "tpope/vim-fugitive" })
+  use({
+    "tpope/vim-fugitive",
+    cmd = "Git",
+  })
 
   -- DAP
+
   use({
     "mfussenegger/nvim-dap",
     commit = "014ebd53612cfd42ac8c131e6cec7c194572f21d",
-    -- event = "BufEnter",
+    event = "BufEnter",
+    config = function()
+      require("user.pluginconf.dap")
+    end
+  })
+
+  use({
+    "mfussenegger/nvim-dap",
+    commit = "014ebd53612cfd42ac8c131e6cec7c194572f21d",
+    event = "BufEnter",
+    config = function()
+      require("user.pluginconf.dap")
+    end
   })
   use({
     "rcarriga/nvim-dap-ui",
     commit = "d76d6594374fb54abf2d94d6a320f3fd6e9bb2f7",
-    -- event = "BufEnter",
   })
+
   use({
     "leoluz/nvim-dap-go",
-    -- ft = { "go" },
   })
+
   use({
     "mfussenegger/nvim-dap-python",
-    ft = { "python" },
-    -- event = "BufEnter",
   })
+
 
   -- Misc
   use({ "stevearc/dressing.nvim" })
@@ -174,6 +189,9 @@ return packer.startup(function(use)
   use({
     "Pocco81/true-zen.nvim",
     cmd = { "TZFocus", "TZNarrow", "TZAtaraxis", "TZMinimalist" },
+    config = function()
+      require("user.pluginconf.zenmode")
+    end
   })
   -- use("folke/zen-mode.nvim")
   use({
@@ -251,12 +269,13 @@ return packer.startup(function(use)
   -- Session management
   use({
     "rmagatti/auto-session",
-    disable = true,
+    config=function()
+      require("user.pluginconf.auto-session")
+    end
   })
   use({
     "rmagatti/session-lens",
     requires = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
-    disable = true,
   })
 
   -- use {
