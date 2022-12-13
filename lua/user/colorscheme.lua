@@ -1,5 +1,5 @@
--- local colorscheme = "catppuccin"
-local colorscheme = "tokyonight-moon"
+local colorscheme = "catppuccin"
+-- local colorscheme = "tokyonight-moon"
 
 local lualine_theme = colorscheme
 local is_transparent = true

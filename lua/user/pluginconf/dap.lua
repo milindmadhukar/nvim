@@ -103,7 +103,7 @@ dap.configurations.go = {
 dap.adapters.cppdbg = {
 	id = "cppdbg",
 	type = "executable",
-	command = "/home/milind/.vscode/extensions/ms-vscode.cpptools-1.11.5-linux-x64/debugAdapters/bin/OpenDebugAD7", -- NOTE: Download cpptools extension from microsoft and paste path.
+	command = "~/.local/share/nvim/mason/bin/OpenDebugAD7", -- NOTE: Download cpptools extension from microsoft and paste path.
 }
 
 dap.configurations.cpp = {
@@ -130,6 +130,8 @@ dap.configurations.cpp = {
 		end,
 	},
 }
+
+dap.configurations.c = dap.configurations.cpp
 
 local dap_go_status_ok, dap_go = pcall(require, "dap-go")
 if not dap_go_status_ok then

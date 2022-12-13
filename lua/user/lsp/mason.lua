@@ -7,6 +7,7 @@ local servers = {
 	"bashls",
 	"jsonls",
 	"yamlls",
+  "clangd",
 }
 
 local mason_status_ok, mason = pcall(require, "mason")

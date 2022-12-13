@@ -1,6 +1,6 @@
 -- Set wrap and spell in markdown and gitcommit
 vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = { "markdown" },
+	pattern = { "markdown", "gitcommit" },
 	callback = function()
 		vim.opt_local.wrap = true
 		vim.opt_local.spell = true
@@ -29,22 +29,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "FileType" }, {
-	pattern = { "gitcommit" },
-	callback = function()
-		vim.opt_local.wrap = true
-		vim.opt_local.spell = true
-	end,
-})
-
-vim.cmd("autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif")
-
--- Fixes Autocomment
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
-	callback = function()
-		vim.cmd("set formatoptions-=cro")
-	end,
-})
+vim.cmd("autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif")auto
 
 -- Highlight Yanked Text
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
@@ -75,5 +60,16 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 vim.api.nvim_create_autocmd({ "VimEnter" }, {
 	callback = function()
 		vim.cmd("hi link illuminatedWord LspReferenceText")
+	end,
+})
+
+-- Disable illuminate when file too big
+vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
+	callback = function()
+	local line_count = vim.api.nvim_buf_line_count(0)
+		if line_count >= 5000 then
+      -- TODO: Maybe turn off highlighting too
+			vim.cmd("IlluminatePauseBuf")
+		end
 	end,
 })

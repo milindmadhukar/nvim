@@ -103,7 +103,6 @@ return packer.startup(function(use)
     "RRethy/vim-illuminate",
     commit = "a2e8476af3f3e993bb0d6477438aad3096512e42",
     event = "BufEnter",
-    -- disable = true, -- TODO: Enable when good performance
   })
 
   use({
@@ -242,6 +241,11 @@ return packer.startup(function(use)
       require("mind").setup()
     end,
     cmd = { "MindOpenMain", "MindOpenProject", "MindReloadState" }, -- TODO: Try it out when 0.8, doesn't seem to be working yet
+  })
+
+  use({
+    "ThePrimeagen/vim-be-good",
+    cmd="VimBeGood"
   })
 
   -- Session management

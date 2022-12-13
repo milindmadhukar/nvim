@@ -26,7 +26,7 @@ local options = {
 	tabstop = 2, -- insert 2 spaces for a tab
 	cursorline = true, -- highlight the current line
 	number = true, -- set numbered lines
-	relativenumber = false, -- set relative numbered lines
+	relativenumber = true, -- set relative numbered lines
 	numberwidth = 4, -- set number column width to 2 {default 4}
 	signcolumn = "yes", -- always show the sign column, otherwise it would shift the text each time
 	wrap = true, -- display lines as one long line
@@ -38,6 +38,7 @@ local options = {
 	hidden = true, -- required to keep multiple buffers and open multiple buffers
 	title = true, -- set the title of window to the value of the titlestring
 	titlestring = "Neovim", -- what the title of the window will be set to
+  linebreak = true,
 }
 
 vim.opt.fillchars.eob = " "

@@ -5,7 +5,8 @@ if not status_ok then
 end
 
 configs.setup({
-	ensure_installed = "all", -- one of "all" or a list of languages
+	-- ensure_installed = "all", -- one of "all" or a list of languages
+  ensure_installed = { "help", "javascript", "typescript", "go", "python", "c", "cpp", "dockerfile", "rust", "lua", "cmake", "markdown", "bash", "html", "css"},
 	ignore_install = { "" }, -- List of parsers to ignore installing
 	sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)
 	highlight = {

@@ -136,6 +136,7 @@ local mappings = {
   g = {
     name = "Git",
     g = { "<cmd>lua _LAZYGIT_TOGGLE()<CR>", "Lazygit" },
+    G = { "<cmd>Git<CR>", "Fugititve Git" },
     j = { "<cmd>lua require 'gitsigns'.next_hunk()<cr>", "Next Hunk" },
     k = { "<cmd>lua require 'gitsigns'.prev_hunk()<cr>", "Prev Hunk" },
     l = { "<cmd>lua require 'gitsigns'.blame_line()<cr>", "Blame" },
@@ -169,11 +170,11 @@ local mappings = {
     name = "LSP",
     a = { "<cmd>lua vim.lsp.buf.code_action()<CR>", "Code Action" },
     d = {
-      "<cmd>Telescope lsp_document_diagnostics<cr>",
+      "<cmd>Telescope diagnostics bufnr=0<cr>",
       "Document Diagnostics",
     },
     w = {
-      "<cmd>Telescope lsp_workspace_diagnostics<cr>",
+      "<cmd>Telescope diagnostics<cr>",
       "Workspace Diagnostics",
     },
     f = { "<cmd>lua vim.lsp.buf.format({ async = true })<cr>", "Format" },
@@ -188,7 +189,7 @@ local mappings = {
       "Previous Diagnostic",
     },
     l = { "<cmd>lua vim.lsp.codelens.run()<cr>", "CodeLens Action" },
-    q = { "<cmd>lua vim.lsp.diagnostic.set_loclist()<cr>", "Quickfix" },
+    q = { "<cmd>lua vim.diagnostic.setloclist()<cr>", "Quickfix" },
     --[[ r = { "<cmd>lua require('renamer').rename{empty=true,}<cr>", "Rename" }, ]]
     -- r = { "<cmd>Lspsaga rename<cr>", "Rename" },
     r = { "<cmd>lua vim.lsp.buf.rename()<cr>", "Rename" },

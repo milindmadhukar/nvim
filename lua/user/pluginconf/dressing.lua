@@ -4,6 +4,8 @@ if not status_ok then
 	return
 end
 
+-- TODO: Replace this config with the readme sometime
+
 dressing.setup({
 	input = {
 		-- Set to false to disable the vim.ui.input implementation
@@ -38,7 +40,7 @@ dressing.setup({
 		-- Window transparency (0-100)
 		-- winblend = 10,
 		-- Change default highlight groups (see :help winhl)
-		winhighlight = "",
+		-- winhighlight = "",
 
 		-- Set to `false` to disable
 		mappings = {
@@ -127,7 +129,6 @@ dressing.setup({
 			-- Window transparency (0-100)
 			-- winblend = 10,
 			-- Change default highlight groups (see :help winhl)
-			winhighlight = "",
 
 			-- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)
 			-- the min_ and max_ options can be a list of mixed types.
