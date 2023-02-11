@@ -1,5 +1,5 @@
-local colorscheme = "catppuccin"
--- local colorscheme = "tokyonight-moon"
+-- local colorscheme = "catppuccin"
+local colorscheme = "tokyonight-moon"
 
 local lualine_theme = colorscheme
 local is_transparent = true
@@ -15,12 +15,10 @@ if colorscheme == "catppuccin" then
   is_transparent = false
 end
 
-
 -- Check if a string starts with "tokyonight"
 if colorscheme:sub(1, 10) == "tokyonight" then
   lualine_theme = "tokyonight"
 end
-
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
 if not status_ok then
@@ -33,13 +31,13 @@ if not lualine_status_ok then
   return
 end
 
-lualine.setup({
+lualine.setup {
   options = {
     theme = lualine_theme,
   },
-})
+}
 
-vim.cmd("let &fcs='eob: '")
+vim.cmd "let &fcs='eob: '"
 
 local transparent_status_ok, transparent = pcall(require, "transparent")
 if not transparent_status_ok then
@@ -47,7 +45,7 @@ if not transparent_status_ok then
   return
 end
 
-transparent.setup({
+transparent.setup {
   enable = is_transparent,
   extra_groups = {
     "MsgArea",
@@ -117,4 +115,4 @@ transparent.setup({
     -- "LspSagaDefPreviewBorder",
   },
   exclude = {},
-})
+}

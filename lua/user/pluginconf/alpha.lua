@@ -4,10 +4,10 @@ if not status_ok then
   return
 end
 
-local packer_path = vim.fn.stdpath("data") .. "/site/pack/packer/start"
+local packer_path = vim.fn.stdpath "data" .. "/site/pack/packer/start"
 local num_plugins_loaded = #vim.fn.globpath(packer_path, "*", 0, 1)
 
-local dashboard = require("alpha.themes.dashboard")
+local dashboard = require "alpha.themes.dashboard"
 dashboard.section.header.val = {
   "      +++++++       xxxxxxx      xxxxxxx",
   "      +:::::+        x:::::x    x:::::x ",

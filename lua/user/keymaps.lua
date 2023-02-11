@@ -30,10 +30,10 @@ keymap("n", "<C-l>", "<C-w>l", opts)
 -- keymap('', '<left>', '<nop>')
 -- keymap('', '<right>', '<nop>')
 
-keymap('n', '<up>',    ':resize +2<CR>', opts)
-keymap('n', '<down>',  ':resize -2<CR>', opts)
-keymap('n', '<left>',  ':vertical resize -2<CR>', opts)
-keymap('n', '<right>', ':vertical resize +2<CR>', opts)
+keymap("n", "<up>", ":resize +2<CR>", opts)
+keymap("n", "<down>", ":resize -2<CR>", opts)
+keymap("n", "<left>", ":vertical resize -2<CR>", opts)
+keymap("n", "<right>", ":vertical resize +2<CR>", opts)
 
 -- Resize with arrows
 keymap("n", "<A-Up>", ":resize -2<CR>", opts)
@@ -59,7 +59,7 @@ keymap("n", "<A-k>", "<Esc>:m .-2<CR>==gi", opts)
 
 -- Better paste
 keymap("v", "p", '"_dP', opts)
-keymap("x", "<leader>p", "\"_dP")
+keymap("x", "<leader>p", '"_dP')
 
 -- Insert --
 -- Press jk fast to enter
