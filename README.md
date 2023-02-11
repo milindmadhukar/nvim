@@ -89,6 +89,11 @@ We will also need `ripgrep` for Telescope to work:
 
 ## Fonts
 
+Install the icon Fonts
+```bash
+mkdir -p ~/.fonts && cp fonts/* ~/.fonts && fc-cache -fv
+```
+
 I recommend using the following repo to get a "Nerd Font" (Font that supports icons)
 
 [getnf](https://github.com/ronniedroid/getnf)
