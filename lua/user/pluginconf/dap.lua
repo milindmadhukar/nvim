@@ -10,7 +10,7 @@ if not dap_ui_status_ok then
   return
 end
 
-dap_ui.setup {
+dap_ui.setup({
   icons = { expanded = "▾", collapsed = "▸" },
   mappings = {
     -- Use a table to apply multiple mappings
@@ -23,7 +23,7 @@ dap_ui.setup {
   },
   -- Expand lines larger than the window
   -- Requires >= 0.7
-  expand_lines = vim.fn.has "nvim-0.7",
+  expand_lines = vim.fn.has("nvim-0.7"),
   -- Layouts define sections of the screen to place windows.
   -- The position can be "left", "right", "top" or "bottom".
   -- The size specifies the height/width depending on position. It can be an Int
@@ -64,7 +64,7 @@ dap_ui.setup {
   render = {
     max_type_length = nil, -- Can be integer or nil.
   },
-}
+})
 
 dap.adapters.delve = {
   type = "server",
@@ -103,7 +103,7 @@ dap.configurations.go = {
 dap.adapters.cppdbg = {
   id = "cppdbg",
   type = "executable",
-  command = "~/.local/share/nvim/mason/bin/OpenDebugAD7", -- NOTE: Download cpptools extension from microsoft and paste path.
+  command = "/home/milind/.local/share/nvim/mason/bin/OpenDebugAD7", -- NOTE: Download cpptools extension from microsoft and paste path.
 }
 
 dap.configurations.cpp = {
@@ -147,7 +147,7 @@ if not dap_python_status_ok then
   return
 end
 
-dap_python.setup "/home/milind/.local/share/nvim/mason/packages/debugpy/venv/bin/python"
+dap_python.setup("/home/milind/.local/share/nvim/mason/packages/debugpy/venv/bin/python")
 
 vim.fn.sign_define("DapBreakpoint", { text = "", texthl = "DiagnosticSignError", linehl = "", numhl = "" }) -- NOTE: Doesn't work, idk why
 

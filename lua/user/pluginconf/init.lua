@@ -9,6 +9,7 @@ require "user.pluginconf.comment"
 require "user.pluginconf.alpha"
 require "user.pluginconf.nvim-tree"
 require "user.pluginconf.bufferline"
+require "user.pluginconf.neoclip"
 -- require("user.pluginconf.spotifytui")
 require "user.pluginconf.lualine"
 require "user.pluginconf.presence"

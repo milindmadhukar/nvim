@@ -46,8 +46,7 @@ if not transparent_status_ok then
 end
 
 transparent.setup {
-  enable = is_transparent,
-  extra_groups = {
+  groups = {
     "MsgArea",
     "NvimTreeNormal",
     "NvimTreeNormalNC",
@@ -114,5 +113,5 @@ transparent.setup {
     -- "LspSagaAutoPreview",
     -- "LspSagaDefPreviewBorder",
   },
-  exclude = {},
+  exclude_groups = {},
 }

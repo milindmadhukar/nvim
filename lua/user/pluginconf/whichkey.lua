@@ -98,7 +98,8 @@ local mappings = {
   ["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
   ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
   ["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
-  ["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
+  ["z"] = { "<cmd>TZMinimalist<CR>", "Toggle narrow mode" },
+  ["r"] = { "<cmd>TermExec cmd='clear && gcc % && ./a.out'<CR>", "Run C Program"},
 
   Z = {
     ["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
@@ -116,7 +117,7 @@ local mappings = {
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
 
-  r = {
+  R = {
     name = "Refactoring",
     p = { "<cmd>lua require('refactoring').debug.printf({below = true})<CR>", "Printf" },
     c = { "<cmd>lua require('refactoring').debug.cleanup({})<CR>", "Cleanup" },
