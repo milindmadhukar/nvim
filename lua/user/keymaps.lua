@@ -5,6 +5,8 @@ local opts = { silent = true }
 
 local term_opts = { noremap = true, silent = true }
 
+keymap("", "<C-f>", ":silent !tmux neww tmux-sessionizer<CR>", opts)
+
 --Remap space as leader key
 keymap("", "<Space>", "<Nop>", opts)
 vim.g.mapleader = " "

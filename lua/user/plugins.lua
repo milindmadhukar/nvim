@@ -243,12 +243,13 @@ return packer.startup(function(use)
 	})
 
 	-- Session management
-	use({
-		"rmagatti/auto-session",
-		config = function()
-			require("user.pluginconf.auto-session")
-		end,
-	})
+	-- use({
+	-- 	"rmagatti/auto-session",
+	-- 	config = function()
+	-- 		require("user.pluginconf.auto-session")
+	--	end,
+	--	disable = true,
+	-- })
 
 	use({
 		"AckslD/nvim-neoclip.lua",
