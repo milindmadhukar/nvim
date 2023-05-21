@@ -12,7 +12,7 @@ local servers = {
   "marksman",
   "tailwindcss",
   "sqlls",
-  "rust-analyzer",
+  "rust_analyzer",
 }
 
 local mason_status_ok, mason = pcall(require, "mason")
