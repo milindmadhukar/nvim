@@ -88,7 +88,7 @@ local mappings = {
   ["q"] = { "<cmd>lua require('user.functions').smart_quit()<CR>", "Quit" },
   [";"] = { "<cmd>Alpha<CR>", "Dashboard" },
   ["/"] = { "<cmd>lua require(\"Comment.api\").locked('toggle.linewise.current')()<CR>", "Comment" },
-  ["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" }, -- PE
+  -- ["c"] = { "<cmd>bdelete!<CR>", "Close Buffer" }, -- PE
   ["f"] = {
     "<cmd>Telescope find_files<cr>",
     "Find files",

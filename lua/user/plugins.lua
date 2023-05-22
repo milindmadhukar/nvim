@@ -1,4 +1,3 @@
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -12,13 +11,13 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-local au_lazy = vim.api.nvim_create_augroup("lazy_autoload", { clear = true })
-vim.api.nvim_create_autocmd("BufWritePost", {
-	group = au_lazy,
-	pattern = "plugins.lua",
-	command = "source <afile> | Lazy sync",
-	desc = "Reloads nvim when you save plugins.lua",
-})
+-- local au_lazy = vim.api.nvim_create_augroup("lazy_autoload", { clear = true })
+-- vim.api.nvim_create_autocmd("BufWritePost", {
+-- 	group = au_lazy,
+-- 	pattern = "plugins.lua",
+-- 	command = "source <afile> | Lazy sync",
+-- 	desc = "Reloads nvim when you save plugins.lua",
+-- })
 
 -- Use a protected call so we don't error out on first use
 local status_ok, lazy = pcall(require, "lazy")
@@ -28,7 +27,6 @@ end
 
 local plugins = {
 	{ "nvim-lua/plenary.nvim", commit = "9ac3e9541bbabd9d73663d757e4fe48a675bb054" }, -- Useful lua functions used by lots of plugins
-	{ "windwp/nvim-autopairs", commit = "7747bbae60074acf0b9e3a4c13950be7a2dff444" }, -- Autopairs, integrates with both cmp and treesitter
 	{ "numToStr/Comment.nvim", commit = "e1fe53117aab24c378d5e6deaad786789c360123" },
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
@@ -36,8 +34,12 @@ local plugins = {
 		event = "BufReadPost",
 	},
 	{ "nvim-tree/nvim-web-devicons", commit = "986875b7364095d6535e28bd4aac3a9357e91bbe" },
-	{ "nvim-tree/nvim-tree.lua", commit = "b1e074d2b52d45c8327b5b43a498b3d7e6c93b97" },
-	{ "akinsho/bufferline.nvim", version = "*", dependencies = "nvim-tree/nvim-web-devicons" },
+	{ "nvim-tree/nvim-tree.lua", commit = "b1e074d2b52d45c8327b5b43a498b3d7e6c93b97", cmd = { "NvimTreeToggle" } },
+	{
+		"akinsho/bufferline.nvim",
+		version = "*",
+		dependencies = "nvim-tree/nvim-web-devicons",
+	},
 	{ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" },
 	{ "nvim-lualine/lualine.nvim", commit = "05d78e9fd0cdfb4545974a5aa14b1be95a86e9c9" },
 	{ "akinsho/toggleterm.nvim", commit = "26f16d3bab1761d0d11117a8e431faba11a1b865" },
@@ -58,32 +60,38 @@ local plugins = {
 	{ "LunarVim/synthwave84.nvim" },
 	{ "catppuccin/nvim", as = "catppuccin" },
 
-	-- cmp plugins
-	{ "hrsh7th/nvim-cmp", commit = "3ac8d6cd29c74ff482d8ea47d45e5081bfc3f5ad" }, -- The completion plugin
-	{ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }, -- buffer completions
-	{ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }, -- path completions
-	{ "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" }, -- snippet completions
-	{ "hrsh7th/cmp-nvim-lsp", commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
-	{ "hrsh7th/cmp-nvim-lua", commit = "f12408bdb54c39c23e67cab726264c10db33ada8" },
-	{ "hrsh7th/cmp-emoji" },
 	{
-		"zbirenbaum/copilot-cmp",
-		module = "copilot_cmp",
+		"hrsh7th/nvim-cmp",
+		commit = "3ac8d6cd29c74ff482d8ea47d45e5081bfc3f5ad",
+		event = "InsertEnter",
+		dependencies = {
+			-- cmp sources plugins
+			{
+				{ "windwp/nvim-autopairs", commit = "7747bbae60074acf0b9e3a4c13950be7a2dff444" }, -- Autopairs, integrates with both cmp and treesitter
+				-- cmp plugins
+				{ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }, -- buffer completions
+				{ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }, -- path completions
+				{ "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" }, -- snippet completions
+				{ "hrsh7th/cmp-nvim-lsp", commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
+				{ "hrsh7th/cmp-nvim-lua", commit = "f12408bdb54c39c23e67cab726264c10db33ada8" },
+				{ "hrsh7th/cmp-emoji" },
+				-- snippets
+				{ "L3MON4D3/LuaSnip" }, --snippet engine
+				{ "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
+				-- use({ "pheianox/solidjs-snippets" })
+				{ "solidjs-community/solid-snippets" },
+			},
+		},
+		config = function()
+			require("user.cmp")
+		end,
 	},
-	-- NOTE: Still in development
-	-- snippets
-	{ "L3MON4D3/LuaSnip" }, --snippet engine
-	{ "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
-	-- use({ "pheianox/solidjs-snippets" })
-	{ "solidjs-community/solid-snippets" },
 
 	-- LSP
 	{ "neovim/nvim-lspconfig", commit = "6f1d124bbcf03c4c410c093143a86415f46d16a0", event = "BufReadPre" }, -- enable LSP
 	{ "williamboman/mason.nvim", commit = "08b2fd308e0107eab9f0b59d570b69089fd0b522" }, -- LSP/DAP/Format/Lint manager
 	{ "williamboman/mason-lspconfig.nvim", commit = "c55d18f3947562e699d34d89681edbf9f0e250d3" },
-
 	{ "jose-elias-alvarez/null-ls.nvim", commit = "77e53bc3bac34cc273be8ed9eb9ab78bcf67fa48" }, -- for formatters and linters
-
 	{
 		"jay-babu/mason-null-ls.nvim",
 		event = { "BufReadPre", "BufNewFile" },
@@ -124,7 +132,12 @@ local plugins = {
 	},
 
 	-- UI
-	{ "rcarriga/nvim-notify" },
+	{
+		"rcarriga/nvim-notify",
+		config = function()
+			require("user.pluginconf.notify")
+		end,
+	},
 
 	-- Treesitter
 	{
@@ -135,7 +148,25 @@ local plugins = {
 	{
 		"lewis6991/gitsigns.nvim",
 		commit = "c18b7ca0b5b50596722f3a1572eb9b8eb520c0f1",
-		-- opt = true,
+		init = function()
+			-- load gitsigns only when a git file is opened
+			vim.api.nvim_create_autocmd({ "BufRead" }, {
+				group = vim.api.nvim_create_augroup("GitSignsLazyLoad", { clear = true }),
+				callback = function()
+					vim.fn.system("git -C " .. '"' .. vim.fn.expand("%:p:h") .. '"' .. " rev-parse")
+					if vim.v.shell_error == 0 then
+						vim.api.nvim_del_augroup_by_name("GitSignsLazyLoad")
+						vim.schedule(function()
+							require("lazy").load({ plugins = { "gitsigns.nvim" } })
+						end)
+					end
+				end,
+			})
+		end,
+
+		config = function()
+			require("user.pluginconf.gitsigns")
+		end,
 	},
 	{
 		"tpope/vim-fugitive",
@@ -224,19 +255,6 @@ local plugins = {
 		cmd = { "Codi", "CodiNew", "CodiSelect", "CodiExpand" },
 	}, -- Interactive scratchpad,
 
-	{ "github/copilot.vim" },
-	-- TODO: This is under early development, it will replace copilot.vim
-
-	{
-		"zbirenbaum/copilot.lua",
-		event = { "VimEnter" },
-		config = function()
-			vim.defer_fn(function()
-				require("copilot").setup()
-			end, 100)
-		end,
-	},
-
 	{
 		"phaazon/mind.nvim",
 		branch = "v2.2",
@@ -288,7 +306,7 @@ local plugins = {
 
 local opts = {
 	defaults = { lazy = true },
-	install = { colorscheme = { "tokyonight" } },
+	install = { colorscheme = { "tokyonight-moon" } },
 	checker = { enabled = true },
 	performance = {
 		rtp = {

@@ -1,6 +1,3 @@
-require "user.pluginconf.notify"
-require "user.pluginconf.telescope"
-require "user.pluginconf.gitsigns"
 require "user.pluginconf.treesitter"
 require "user.pluginconf.dressing"
 require "user.pluginconf.autopairs"
