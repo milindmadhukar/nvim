@@ -99,6 +99,8 @@ local mappings = {
   ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
   ["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
   ["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
+  -- TODO: Switch to something that can run all file types
+  ["r"] = { "<cmd>TermExec cmd='clear && gcc % && ./a.out'<CR>", "Run C Program"},
   ["L"] = { "<cmd>Lazy<cr>", "Lazy Menu" },
 
   Z = {
@@ -117,7 +119,7 @@ local mappings = {
     u = { "<cmd>PackerUpdate<cr>", "Update" },
   },
 
-  r = {
+  R = {
     name = "Refactoring",
     p = { "<cmd>lua require('refactoring').debug.printf({below = true})<CR>", "Printf" },
     c = { "<cmd>lua require('refactoring').debug.cleanup({})<CR>", "Cleanup" },

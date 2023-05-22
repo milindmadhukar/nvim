@@ -25,3 +25,4 @@ require "user.pluginconf.harpoon"
 -- require "user.pluginconf.impatient" -- NOTE: Deprecated
 -- require("user.pluginconf.spotifytui")
 -- require("user.pluginconf.lspsaga")
+-- require "user.pluginconf.neoclip"
