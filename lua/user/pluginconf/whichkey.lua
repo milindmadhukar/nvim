@@ -98,8 +98,10 @@ local mappings = {
   ["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
   ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
   ["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
-  ["z"] = { "<cmd>TZMinimalist<CR>", "Toggle narrow mode" },
+  ["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
+  -- TODO: Switch to something that can run all file types
   ["r"] = { "<cmd>TermExec cmd='clear && gcc % && ./a.out'<CR>", "Run C Program"},
+  ["L"] = { "<cmd>Lazy<cr>", "Lazy Menu" },
 
   Z = {
     ["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },

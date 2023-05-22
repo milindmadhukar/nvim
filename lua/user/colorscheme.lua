@@ -47,7 +47,7 @@ if not transparent_status_ok then
 end
 
 transparent.setup {
-  groups = {
+  extra_groups = {
     "MsgArea",
     "NvimTreeNormal",
     "NvimTreeNormalNC",

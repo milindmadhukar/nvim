@@ -1,5 +1,5 @@
 local servers = {
-  "sumneko_lua",
+  "lua_ls",
   "cssls",
   "html",
   "tsserver",
@@ -27,10 +27,6 @@ if not mason_lsp_ok then
   return
 end
 
-mason_lsp_config.setup {
-  ensure_installed = servers,
-  automatic_installation = true,
-}
 
 local handlers_ok, lsp_handlers = pcall(require, "user.lsp.handlers")
 if not handlers_ok then
@@ -89,3 +85,9 @@ for _, server in pairs(servers) do
 
   lspconfig[server].setup(opts)
 end
+
+
+mason_lsp_config.setup {
+  ensure_installed = servers,
+  automatic_installation = true,
+}

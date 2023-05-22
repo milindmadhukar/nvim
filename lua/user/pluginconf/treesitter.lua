@@ -7,7 +7,6 @@ end
 configs.setup {
   -- ensure_installed = "all", -- one of "all" or a list of languages
   ensure_installed = {
-    "help",
     "javascript",
     "typescript",
     "go",
