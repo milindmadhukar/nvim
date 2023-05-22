@@ -4,29 +4,6 @@ if not status_ok then
   return
 end
 
-vim.api.nvim_create_autocmd({ "BufAdd", "VimEnter" }, {
-  callback = function()
-    local function onexit(code, _)
-      if code == 0 then
-        vim.schedule(function()
-          require("packer").loader "gitsigns.nvim"
-        end)
-      end
-    end
-
-    local lines = vim.api.nvim_buf_get_lines(0, 0, -1, false)
-    if lines ~= { "" } then
-      vim.loop.spawn("git", {
-        args = {
-          "ls-files",
-          "--error-unmatch",
-          vim.fn.expand "%",
-        },
-      }, onexit)
-    end
-  end,
-})
-
 gitsigns.setup {
   signs = {
     add = {

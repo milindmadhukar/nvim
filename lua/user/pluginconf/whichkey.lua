@@ -99,6 +99,7 @@ local mappings = {
   ["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
   ["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
   ["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
+  ["L"] = { "<cmd>Lazy<cr>", "Lazy Menu" },
 
   Z = {
     ["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
