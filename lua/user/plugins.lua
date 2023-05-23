@@ -202,6 +202,7 @@ local plugins = {
 		config = function()
 			require("user.pluginconf.notify")
 		end,
+		lazy = false,
 	},
 
 	-- Treesitter
@@ -280,7 +281,7 @@ local plugins = {
 	},
 	{
 		"folke/todo-comments.nvim",
-    event = "BufEnter",
+		event = "BufEnter",
 		config = function()
 			require("user.pluginconf.todocomments")
 		end,

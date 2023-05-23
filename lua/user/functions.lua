@@ -94,4 +94,24 @@ function M.toggle_format_on_save()
   end
 end
 
+function M.handle_buffer_close()
+  local current_bufnr = vim.api.nvim_get_current_buf()
+  local buffer_count = 0
+  local buffers = vim.api.nvim_list_bufs()
+
+  for _, bufnr in ipairs(buffers) do
+    if vim.fn.buflisted(bufnr) == 1 then
+      buffer_count = buffer_count + 1
+    end
+  end
+
+  if buffer_count == 1 then
+    vim.cmd('Alpha')
+    vim.cmd('bwipeout ' .. current_bufnr)
+  else
+    vim.cmd('bdelete')
+  end
+end
 return M
+
+
