@@ -260,6 +260,7 @@ local plugins = {
 
 	{
 		"leoluz/nvim-dap-go",
+		ft = "go",
 	},
 
 	{
@@ -272,6 +273,7 @@ local plugins = {
 		config = function()
 			require("user.pluginconf.dressing")
 		end,
+		event = "BufEnter",
 	},
 	{
 		"norcalli/nvim-colorizer.lua",
@@ -332,6 +334,7 @@ local plugins = {
 	{
 		"iamcco/markdown-preview.nvim",
 		run = "cd app && npm install",
+		ft = "markdown",
 		setup = function()
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
@@ -387,6 +390,23 @@ local plugins = {
 		},
 		cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions" },
 		enabled = false, -- NOTE: Enable when rich :skull:
+	},
+
+	{
+		"zbirenbaum/copilot.lua",
+		cmd = "Copilot",
+		event = "InsertEnter",
+		config = function()
+			require("user.pluginconf.copilot")
+		end,
+	},
+
+	{
+		"zbirenbaum/copilot-cmp",
+    event="InsertEnter",
+		config = function()
+			require("copilot_cmp").setup()
+		end,
 	},
 
 	{ "eandrju/cellular-automaton.nvim", cmd = { "CellularAutomation" } },

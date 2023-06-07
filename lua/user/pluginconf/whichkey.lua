@@ -100,7 +100,7 @@ local mappings = {
   ["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
   ["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
   -- TODO: Switch to something that can run all file types
-  ["r"] = { "<cmd>TermExec cmd='clear && gcc % && ./a.out'<CR>", "Run C Program"},
+  ["r"] = { "<cmd>TermExec cmd='clear && g++ % && ./a.out'<CR>", "Run C++ Program"},
   ["L"] = { "<cmd>Lazy<cr>", "Lazy Menu" },
 
   Z = {
