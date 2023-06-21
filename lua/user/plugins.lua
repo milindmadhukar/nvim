@@ -16,8 +16,7 @@ vim.opt.rtp:prepend(lazypath)
 -- 	group = au_lazy,
 -- 	pattern = "plugins.lua",
 -- 	command = "source <afile> | Lazy sync",
--- 	desc = "Reloads nvim when you save plugins.lua",
--- })
+-- 	desc = "Reloads nvim when you save plugins.lua", })
 
 -- Use a protected call so we don't error out on first use
 local status_ok, lazy = pcall(require, "lazy")
@@ -58,6 +57,7 @@ local plugins = {
 		end,
 	},
 	{ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" },
+
 	{
 		"nvim-lualine/lualine.nvim",
 		commit = "05d78e9fd0cdfb4545974a5aa14b1be95a86e9c9",
@@ -123,17 +123,27 @@ local plugins = {
 				{
 					"windwp/nvim-autopairs",
 					commit = "7747bbae60074acf0b9e3a4c13950be7a2dff444",
+					event = "InsertEnter",
 					config = function()
 						require("user.pluginconf.autopairs")
 					end,
 				}, -- Autopairs, integrates with both cmp and treesitter
 				-- cmp plugins
-				{ "hrsh7th/cmp-buffer", commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa" }, -- buffer completions
-				{ "hrsh7th/cmp-path", commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1" }, -- path completions
+				{
+					"hrsh7th/cmp-buffer",
+					commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa",
+					event = "InsertEnter",
+				}, -- buffer completions
+				{
+					"hrsh7th/cmp-path",
+					commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1",
+					event = "InsertEnter",
+				}, -- path completions
 				{ "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" }, -- snippet completions
 				{ "hrsh7th/cmp-nvim-lsp", commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
 				{ "hrsh7th/cmp-nvim-lua", commit = "f12408bdb54c39c23e67cab726264c10db33ada8" },
 				{ "hrsh7th/cmp-emoji" },
+				{ "hrsh7th/cmp-calc" },
 				-- snippets
 				{ "L3MON4D3/LuaSnip" }, --snippet engine
 				{ "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
@@ -273,6 +283,7 @@ local plugins = {
 		config = function()
 			require("user.pluginconf.dressing")
 		end,
+		enabled = false,
 		event = "BufEnter",
 	},
 	{
@@ -403,7 +414,7 @@ local plugins = {
 
 	{
 		"zbirenbaum/copilot-cmp",
-    event="InsertEnter",
+		event = "InsertEnter",
 		config = function()
 			require("copilot_cmp").setup()
 		end,
@@ -414,6 +425,26 @@ local plugins = {
 	-- Rust:
 	{ "rust-lang/rust.vim", ft = "rust" },
 	{ "simrat39/rust-tools.nvim", ft = "rust" }, -- TODO: Configure this
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
+
+	{
+		"folke/noice.nvim",
+		event = "VeryLazy",
+		opts = {
+			-- add any options here
+		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+			"rcarriga/nvim-notify",
+		},
+		config = function()
+			require("user.pluginconf.noice")
+		end,
+	},
 
 	-- use {
 	--   'KadoBOT/nvim-spotify',
@@ -424,7 +455,7 @@ local plugins = {
 }
 
 local opts = {
-	defaults = { lazy = true },
+	defaults = { lazy = false },
 	install = { colorscheme = { "tokyonight-moon" } },
 	checker = { enabled = true },
 	performance = {
