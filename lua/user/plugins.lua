@@ -206,15 +206,6 @@ local plugins = {
 		opt = true,
 	},
 
-	-- UI
-	{
-		"rcarriga/nvim-notify",
-		config = function()
-			require("user.pluginconf.notify")
-		end,
-		lazy = false,
-	},
-
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
@@ -439,7 +430,28 @@ local plugins = {
 			-- OPTIONAL:
 			--   `nvim-notify` is only needed, if you want to use the notification view.
 			--   If not available, we use `mini` as the fallback
-			"rcarriga/nvim-notify",
+			{
+				"rcarriga/nvim-notify",
+				config = function()
+					require("user.pluginconf.notify")
+				end,
+
+				init = function()
+					vim.notify = function(msg, ...)
+						if msg:match("character_offset must be called") then
+							return
+						end
+						if msg:match("method textDocument") then
+							return
+						end
+						if msg:match("warning: multiple different client offset_encodings") then
+							return
+						end
+					end
+				end,
+
+				lazy = false,
+			},
 		},
 		config = function()
 			require("user.pluginconf.noice")
@@ -455,8 +467,9 @@ local plugins = {
 
 	{
 		"m4xshen/hardtime.nvim",
+		enabled = false,
 		opts = {
-			max_time = 500,
+			max_time = 1000,
 			max_count = 5,
 			disable_mouse = true,
 			hint = true,

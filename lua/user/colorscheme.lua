@@ -3,7 +3,6 @@ local colorscheme = "tokyonight-moon"
 -- local colorscheme = "shado"
 
 local lualine_theme = colorscheme
-local is_transparent = true
 
 if colorscheme == "catppuccin" then
 	vim.g.catppuccin_flavour = "latte" --latte, frappe, macchiato, mocha
@@ -13,12 +12,19 @@ if colorscheme == "catppuccin" then
 		return
 	end
 	catppuccin.setup()
-	is_transparent = false
+	local status_transparent_ok, _ = pcall(vim.cmd, "TransparentDisable")
+	if not status_transparent_ok then
+		return
+	end
 end
 
 -- Check if a string starts with "tokyonight"
 if colorscheme:sub(1, 10) == "tokyonight" then
 	lualine_theme = "tokyonight"
+	local status_transparent_ok, _ = pcall(vim.cmd, "TransparentEnable")
+	if not status_transparent_ok then
+		return
+	end
 end
 
 local status_ok, _ = pcall(vim.cmd, "colorscheme " .. colorscheme)
@@ -62,7 +68,6 @@ transparent.setup({
 		"Debug",
 		"NonText",
 		"LspFloatWinNormal",
-		"LspFloatWinBorder",
 		"TargetWord",
 		"ReferencesCount",
 		"DefinitionCount",
@@ -77,7 +82,6 @@ transparent.setup({
 		"DiagnosticHint",
 		"DefinitionPreviewTitle",
 		"LineDiagTuncateLine",
-		"LspLinesDiagBorder",
 		"Normal",
 		"SignColumn",
 		"NormalNC",
@@ -97,6 +101,14 @@ transparent.setup({
 		"NotifyINFOBorder",
 		"NotifyDEBUGBorder",
 		"NotifyTRACEBorder",
+		"NoiceFormatProgressDone",
+		"NoiceFormatProgressTodo",
+		"NoiceFormatTitle",
+		"NoiceLspProgressClient",
+		"NoiceLspProgressSpinner",
+		"NoiceLspProgressTitle",
+		"NoiceMini",
+		"NoicePopupmenuMatch",
 
 		-- "LspSagaFinderSelection",
 		-- "LspSagaBorderTitle",
@@ -115,11 +127,5 @@ transparent.setup({
 		-- "LspSagaAutoPreview",
 		-- "LspSagaDefPreviewBorder",
 	},
-	exclude_groups = {
-		"NoiceLspProgressTitle",
-		"NoiceLspProgressClient",
-		"NoiceLspProgressSpinner",
-		"NoiceFormatProgressDone",
-		"NoiceFormatProgressTodo",
-	},
+	exclude_groups = {},
 })
