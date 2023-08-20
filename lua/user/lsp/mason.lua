@@ -13,6 +13,7 @@ local servers = {
   "tailwindcss",
   "sqlls",
   "rust_analyzer",
+  "jdtls",
 }
 
 local mason_status_ok, mason = pcall(require, "mason")

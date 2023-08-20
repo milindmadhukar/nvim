@@ -274,7 +274,6 @@ local plugins = {
 		config = function()
 			require("user.pluginconf.dressing")
 		end,
-		enabled = false,
 		event = "BufEnter",
 	},
 	{
@@ -420,7 +419,6 @@ local plugins = {
 
 	{
 		"folke/noice.nvim",
-		event = "VeryLazy",
 		opts = {
 			-- add any options here
 		},
@@ -430,32 +428,19 @@ local plugins = {
 			-- OPTIONAL:
 			--   `nvim-notify` is only needed, if you want to use the notification view.
 			--   If not available, we use `mini` as the fallback
-			{
-				"rcarriga/nvim-notify",
-				config = function()
-					require("user.pluginconf.notify")
-				end,
-
-				init = function()
-					vim.notify = function(msg, ...)
-						if msg:match("character_offset must be called") then
-							return
-						end
-						if msg:match("method textDocument") then
-							return
-						end
-						if msg:match("warning: multiple different client offset_encodings") then
-							return
-						end
-					end
-				end,
-
-				lazy = false,
-			},
 		},
 		config = function()
 			require("user.pluginconf.noice")
 		end,
+	},
+
+	{
+		"rcarriga/nvim-notify",
+		config = function()
+			require("user.pluginconf.notify")
+		end,
+
+		lazy = false,
 	},
 
 	{
