@@ -24,7 +24,6 @@ dressing.setup {
     start_in_insert = true,
 
     -- These are passed to nvim_open_win
-    anchor = "SW",
     border = "rounded",
     -- 'editor' and 'win' will default to being centered
     relative = "cursor",
@@ -38,7 +37,7 @@ dressing.setup {
     min_width = { 20, 0.2 },
 
     -- Window transparency (0-100)
-    -- winblend = 10,
+    winblend = 10,
     -- Change default highlight groups (see :help winhl)
     -- winhighlight = "",
 
@@ -78,7 +77,6 @@ dressing.setup {
     -- Options for telescope selector
     -- These are passed into the telescope picker directly. Can be used like:
 
-    -- telescope = require("telescope.themes").get_dropdown({ winblend = 10 }),
     telescope = require("telescope.themes").get_cursor(),
 
     -- Options for fzf selector
@@ -110,7 +108,7 @@ dressing.setup {
         filetype = "DressingSelect",
       },
       win_options = {
-        -- winblend = 10,
+        winblend = 10,
       },
       max_width = 80,
       max_height = 40,
@@ -121,13 +119,12 @@ dressing.setup {
     -- Options for built-in selector
     builtin = {
       -- These are passed to nvim_open_win
-      anchor = "NW",
       border = "rounded",
       -- 'editor' and 'win' will default to being centered
       relative = "cursor",
 
       -- Window transparency (0-100)
-      -- winblend = 10,
+      winblend = 10,
       -- Change default highlight groups (see :help winhl)
 
       -- These can be integers or a float between 0 and 1 (e.g. 0.4 for 40%)

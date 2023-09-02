@@ -54,6 +54,7 @@ local kind_icons = {
 	Unit = "塞",
 	Value = " ",
 	Variable = " ",
+  Copilot = " ",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 

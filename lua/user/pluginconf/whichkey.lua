@@ -97,7 +97,8 @@ local mappings = {
 	["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
-	["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
+  ["C"] = { "<cmd>Copilot suggestion toggle_auto_trigger<cr>", "Toggle Copilot Text"},
+	-- ["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
 	["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
 	-- TODO: Switch to something that can run all file types
 	["r"] = { "<cmd>TermExec cmd='clear && g++ % && ./a.out'<CR>", "Run C++ Program" },

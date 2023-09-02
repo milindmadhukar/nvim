@@ -22,7 +22,7 @@ copilot.setup({
   },
   suggestion = {
     enabled = true,
-    auto_trigger = true,
+    auto_trigger = false,
     debounce = 75,
     keymap = {
       accept = "<M-a>",
@@ -33,6 +33,7 @@ copilot.setup({
       dismiss = "<C-q>",
     },
   },
+
   filetypes = {
     yaml = false,
     markdown = false,

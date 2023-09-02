@@ -28,17 +28,18 @@ local plugins = {
 	{ "nvim-lua/plenary.nvim", commit = "9ac3e9541bbabd9d73663d757e4fe48a675bb054" }, -- Useful lua functions used by lots of plugins
 	{
 		"numToStr/Comment.nvim",
-		commit = "e1fe53117aab24c378d5e6deaad786789c360123",
 		config = function()
 			require("user.pluginconf.comment")
 		end,
+		lazy = false,
 	},
+
 	{
 		"JoosepAlviste/nvim-ts-context-commentstring",
-		commit = "0bf8fbc2ca8f8cdb6efbd0a9e32740d7a991e4c3",
 		event = "BufReadPost",
 	},
-	{ "nvim-tree/nvim-web-devicons", commit = "986875b7364095d6535e28bd4aac3a9357e91bbe" },
+
+	{ "nvim-tree/nvim-web-devicons" },
 	{
 		"nvim-tree/nvim-tree.lua",
 		commit = "b1e074d2b52d45c8327b5b43a498b3d7e6c93b97",
@@ -111,7 +112,7 @@ local plugins = {
 	{ "lunarvim/darkplus.nvim" },
 	{ "Shadorain/shadotheme" },
 	{ "LunarVim/synthwave84.nvim" },
-	{ "catppuccin/nvim", as = "catppuccin" },
+	{ "catppuccin/nvim", name = "catppuccin" },
 
 	{
 		"hrsh7th/nvim-cmp",
@@ -190,16 +191,8 @@ local plugins = {
 		end,
 	},
 
-	{
-		"glepnir/lspsaga.nvim",
-		enabled = false,
-		branch = "main",
-		commit = "01b9633aefd010f272d6c7e3d8293c44fcfe7696",
-		cmd = { "Lspsaga" },
-	},
-
 	-- Telescope
-	{ "nvim-telescope/telescope.nvim", commit = "40c31fdde93bcd85aeb3447bb3e2a3208395a868", lazy = false },
+	{ "nvim-telescope/telescope.nvim", lazy = false },
 
 	{
 		"nvim-telescope/telescope-ui-select.nvim",
@@ -209,7 +202,6 @@ local plugins = {
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
-		commit = "f2778bd1a28b74adf5b1aa51aa57da85adfa3d16",
 		config = function()
 			require("user.pluginconf.treesitter")
 		end,
@@ -270,13 +262,6 @@ local plugins = {
 
 	-- Misc
 	{
-		"stevearc/dressing.nvim",
-		config = function()
-			require("user.pluginconf.dressing")
-		end,
-		event = "BufEnter",
-	},
-	{
 		"norcalli/nvim-colorizer.lua",
 		config = function()
 			require("user.pluginconf.colorizer")
@@ -334,16 +319,16 @@ local plugins = {
 
 	{
 		"iamcco/markdown-preview.nvim",
-		run = "cd app && npm install",
+		build = "cd app && npm install",
 		ft = "markdown",
-		setup = function()
+		init = function()
 			vim.g.mkdp_filetypes = { "markdown" }
 		end,
 	},
 
 	{
 		"wfxr/minimap.vim",
-		run = "cargo install --locked code-minimap",
+		build = "cargo install --locked code-minimap",
 		cmd = "MinimapToggle",
 	},
 
@@ -353,86 +338,31 @@ local plugins = {
 	}, -- Interactive scratchpad,
 
 	{
-		"phaazon/mind.nvim",
-		branch = "v2.2",
-		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("mind").setup()
-		end,
-		cmd = { "MindOpenMain", "MindOpenProject", "MindReloadState" }, -- TODO: Try it out when 0.8, doesn't seem to be working yet
-	},
-
-	{
 		"ThePrimeagen/vim-be-good",
 		cmd = "VimBeGood",
 	},
 
-	-- Session management
-	{
-		"rmagatti/auto-session",
-		config = function()
-			require("user.pluginconf.auto-session")
-		end,
-	},
-	{
-		"rmagatti/session-lens",
-		dependencies = { "rmagatti/auto-session", "nvim-telescope/telescope.nvim" },
-	},
-
-	{
-		"jackMort/ChatGPT.nvim",
-		config = function()
-			require("user.pluginconf.chatgpt")
-		end,
-		dependencies = {
-			"MunifTanjim/nui.nvim",
-			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope.nvim",
-		},
-		cmd = { "ChatGPT", "ChatGPTActAs", "ChatGPTEditWithInstructions" },
-		enabled = false, -- NOTE: Enable when rich :skull:
-	},
-
-	{
-		"zbirenbaum/copilot.lua",
-		cmd = "Copilot",
-		event = "InsertEnter",
-		config = function()
-			require("user.pluginconf.copilot")
-		end,
-	},
-
 	{
 		"zbirenbaum/copilot-cmp",
-		event = "InsertEnter",
 		config = function()
 			require("copilot_cmp").setup()
 		end,
+
+		dependencies = {
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			event = "InsertEnter",
+			config = function()
+				require("user.pluginconf.copilot")
+			end,
+		},
 	},
 
-	{ "eandrju/cellular-automaton.nvim", cmd = { "CellularAutomation" } },
-
-	-- Rust:
+	-- Rust
 	{ "rust-lang/rust.vim", ft = "rust" },
 	{ "simrat39/rust-tools.nvim", ft = "rust" }, -- TODO: Configure this
-	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 
-	{
-		"folke/noice.nvim",
-		opts = {
-			-- add any options here
-		},
-		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
-			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
-		},
-		config = function()
-			require("user.pluginconf.noice")
-		end,
-	},
+	{ "ellisonleao/glow.nvim", config = true, cmd = "Glow" },
 
 	{
 		"rcarriga/nvim-notify",
@@ -450,47 +380,37 @@ local plugins = {
 		end,
 	},
 
+	-- UI
 	{
-		"m4xshen/hardtime.nvim",
+		"folke/noice.nvim",
 		enabled = false,
 		opts = {
-			max_time = 1000,
-			max_count = 5,
-			disable_mouse = true,
-			hint = true,
-			allow_different_key = false,
-			resetting_keys = {
-				"0",
-				"1",
-				"2",
-				"3",
-				"4",
-				"5",
-				"6",
-				"7",
-				"8",
-				"9",
-				"c",
-				"C",
-				"d",
-				"x",
-				"X",
-				"y",
-				"Y",
-				"p",
-				"P",
-			},
-			restricted_keys = { "h", "j", "k", "l", "-", "+", "gj", "gk" },
-			hint_keys = { "k", "j", "^", "$", "a", "i", "d", "y", "c", "l" },
-			disabled_keys = { "<UP>", "<DOWN>", "<LEFT>", "<RIGHT>" },
-			disabled_filetypes = { "qf", "netrw", "NvimTree", "lazy", "mason" },
+			-- add any options here
 		},
+		dependencies = {
+			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+			"MunifTanjim/nui.nvim",
+			-- OPTIONAL:
+			--   `nvim-notify` is only needed, if you want to use the notification view.
+			--   If not available, we use `mini` as the fallback
+		},
+		config = function()
+			require("user.pluginconf.noice")
+		end,
+	},
+
+	{
+		"stevearc/dressing.nvim",
+		config = function()
+			require("user.pluginconf.dressing")
+		end,
+		event = "BufEnter",
 	},
 
 	-- use {
 	--   'KadoBOT/nvim-spotify',
 	--   dependencies = 'nvim-telescope/telescope.nvim',
-	--   run = 'cargo install spotify-tui && make',
+	--   build = 'cargo install spotify-tui && make',
 	-- }
 	--
 }
@@ -498,7 +418,7 @@ local plugins = {
 local opts = {
 	defaults = { lazy = false },
 	install = { colorscheme = { "tokyonight-moon" } },
-	checker = { enabled = true },
+	checker = { enabled = true, notify = false },
 	performance = {
 		rtp = {
 			disabled_plugins = {
