@@ -1,20 +1,13 @@
-# Neovim
+# My Neovim Configuration
 
-> Why does this repo exist?
+![image](https://github.com/milindmadhukar/nvim/assets/68477234/869d0b59-c87a-492d-859a-0eeae783bf14)
+![image](https://github.com/milindmadhukar/nvim/assets/68477234/5525596f-c872-4da0-a550-a48da6a69556)
 
-This config attempts to provide a rock solid fully featured IDE like experience with complete stability.
-
-> What makes it "rock solid"?
-
-All of the included plugins are pinned to a version that ensures they are compatible and will not update potentially introducing errors into your config. For every Neovim release I will update this repo along with the community to keep it up to date with the newest versions.
-
-The config has a very simple structure that makes it easy to add new plugins, very easy to use for beginners
-
-## Install Neovim 0.8
+## Install Neovim 0.9
 
 You can install Neovim with your package manager e.g. brew, apt, pacman etc.. but remember that when you update your packages Neovim may be upgraded to a newer version.
 
-If you would like to make sure Neovim only updates when you want it to than I recommend installing from source:
+I have included scripts to install neovim from release or building from source
 
 ```sh
 git clone https://github.com/neovim/neovim.git
