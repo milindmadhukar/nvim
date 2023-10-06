@@ -1,11 +1,12 @@
--- local colorscheme = "catppuccin"
-local colorscheme = "tokyonight-moon"
+local colorscheme = "catppuccin"
+-- local colorscheme = "tokyonight-moon"
 -- local colorscheme = "shado"
+-- local colorscheme = "synthwave84"
 
 local lualine_theme = colorscheme
 
 if colorscheme == "catppuccin" then
-	vim.g.catppuccin_flavour = "latte" --latte, frappe, macchiato, mocha
+	vim.g.catppuccin_flavour = "mocha" --latte, frappe, macchiato, mocha
 	local catppuccin_status_ok, catppuccin = pcall(require, "catppuccin")
 	if not catppuccin_status_ok then
 		vim.notify("Catppuccin not found, couldn't set colorscheme", "error")
@@ -16,6 +17,27 @@ if colorscheme == "catppuccin" then
 	if not status_transparent_ok then
 		return
 	end
+end
+
+if colorscheme == "synthwave84" then
+
+	local status_transparent_ok, _ = pcall(vim.cmd, "TransparentDisable")
+	if not status_transparent_ok then
+		return
+	end
+
+  require 'synthwave84'.setup({
+    glow = {
+      error_msg = true,
+      type2 = true,
+      func = true,
+      keyword = true,
+      operator = true,
+      buffer_current_target = true,
+      buffer_visible_target = true,
+      buffer_inactive_target = true,
+    }
+  })
 end
 
 -- Check if a string starts with "tokyonight"

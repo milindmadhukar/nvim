@@ -113,4 +113,30 @@ function M.handle_buffer_close()
 	end
 end
 
+function M.capture_selection()
+	local buf = vim.api.nvim_get_current_buf()
+
+	-- Get the line numbers for the start '< and end '> of the visual selection
+	local start_line = vim.fn.line("'<") - 1 -- 0-based indexing
+	local end_line = vim.fn.line("'>")
+
+	-- Get the lines in the visual selection
+	local lines = vim.api.nvim_buf_get_lines(buf, start_line, end_line, false)
+	-- Concatenate the lines into a single string
+	local text = table.concat(lines, "\n")
+
+	-- Get the current file name and extract its extension
+	local filename = vim.fn.expand("%:t")
+	local filetype = filename:match("^.+(%..+)$")
+
+	if filetype == nil then
+		filetype = vim.bo.filetype -- fallback to Vim's filetype if no extension found
+	end
+
+	return { text, filetype }
+end
+
+-- use the function
+local function lol() end
+
 return M

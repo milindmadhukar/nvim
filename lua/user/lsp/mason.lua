@@ -14,6 +14,7 @@ local servers = {
   "sqlls",
   "rust_analyzer",
   "jdtls",
+  "svelte",
 }
 
 local mason_status_ok, mason = pcall(require, "mason")

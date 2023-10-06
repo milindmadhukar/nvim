@@ -21,6 +21,7 @@ configs.setup {
     "bash",
     "html",
     "css",
+    "java"
   },
   ignore_install = { "" }, -- List of parsers to ignore installing
   sync_install = false, -- install languages synchronously (only applied to `ensure_installed`)

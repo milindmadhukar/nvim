@@ -97,18 +97,26 @@ local mappings = {
 	["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
-  ["C"] = { "<cmd>Copilot suggestion toggle_auto_trigger<cr>", "Toggle Copilot Text"},
 	-- ["C"] = { "<cmd>CodiNew javascript<CR>", "Codi" },
 	["z"] = { "<cmd>TZMinimalist<cr>", "Toggle narrow mode" },
 	-- TODO: Switch to something that can run all file types
 	["r"] = { "<cmd>TermExec cmd='clear && g++ % && ./a.out'<CR>", "Run C++ Program" },
 	["L"] = { "<cmd>Lazy<cr>", "Lazy Menu" },
+	["S"] = { "<cmd>lua require('user.screenshot').generate_carbon_screenshot()<cr>", "Take screenshot" },
 
 	Z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
 		["m"] = { "<cmd>TZMinimalist<cr>", "Toggle minimalist mode" },
 		["f"] = { "<cmd>TZFocus<cr>", "Toggle focus mode" },
 		["z"] = { "<cmd>TZNarrow<cr>", "Toggle narrow mode" },
+	},
+
+	C = {
+		name = "Copilot",
+		t = { "<cmd>Copilot suggestion toggle_auto_trigger<cr>", "Toggle Copilot Sugesstions" },
+		d = { "<cmd>Copilot toggle<cr>", "Toggle Copilot" },
+    p = { "<cmd>Copilot panel<cr>", "Show Panel" },
+    s = { "<cmd>Copilot status<cr>", "Status"},
 	},
 
 	p = {
@@ -126,16 +134,16 @@ local mappings = {
 		c = { "<cmd>lua require('refactoring').debug.cleanup({})<CR>", "Cleanup" },
 	},
 
-	S = {
-		name = "Spotify",
-		n = { "<Plug>(SpotifySkip)", "Next" },
-		b = { "<Plug>(SpotifyPrev)", "Previous" },
-		s = { "<Plug>(SpotifySave)", "Save" },
-		o = { "<cmd>Spotify<CR>", "Open" },
-		d = { "<cmd>SpotifyDevices<CR>", "Devices" },
-		p = { "<Plug>(SpotifyPause)", "Play/Pause" },
-		S = { "<Plug>(SpotifyShuffle)", "Shuffle" },
-	},
+	-- S = {
+	-- 	name = "Spotify",
+	-- 	n = { "<Plug>(SpotifySkip)", "Next" },
+	-- 	b = { "<Plug>(SpotifyPrev)", "Previous" },
+	-- 	s = { "<Plug>(SpotifySave)", "Save" },
+	-- 	o = { "<cmd>Spotify<CR>", "Open" },
+	-- 	d = { "<cmd>SpotifyDevices<CR>", "Devices" },
+	-- 	p = { "<Plug>(SpotifyPause)", "Play/Pause" },
+	-- 	S = { "<Plug>(SpotifyShuffle)", "Shuffle" },
+	-- },
 
 	g = {
 		name = "Git",
@@ -240,6 +248,7 @@ local mappings = {
 		h = { "<cmd>ToggleTerm size=10 direction=horizontal<cr>", "Horizontal" },
 		v = { "<cmd>ToggleTerm size=80 direction=vertical<cr>", "Vertical" },
 	},
+
 	d = {
 		name = "Debug",
 		b = { "<cmd>lua require'dap'.toggle_breakpoint()<cr>", "Toggle Breakpoint" },
@@ -301,6 +310,14 @@ local mappings = {
 		["9"] = { '<cmd>lua require("harpoon.ui").nav_file(9)<CR>', "Go to file 9" },
 		["0"] = { '<cmd>lua require("harpoon.ui").nav_file(0)<CR>', "Go to file 0" },
 	},
+
+	o = {
+		name = "Other",
+		["t"] = { "<cmd>TransparentToggle<cr>", "Toggle Background Tranparency" },
+    ["c"] = { "<cmd>CodiNew javascript<cr>", "Javascript Scratchpad" },
+    ["b"] = {"<cmd>lua require('barbecue.ui').toggle()<cr>", "Toggle Barbecue"},
+	},
+
 	-- NOTE: Maybe terminal support?
 }
 
@@ -318,6 +335,9 @@ local vmappings = {
 		"<ESC><CMD>lua require(\"Comment.api\").locked('comment.linewise')(vim.fn.visualmode())<CR>",
 		"Comment",
 	},
+
+	["S"] = { "<cmd>lua require('user.screenshot').generate_carbon_screenshot()<cr>", "Take screenshot" },
+
 	r = {
 		name = "Refactoring",
 		e = { "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>", "Extract Function" },
