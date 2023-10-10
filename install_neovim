@@ -1,0 +1,211 @@
+#!/usr/bin/env bash
+
+set -eu pipefall
+
+# Function for dependency check
+dep_ch() {
+    for dep; do
+        if ! command -v "$dep" >/dev/null; then
+            terminate_script "Program \"$dep\" not found. Please install it."
+        fi
+    done
+}
+
+# Display error message in red to stderr
+error() {
+    printf "\33[2k\r\033[1;31m%s\033[0m\n" "$*" >&2
+}
+
+# Display an informational message (first argument in green, second in magenta)
+inf() {
+    printf "\33[2K\r\033[1;35m%s \033[1;35m%s\033[0m\n" "$1" "$2"
+}
+
+# Function to terminate script if error occurs
+terminate_script() {
+    error "$*"
+    exit 1
+}
+
+function __invalid__prefix__handler() {
+  inf "" "Error! Invalid value for NEOVIM_INSTALL_PREFIX: [$INSTALL_PREFIX]"
+  inf "" "Please verify that the folder exists and re-run the installer!"
+  exit 1
+}
+
+function build_from_source() {
+  dep_ch "gcc" "cmake" || true
+  CURRENT_DIR="$(pwd)"
+  NEOVIM_DIR="$HOME/.config/nvim/neovim"
+
+  inf "" "Please choose a build type"
+  PS3='Please enter your choice: '
+  options=("Nightly (RelWithDebInfo)" "Release (Default)" "exit script")
+  select opt in "${options[@]}"; do
+    case $opt in
+      "Nightly (RelWithDebInfo)")
+      BUILD_TYPE="RelWithDebInfo"
+      break
+      ;;
+    "Release (Default)")
+      BUILD_TYPE="Release"
+      break
+      ;;
+    "exit script")
+      exit 0
+      ;;
+    *)
+      BUILD_TYPE="Release"
+      inf "[OK]" "Build type set to Release"
+      break
+      ;;
+    esac
+  done
+
+
+  #checks if neovim directory already exists, pull new changes else clone
+  if [ -d "$NEOVIM_DIR" ]; then
+    cd "$NEOVIM_DIR" || terminate_script "Error: neovim directory not found exiting script ..."
+    git pull
+    cd "$CURRENT_DIR" || terminate_script "Error: not able to change directory to \"$CURRENT_DIR\""
+  else
+    git clone https://github.com/neovim/neovim.git "$NEOVIM_DIR"
+  fi
+
+  #checks for file existance
+  [ -e /usr/local/bin/nvim ] && sudo rm -f /usr/local/bin/nvim
+  [ -e /usr/local/share/nvim/ ] && sudo rm -rf /usr/local/share/nvim/
+
+  cd "$NEOVIM_DIR" 2>/dev/null || terminate_script "Error: neovim directory not found exiting script ..."
+
+  make CMAKE_BUILD_TYPE="$BUILD_TYPE"
+
+  sudo make install
+  cd "$CURRENT_DIR" || terminate_script "Error: not able to change directory to \"$CURRENT_DIR\""
+  rm -rf "$NEOVIM_DIR"
+
+  exit
+}
+
+function install_from_release() {
+
+  declare -r NEOVIM_INSTALL_PREFIX="${INSTALL_PREFIX:-"$HOME/.local"}"
+  declare RELEASE_VER
+
+  inf "" "Please choose a release version:"
+  PS3='Please enter your choice: '
+  options=("latest" "nightly")
+  select opt in "${options[@]}"; do
+    case $opt in
+    "latest")
+      RELEASE_VER="latest"
+      break
+      ;;
+    "nightly")
+      RELEASE_VER="nightly"
+      break
+      ;;
+    *)
+      RELEASE_VER="latest"
+      inf "[OK]" "Release version set to latest"
+      break
+      ;;
+    esac
+  done
+
+  declare ARCHIVE_NAME
+  declare RELEASE_NAME
+  declare OS
+
+  OS="$(uname -s)"
+
+  if [ "$OS" == "Linux" ]; then
+    ARCHIVE_NAME="nvim-linux64"
+    RELEASE_NAME="nvim-linux64"
+  elif [ "$OS" == "Darwin" ]; then
+    ARCHIVE_NAME="nvim-macos"
+    # for some reason the archive has a different name
+    RELEASE_NAME="nvim-osx64"
+  else
+    inf "" "$OS platform is not supported currently"
+    exit 1
+  fi
+
+  if [[ "${RELEASE_VER}" == "latest" ]]; then
+    declare -r RELEASE_URL="https://github.com/neovim/neovim/releases/${RELEASE_VER}/download/${ARCHIVE_NAME}.tar.gz"
+  else
+    declare -r RELEASE_URL="https://github.com/neovim/neovim/releases/download/${RELEASE_VER}/${ARCHIVE_NAME}.tar.gz"
+  fi
+  declare -r CHECKSUM_URL="$RELEASE_URL.sha256sum"
+
+  DOWNLOAD_DIR="$(mktemp -d)"
+  readonly DOWNLOAD_DIR
+
+  RELEASE_SHA="$(curl -Ls "$CHECKSUM_URL" | awk '{print $1}')"
+  readonly RELEASE_SHA
+
+  if [ ! -d "$NEOVIM_INSTALL_PREFIX" ]; then
+    mkdir -p "$NEOVIM_INSTALL_PREFIX" || __invalid__prefix__handler
+  fi
+
+  inf "" "Downloading Neovim's binary from $RELEASE_VER release.."
+  if ! curl --progress-bar --fail -L "$RELEASE_URL" -o "$DOWNLOAD_DIR/$ARCHIVE_NAME.tar.gz"; then
+    inf "" "Download failed.  Check that the release/filename are correct."
+    exit 1
+  fi
+  inf "" "Download complete!"
+
+  inf "" "Verifying the installation.."
+  DOWNLOADED_SHA="$(openssl dgst -sha256 "$DOWNLOAD_DIR/$ARCHIVE_NAME.tar.gz" | awk '{print $2}')"
+
+  if [ "$RELEASE_SHA" != "$DOWNLOADED_SHA" ]; then
+    inf "" "Error! checksum mismatch."
+    inf "" "Expected: $RELEASE_SHA but got: $DOWNLOADED_SHA"
+    exit 1
+  fi
+  inf "" "Verification complete!"
+
+  inf "" "Installing Neovim.."
+  pushd "$DOWNLOAD_DIR"
+  tar -xzf "$DOWNLOAD_DIR/$ARCHIVE_NAME.tar.gz"
+  popd
+  if [ ! -d "$DOWNLOAD_DIR/$RELEASE_NAME" ]; then
+    # fallback to archive name
+    RELEASE_NAME="$ARCHIVE_NAME"
+  fi
+  # https://dev.to/ackshaey/macos-vs-linux-the-cp-command-will-trip-you-up-2p00
+  cp -r "$DOWNLOAD_DIR/$RELEASE_NAME/." "$NEOVIM_INSTALL_PREFIX"
+  inf "" "Installation complete!"
+  inf "" "Now you can run $NEOVIM_INSTALL_PREFIX/bin/nvim"
+
+  exit
+}
+
+inf "" "Please choose an installation method:"
+PS3='Please enter your choice: '
+options=("Build from Scratch" "Download from Releases" "Exit Script")
+
+# Ask the user to chose one of the options only once
+# If the user enters an invalid option, the script will exit
+
+select opt in "${options[@]}"; do
+  case $opt in
+  "Build from Scratch")
+    build_from_source
+    break
+    ;;
+  "Download from Releases")
+    install_from_release
+    break
+    ;;
+  "Exit Script")
+    exit 0
+    ;;
+  *)
+    error "Invalid option $REPLY"
+    exit 1
+    ;;
+  esac
+done
+
+
