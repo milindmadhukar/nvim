@@ -467,9 +467,11 @@ local plugins = {
 		end,
 	},
 
+
+  -- Smooth scrolling
 	{
 		"karb94/neoscroll.nvim",
-		enabled = true,
+		enabled = false,
 		-- NOTE: Disabled coz animation seems too slow for me, i think default jumps are ok, idk
 		config = function()
 			require("neoscroll").setup({
