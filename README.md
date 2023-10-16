@@ -1,7 +1,9 @@
 # My Neovim Configuration
 
 ![image](https://github.com/milindmadhukar/nvim/assets/68477234/869d0b59-c87a-492d-859a-0eeae783bf14)
-![image](https://github.com/milindmadhukar/nvim/assets/68477234/5525596f-c872-4da0-a550-a48da6a69556)
+![image](https://github.com/milindmadhukar/nvim/assets/68477234/5525596f-c872-4da0-a550-a48da6a69556)A
+
+<a href="https://dotfyle.com/milindmadhukar/nvim"><img src="https://dotfyle.com/milindmadhukar/nvim/badges/plugins?style=flat" /></a>
 
 ## Install Neovim 0.9
 
