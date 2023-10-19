@@ -113,6 +113,12 @@ function M.handle_buffer_close()
 	end
 end
 
+function M.export_neorg_to_md()
+  -- Get currently opened file name without extension
+  local filename = vim.fn.expand("%:t:r")
+  vim.cmd("Neorg export to-file " .. filename .. ".md")
+end
+
 function M.capture_selection()
 	local buf = vim.api.nvim_get_current_buf()
 

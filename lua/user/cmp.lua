@@ -121,6 +121,7 @@ cmp.setup({
 				copilot = "[Copilot ]",
 				nvim_lua = "[Nvim Lua ]",
 				calc = "[Calc 󰃬]",
+        neorg = "[Neorg ]",
 			})[entry.source.name]
 			return vim_item
 		end,

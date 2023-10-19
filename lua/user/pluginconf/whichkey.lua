@@ -93,7 +93,7 @@ local mappings = {
 		"<cmd>Telescope find_files<cr>",
 		"Find files",
 	},
-	["n"] = { "<cmd>lua require('telescope').extensions.notify.notify()<cr>", "Notifications" },
+	["N"] = { "<cmd>lua require('telescope').extensions.notify.notify()<cr>", "Notifications" },
 	["F"] = { "<cmd>Telescope live_grep theme=ivy<cr>", "Find Text" },
 	["m"] = { "<cmd>MinimapToggle<CR>", "Toggle Minimap" },
 	["P"] = { "<cmd>lua require('telescope').extensions.projects.projects()<cr>", "Projects" },
@@ -168,6 +168,18 @@ local mappings = {
 			"Diff",
 		},
 	},
+
+  n = {
+    name = "Neorg",
+    ["o"] = {"<cmd>Neorg workspace notes<cr>", "Open Notes workspace"},
+    ["j"] = {"<cmd>Neorg journal today<cr>" , "Open today's journal"},
+    ["i"] = {"<cmd>Neorg index<cr>", "Index files"},
+    ["s"] = {"<cmd>Neorg sync-parsers<cr>", "Sync Neorg Parsers"},
+    ["e"] = {"<cmd>lua require('user.functions').export_neorg_to_md()<cr>", "Export file to markdown"},
+    ["c"] = {"<cmd>Neorg toggle-concealer<cr>", "Toggle Concealer (icons)"},
+    ["f"] = { "<cmd>Telescope neorg find_norg_files<cr>" , "Find Norg Files"},
+    -- TODO: Add Neorg telescope shortcuts.
+  },
 
 	--[[ h = { ]]
 	--[[ 	name = "Hop", ]]

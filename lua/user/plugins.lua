@@ -106,17 +106,28 @@ local plugins = {
 	{ "Shadorain/shadotheme" },
 	{ "LunarVim/synthwave84.nvim", lazy = "false" },
 	{ "catppuccin/nvim", name = "catppuccin", lazy = "false" },
+	-- {
+	--   'maxmx03/fluoromachine.nvim',
+	--   config = function()
+	--     local fm = require 'fluoromachine'
+	--
+	--     fm.setup {
+	--       glow = true,
+	--       theme = 'retrowave'
+	--     }
+	--
+	--     vim.cmd.colorscheme 'fluoromachine'
+	--   end
+	-- },
 
 	{
 		"hrsh7th/nvim-cmp",
-		commit = "3ac8d6cd29c74ff482d8ea47d45e5081bfc3f5ad",
 		event = "InsertEnter",
 		dependencies = {
 			-- cmp sources plugins
 			{
 				{
 					"windwp/nvim-autopairs",
-					commit = "7747bbae60074acf0b9e3a4c13950be7a2dff444",
 					event = "InsertEnter",
 					config = function()
 						require("user.pluginconf.autopairs")
@@ -125,28 +136,33 @@ local plugins = {
 				-- cmp plugins
 				{
 					"hrsh7th/cmp-buffer",
-					commit = "3022dbc9166796b644a841a02de8dd1cc1d311fa",
 					event = "InsertEnter",
-				}, -- buffer completions
+				},
 				{
 					"hrsh7th/cmp-path",
-					commit = "447c87cdd6e6d6a1d2488b1d43108bfa217f56e1",
 					event = "InsertEnter",
 				}, -- path completions
-				{ "saadparwaiz1/cmp_luasnip", commit = "18095520391186d634a0045dacaa346291096566" }, -- snippet completions
-				{ "hrsh7th/cmp-nvim-lsp", commit = "0e6b2ed705ddcff9738ec4ea838141654f12eeef" },
-				{ "hrsh7th/cmp-nvim-lua", commit = "f12408bdb54c39c23e67cab726264c10db33ada8" },
+				{ "saadparwaiz1/cmp_luasnip" }, -- snippet completions
+				{ "hrsh7th/cmp-nvim-lsp" },
+				{ "hrsh7th/cmp-nvim-lua" },
 				{ "hrsh7th/cmp-emoji" },
 				{ "hrsh7th/cmp-calc" },
 				-- snippets
 				{ "L3MON4D3/LuaSnip" }, --snippet engine
 				{ "rafamadriz/friendly-snippets" }, -- a bunch of snippets to use
-				-- use({ "pheianox/solidjs-snippets" })
-				{ "solidjs-community/solid-snippets" },
 			},
 		},
 		config = function()
 			require("user.cmp")
+		end,
+	},
+	-- TODO: Tinker with Neorg
+	{
+		"nvim-neorg/neorg",
+		build = ":Neorg sync-parsers",
+		dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } },
+		config = function()
+			require("user.pluginconf.neorg")
 		end,
 	},
 
@@ -154,7 +170,7 @@ local plugins = {
 	{ "neovim/nvim-lspconfig", commit = "6f1d124bbcf03c4c410c093143a86415f46d16a0", event = "BufReadPre" }, -- enable LSP
 	{ "williamboman/mason.nvim", commit = "08b2fd308e0107eab9f0b59d570b69089fd0b522" }, -- LSP/DAP/Format/Lint manager
 	{ "williamboman/mason-lspconfig.nvim", commit = "c55d18f3947562e699d34d89681edbf9f0e250d3" },
-	{ "nvimtools/none-ls.nvim", commit = "bec2b07872d5112fd723a23fc2a69c70fec4d673" }, -- for formatters and linters
+	{ "nvimtools/none-ls.nvim" }, -- for formatters and linters
 	{
 		"jay-babu/mason-null-ls.nvim",
 		event = { "BufReadPre", "BufNewFile" },
@@ -467,8 +483,7 @@ local plugins = {
 		end,
 	},
 
-
-  -- Smooth scrolling
+	-- Smooth scrolling
 	{
 		"karb94/neoscroll.nvim",
 		enabled = false,
@@ -491,9 +506,27 @@ local plugins = {
 
 	{
 		"gen740/SmoothCursor.nvim",
-    config = function()
-      require("user.pluginconf.smoothcursor")
-    end,
+		enabled = false,
+		config = function()
+			require("user.pluginconf.smoothcursor")
+		end,
+	},
+
+	{
+		"kawre/leetcode.nvim",
+		build = ":TSUpdate html",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"nvim-telescope/telescope.nvim",
+			"nvim-lua/plenary.nvim", -- required by telescope
+			"MunifTanjim/nui.nvim",
+
+			-- optional
+			"rcarriga/nvim-notify",
+		},
+		opts = {
+			-- configuration goes here
+		},
 	},
 
 	-- use {
