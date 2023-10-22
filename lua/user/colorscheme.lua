@@ -1,7 +1,7 @@
 -- local colorscheme = "catppuccin"
--- local colorscheme = "tokyonight-moon"
+local colorscheme = "tokyonight-moon"
 -- local colorscheme = "shado"
-local colorscheme = "synthwave84"
+-- local colorscheme = "synthwave84"
 -- local colorscheme = "fluoromachine"
 
 local lualine_theme = colorscheme

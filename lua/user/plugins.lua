@@ -53,6 +53,16 @@ local plugins = {
 	{ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" },
 
 	{
+		"folke/neodev.nvim",
+		opts = {},
+	},
+
+	{ 
+    "rafcamlet/nvim-luapad",
+    dependencies = { "antoinemadec/FixCursorHold.nvim" } 
+  },
+
+	{
 		"nvim-lualine/lualine.nvim",
 		commit = "05d78e9fd0cdfb4545974a5aa14b1be95a86e9c9",
 		config = function()
@@ -234,6 +244,14 @@ local plugins = {
 			require("user.pluginconf.lightbulb")
 		end,
 	},
+
+  {
+    "mfussenegger/nvim-jdtls",
+    ft = "java",
+    config = function()
+      require("user.pluginconf.jdtls")
+    end,
+  },
 
 	-- Telescope
 	{ "nvim-telescope/telescope.nvim", lazy = false },
