@@ -448,7 +448,6 @@ local plugins = {
 	-- UI
 	{
 		"folke/noice.nvim",
-		enabled = false,
 		opts = {
 			-- add any options here
 		},

@@ -2,6 +2,9 @@ if not vim.g.neovide then
   return
 end
 
+
+require("user.colorscheme").load("catppuccin")
+
 vim.g.neovide_scale_factor = 0.75
 vim.g.neovide_scroll_animation_length = 0.3
 vim.g.neovide_hide_mouse_when_typing = false

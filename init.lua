@@ -2,9 +2,8 @@ require("user.keymaps")
 require("user.options")
 require("user.plugins")
 require("user.lsp")
-require("user.colorscheme")
 require("user.autocommands")
+require("user.colorscheme").load("tokyonight-moon") -- catppuccin, tokyonight-moon, synthwave84, fluoromachine
 require("user.neovide")
 
-vim.opt.rtp:append("~/Desktop/Code/dotfyle.nvim/")
-require("dotfyle").setup() -- FOR DEVELOPEMENT ONLY
+

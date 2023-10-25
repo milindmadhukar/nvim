@@ -12,6 +12,7 @@ neorg.setup({
 			config = {
 				workspaces = {
 					notes = "~/notes",
+					twig = "~/notes/this-week-in-garrix",
 				},
 			},
 		},

@@ -172,6 +172,7 @@ local mappings = {
   n = {
     name = "Neorg",
     ["o"] = {"<cmd>Neorg workspace notes<cr>", "Open Notes workspace"},
+    ["g"] = {"<cmd>Neorg workspace twig<cr>", "Open TWiG workspace"},
     ["j"] = {"<cmd>Neorg journal today<cr>" , "Open today's journal"},
     ["i"] = {"<cmd>Neorg index<cr>", "Index files"},
     ["s"] = {"<cmd>Neorg sync-parsers<cr>", "Sync Neorg Parsers"},
