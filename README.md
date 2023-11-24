@@ -11,6 +11,12 @@ You can install Neovim with your package manager e.g. brew, apt, pacman etc.. bu
 
 I have included scripts to install neovim from release or building from source
 
+Or run the following (make sure to read the script before running it.)
+
+```sh
+bash <(curl -s https://raw.githubusercontent.com/milindmadhukar/nvim/master/install_neovim)
+```
+
 ## Install the config
 
 Make sure to remove or move your current `nvim` directory
