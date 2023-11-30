@@ -325,7 +325,7 @@ local plugins = {
 
 	-- Misc
 	{
-		"norcalli/nvim-colorizer.lua",
+		"NvChad/nvim-colorizer.lua",
 		config = function()
 			require("user.pluginconf.colorizer")
 		end,
@@ -448,6 +448,7 @@ local plugins = {
 	-- UI
 	{
 		"folke/noice.nvim",
+    enabled = false,
 		opts = {
 			-- add any options here
 		},
