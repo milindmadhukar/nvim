@@ -114,9 +114,9 @@ function M.handle_buffer_close()
 end
 
 function M.export_neorg_to_md()
-  -- Get currently opened file name without extension
-  local filename = vim.fn.expand("%:t:r")
-  vim.cmd("Neorg export to-file " .. filename .. ".md")
+	-- Get currently opened file name without extension
+	local filename = vim.fn.expand("%:t:r")
+	vim.cmd("Neorg export to-file " .. filename .. ".md")
 end
 
 function M.capture_selection()
@@ -140,6 +140,16 @@ function M.capture_selection()
 	end
 
 	return { text, filetype }
+end
+
+function M.has_value(tab, val)
+	for _, value in ipairs(tab) do
+		if value == val then
+			return true
+		end
+	end
+
+	return false
 end
 
 -- use the function

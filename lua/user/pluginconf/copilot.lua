@@ -11,7 +11,7 @@ copilot.setup({
     keymap = {
       jump_prev = "[[",
       jump_next = "]]",
-      accept = "<CR>",
+      accept = "<C-a>",
       refresh = "gr",
       open = "<M-CR>"
     },
