@@ -1,6 +1,6 @@
 local status_ok, neorg = pcall(require, "neorg")
 if not status_ok then
-	vim.notify("Neorg not found", "error")
+	vim.notify("Neorg not found", vim.log.levels.ERROR)
 	return
 end
 

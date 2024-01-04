@@ -1,6 +1,6 @@
 local status_ok, todo_comments = pcall(require, "todo-comments")
 if not status_ok then
-  vim.notify("TodoComments not found", "error")
+  vim.notify("TodoComments not found", vim.log.levels.ERROR)
   return
 end
 local error_red = "#F44747"

@@ -1,7 +1,7 @@
 local status_ok, noice = pcall(require, "noice")
 
 if not status_ok then
-	return
+  vim.notify("Noice not found", vim.log.levels.ERROR)
 end
 
 noice.setup({

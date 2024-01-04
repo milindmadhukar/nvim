@@ -1,6 +1,6 @@
 local status_ok, spotify = pcall(require, "nvim-spotify")
 if not status_ok then
-  vim.notify("Spotify not found", "error")
+  vim.notify("Spotify not found", vim.log.levels.ERROR)
   return
 end
 

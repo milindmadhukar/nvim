@@ -1,6 +1,6 @@
 local status_ok, configs = pcall(require, "nvim-treesitter.configs")
 if not status_ok then
-  vim.notify("Treesitter not found", "error")
+  vim.notify("Treesitter not found", vim.log.levels.ERROR)
   return
 end
 

@@ -1,6 +1,6 @@
 local status_ok, which_key = pcall(require, "which-key")
 if not status_ok then
-	vim.notify("WhichKey not found", "error")
+	vim.notify("WhichKey not found", vim.log.levels.ERROR)
 	return
 end
 
@@ -104,6 +104,8 @@ local mappings = {
 	["L"] = { "<cmd>Lazy<cr>", "Lazy Menu" },
 	["S"] = { "<cmd>lua require('user.screenshot').generate_carbon_screenshot()<cr>", "Take screenshot" },
 
+	["x"] = { "<cmd>lua require('user.functions').sourcefile()<CR>", "Source File" },
+
 	Z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
 		["m"] = { "<cmd>TZMinimalist<cr>", "Toggle minimalist mode" },
@@ -115,8 +117,8 @@ local mappings = {
 		name = "Copilot",
 		t = { "<cmd>Copilot suggestion toggle_auto_trigger<cr>", "Toggle Copilot Sugesstions" },
 		d = { "<cmd>Copilot toggle<cr>", "Toggle Copilot" },
-    p = { "<cmd>Copilot panel<cr>", "Show Panel" },
-    s = { "<cmd>Copilot status<cr>", "Status"},
+		p = { "<cmd>Copilot panel<cr>", "Show Panel" },
+		s = { "<cmd>Copilot status<cr>", "Status" },
 	},
 
 	p = {
@@ -169,18 +171,18 @@ local mappings = {
 		},
 	},
 
-  n = {
-    name = "Neorg",
-    ["o"] = {"<cmd>Neorg workspace notes<cr>", "Open Notes workspace"},
-    ["g"] = {"<cmd>Neorg workspace twig<cr>", "Open TWiG workspace"},
-    ["j"] = {"<cmd>Neorg journal today<cr>" , "Open today's journal"},
-    ["i"] = {"<cmd>Neorg index<cr>", "Index files"},
-    ["s"] = {"<cmd>Neorg sync-parsers<cr>", "Sync Neorg Parsers"},
-    ["e"] = {"<cmd>lua require('user.functions').export_neorg_to_md()<cr>", "Export file to markdown"},
-    ["c"] = {"<cmd>Neorg toggle-concealer<cr>", "Toggle Concealer (icons)"},
-    ["f"] = { "<cmd>Telescope neorg find_norg_files<cr>" , "Find Norg Files"},
-    -- TODO: Add Neorg telescope shortcuts.
-  },
+	n = {
+		name = "Neorg",
+		["o"] = { "<cmd>Neorg workspace notes<cr>", "Open Notes workspace" },
+		["g"] = { "<cmd>Neorg workspace twig<cr>", "Open TWiG workspace" },
+		["j"] = { "<cmd>Neorg journal today<cr>", "Open today's journal" },
+		["i"] = { "<cmd>Neorg index<cr>", "Index files" },
+		["s"] = { "<cmd>Neorg sync-parsers<cr>", "Sync Neorg Parsers" },
+		["e"] = { "<cmd>lua require('user.functions').export_neorg_to_md()<cr>", "Export file to markdown" },
+		["c"] = { "<cmd>Neorg toggle-concealer<cr>", "Toggle Concealer (icons)" },
+		["f"] = { "<cmd>Telescope neorg find_norg_files<cr>", "Find Norg Files" },
+		-- TODO: Add Neorg telescope shortcuts.
+	},
 
 	--[[ h = { ]]
 	--[[ 	name = "Hop", ]]
@@ -327,8 +329,8 @@ local mappings = {
 	o = {
 		name = "Other",
 		["t"] = { "<cmd>TransparentToggle<cr>", "Toggle Background Tranparency" },
-    ["c"] = { "<cmd>CodiNew javascript<cr>", "Javascript Scratchpad" },
-    ["b"] = {"<cmd>lua require('barbecue.ui').toggle()<cr>", "Toggle Barbecue"},
+		["c"] = { "<cmd>CodiNew javascript<cr>", "Javascript Scratchpad" },
+		["b"] = { "<cmd>lua require('barbecue.ui').toggle()<cr>", "Toggle Barbecue" },
 	},
 
 	-- NOTE: Maybe terminal support?

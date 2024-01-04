@@ -1,6 +1,6 @@
 local status_ok, copilot = pcall(require, "copilot")
 if not status_ok then
-  vim.notify("Copilot not found", "error")
+  vim.notify("Copilot not found", vim.log.levels.ERROR)
   return
 end
 

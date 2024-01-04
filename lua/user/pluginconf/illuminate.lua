@@ -1,6 +1,6 @@
 local status_ok, illuminate = pcall(require, "illuminate")
 if not status_ok then
-  vim.notify("Illuminate not found", "error")
+  vim.notify("Illuminate not found", vim.log.levels.ERROR)
   return
 end
 

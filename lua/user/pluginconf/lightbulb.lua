@@ -1,6 +1,6 @@
 local lightbulb_status_ok, lightbulb = pcall(require, "nvim-lightbulb")
 if not lightbulb_status_ok then
-  vim.notify("Lightbulb not found", "error")
+  vim.notify("Lightbulb not found", vim.log.levels.ERROR)
   return
 end
 

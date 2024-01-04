@@ -1,6 +1,6 @@
 local status_ok, dressing = pcall(require, "dressing")
 if not status_ok then
-  vim.notify("Dressing not found", "error")
+  vim.notify("Dressing not found", vim.log.levels.ERROR)
   return
 end
 

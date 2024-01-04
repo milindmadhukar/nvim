@@ -1,6 +1,6 @@
 local status_ok, cloak = pcall(require, 'cloak')
 if not status_ok then
-  return
+  vim.notify("Cloak not found", vim.log.levels.ERROR)
 end
 
 

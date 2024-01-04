@@ -1,6 +1,6 @@
 local status_ok, telescope = pcall(require, "telescope")
 if not status_ok then
-  vim.notify("Harpoon not found", "error")
+  vim.notify("Harpoon not found", vim.log.levels.ERROR)
   return
 end
 

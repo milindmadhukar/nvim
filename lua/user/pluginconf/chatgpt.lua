@@ -1,6 +1,6 @@
 local status_ok, chatgpt = pcall(require, "chatgpt")
 if not status_ok then
-  vim.notify("ChatGPT not found", "error")
+  vim.notify("ChatGPT not found", vim.log.levels.ERROR)
   return
 end
 

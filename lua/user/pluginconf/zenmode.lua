@@ -1,6 +1,6 @@
 local status_ok, truezen = pcall(require, "true-zen")
 if not status_ok then
-  vim.notify("TrueZen not found", "error")
+  vim.notify("TrueZen not found", vim.log.levels.ERROR)
   return
 end
 

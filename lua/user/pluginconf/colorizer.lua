@@ -1,6 +1,6 @@
 local status_ok, colorizer = pcall(require, "colorizer")
 if not status_ok then
-	vim.notify("Colorizer not found", "error")
+	vim.notify("Colorizer not found", vim.log.levels.ERROR)
 	return
 end
 

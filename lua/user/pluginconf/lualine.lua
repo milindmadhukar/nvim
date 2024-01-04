@@ -1,6 +1,6 @@
 local status_ok, lualine = pcall(require, "lualine")
 if not status_ok then
-  return
+  vim.notify("Lualine not found", vim.log.levels.ERROR)
 end
 
 local hide_in_width = function()

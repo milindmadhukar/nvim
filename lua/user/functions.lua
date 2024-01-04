@@ -42,6 +42,11 @@ function M.toggle_diagnostics()
 	end
 end
 
+function M.sourcefile()
+	vim.cmd(":w")
+	vim.cmd(":source %")
+end
+
 function M.isempty(s)
 	return s == nil or s == ""
 end

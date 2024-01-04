@@ -1,12 +1,12 @@
 local dap_status_ok, dap = pcall(require, "dap")
 if not dap_status_ok then
-  vim.notify("DAP not found", "error")
+  vim.notify("DAP not found", vim.log.levels.ERROR)
   return
 end
 
 local dap_ui_status_ok, dap_ui = pcall(require, "dapui")
 if not dap_ui_status_ok then
-  vim.notify("DAP UI not found", "error")
+  vim.notify("DAP UI not found", vim.log.levels.ERROR)
   return
 end
 
@@ -135,7 +135,7 @@ dap.configurations.c = dap.configurations.cpp
 
 local dap_go_status_ok, dap_go = pcall(require, "dap-go")
 if not dap_go_status_ok then
-  vim.notify("DAP Go not found", "error")
+  vim.notify("DAP Go not found", vim.log.levels.ERROR)
   return
 end
 
@@ -143,7 +143,7 @@ dap_go.setup()
 
 local dap_python_status_ok, dap_python = pcall(require, "dap-python")
 if not dap_python_status_ok then
-  vim.notify("DAP Python not found", "error")
+  vim.notify("DAP Python not found", vim.log.levels.ERROR)
   return
 end
 
