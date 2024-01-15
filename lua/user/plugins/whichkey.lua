@@ -1,8 +1,6 @@
-local status_ok, which_key = pcall(require, "which-key")
-if not status_ok then
-	vim.notify("WhichKey not found", vim.log.levels.ERROR)
-	return
-end
+local M = {
+	"folke/which-key.nvim",
+}
 
 local setup = {
 	plugins = {
@@ -105,6 +103,8 @@ local mappings = {
 	["S"] = { "<cmd>lua require('user.screenshot').generate_carbon_screenshot()<cr>", "Take screenshot" },
 
 	["x"] = { "<cmd>lua require('user.functions').sourcefile()<CR>", "Source File" },
+
+  ["O"] = { "<cmd>Oil<cr>", "Oil" },
 
 	Z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
@@ -368,6 +368,11 @@ local vmappings = {
 	z = { "<cmd>'<,'>TZNarrow<cr>", "Toggle narrow mode" },
 }
 
-which_key.setup(setup)
-which_key.register(mappings, opts)
-which_key.register(vmappings, vopts)
+function M.config()
+  local which_key = require("which-key")
+	which_key.setup(setup)
+	which_key.register(mappings, opts)
+	which_key.register(vmappings, vopts)
+end
+
+return M

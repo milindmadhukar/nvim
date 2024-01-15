@@ -54,7 +54,7 @@ local kind_icons = {
 	Unit = "塞",
 	Value = " ",
 	Variable = " ",
-  Copilot = " ",
+	Copilot = " ",
 }
 -- find more here: https://www.nerdfonts.com/cheat-sheet
 
@@ -121,7 +121,7 @@ cmp.setup({
 				copilot = "[Copilot ]",
 				nvim_lua = "[Nvim Lua ]",
 				calc = "[Calc 󰃬]",
-        neorg = "[Neorg ]",
+				neorg = "[Neorg ]",
 			})[entry.source.name]
 			return vim_item
 		end,
