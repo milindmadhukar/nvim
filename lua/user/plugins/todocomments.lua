@@ -3,6 +3,7 @@ if not status_ok then
   vim.notify("TodoComments not found", vim.log.levels.ERROR)
   return
 end
+
 local error_red = "#F44747"
 local warning_orange = "#ff8800"
 local info_yellow = "#FFCC66"

@@ -24,7 +24,7 @@ local plugins = {
 	{
 		"numToStr/Comment.nvim",
 		config = function()
-			require("user.pluginconf.comment")
+			require("user.plugins.comment")
 		end,
 		lazy = false,
 	},
@@ -41,16 +41,17 @@ local plugins = {
 		commit = "b1e074d2b52d45c8327b5b43a498b3d7e6c93b97",
 		cmd = { "NvimTreeToggle" },
 		config = function()
-			require("user.pluginconf.nvim-tree")
+			require("user.plugins.nvim-tree")
 		end,
 	},
+
 	{
 		"akinsho/bufferline.nvim",
 		event = "BufEnter",
 		version = "*",
 		dependencies = "nvim-tree/nvim-web-devicons",
 		config = function()
-			require("user.pluginconf.bufferline")
+			require("user.plugins.bufferline")
 		end,
 	},
 	{ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" },
@@ -58,7 +59,7 @@ local plugins = {
 	{
 		"folke/neodev.nvim",
 		config = function()
-			require("user.pluginconf.neodev")
+			require("user.plugins.neodev")
 		end,
 	},
 
@@ -71,7 +72,7 @@ local plugins = {
 		"nvim-lualine/lualine.nvim",
 		commit = "05d78e9fd0cdfb4545974a5aa14b1be95a86e9c9",
 		config = function()
-			require("user.pluginconf.lualine")
+			require("user.plugins.lualine")
 		end,
 	},
 	{
@@ -79,14 +80,14 @@ local plugins = {
 		commit = "26f16d3bab1761d0d11117a8e431faba11a1b865",
 		event = "BufEnter",
 		config = function()
-			require("user.pluginconf.toggleterm")
+			require("user.plugins.toggleterm")
 		end,
 	},
 	{
 		"ahmedkhalf/project.nvim",
 		commit = "8c6bad7d22eef1b71144b401c9f74ed01526a4fb",
 		config = function()
-			require("user.pluginconf.project")
+			require("user.plugins.project")
 		end,
 		lazy = false,
 	},
@@ -95,21 +96,21 @@ local plugins = {
 		commit = "018bd04d80c9a73d399c1061fa0c3b14a7614399",
 		event = "BufEnter",
 		config = function()
-			require("user.pluginconf.indentline")
+			require("user.plugins.indentline")
 		end,
 	},
 	{
 		"goolord/alpha-nvim",
 		commit = "1838ae926e8d49fe5330d1498ee8289ae2c340bc",
 		config = function()
-			require("user.pluginconf.alpha")
+			require("user.plugins.alpha")
 		end,
 		lazy = false,
 	},
 	{
 		"folke/which-key.nvim",
 		config = function()
-			require("user.pluginconf.whichkey")
+			require("user.plugins.whichkey")
 		end,
 		lazy = false,
 	},
@@ -146,7 +147,7 @@ local plugins = {
 					"windwp/nvim-autopairs",
 					event = "InsertEnter",
 					config = function()
-						require("user.pluginconf.autopairs")
+						require("user.plugins.autopairs")
 					end,
 				}, -- Autopairs, integrates with both cmp and treesitter
 				-- cmp plugins
@@ -178,7 +179,7 @@ local plugins = {
 		build = ":Neorg sync-parsers",
 		dependencies = { { "nvim-lua/plenary.nvim" }, { "nvim-neorg/neorg-telescope" } },
 		config = function()
-			require("user.pluginconf.neorg")
+			require("user.plugins.neorg")
 		end,
 	},
 
@@ -206,7 +207,7 @@ local plugins = {
 			"neovim/nvim-lspconfig",
 		},
 		config = function()
-			require("user.pluginconf.navic")
+			require("user.plugins.navic")
 		end,
 	},
 
@@ -239,7 +240,7 @@ local plugins = {
 		commit = "a2907275a6899c570d16e95b9db5fd921c167502",
 		event = "BufEnter",
 		config = function()
-			require("user.pluginconf.illuminate")
+			require("user.plugins.illuminate")
 		end,
 	},
 
@@ -247,7 +248,7 @@ local plugins = {
 		"kosayoda/nvim-lightbulb",
 		dependencies = { "antoinemadec/FixCursorHold.nvim" },
 		config = function()
-			require("user.pluginconf.lightbulb")
+			require("user.plugins.lightbulb")
 		end,
 	},
 
@@ -255,7 +256,7 @@ local plugins = {
 		"mfussenegger/nvim-jdtls",
 		ft = "java",
 		config = function()
-			require("user.pluginconf.jdtls")
+			require("user.plugins.jdtls")
 		end,
 	},
 
@@ -271,7 +272,7 @@ local plugins = {
 	{
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
-			require("user.pluginconf.treesitter")
+			require("user.plugins.treesitter")
 		end,
 	},
 	-- Git
@@ -295,7 +296,7 @@ local plugins = {
 		end,
 
 		config = function()
-			require("user.pluginconf.gitsigns")
+			require("user.plugins.gitsigns")
 		end,
 	},
 	{
@@ -311,7 +312,7 @@ local plugins = {
 		commit = "56118cee6af15cb9ddba9d080880949d8eeb0c9f",
 		event = "BufEnter",
 		config = function()
-			require("user.pluginconf.dap")
+			require("user.plugins.dap")
 		end,
 	},
 
@@ -333,14 +334,14 @@ local plugins = {
 	{
 		"NvChad/nvim-colorizer.lua",
 		config = function()
-			require("user.pluginconf.colorizer")
+			require("user.plugins.colorizer")
 		end,
 	},
 	{
 		"folke/todo-comments.nvim",
 		event = "BufEnter",
 		config = function()
-			require("user.pluginconf.todocomments")
+			require("user.plugins.todocomments")
 		end,
 	}, -- NOTE: Not actively maintained
 	{
@@ -351,7 +352,7 @@ local plugins = {
 		"Pocco81/true-zen.nvim",
 		cmd = { "TZFocus", "TZNarrow", "TZAtaraxis", "TZMinimalist" },
 		config = function()
-			require("user.pluginconf.zenmode")
+			require("user.plugins.zenmode")
 		end,
 	},
 	{
@@ -366,12 +367,11 @@ local plugins = {
 	{
 		"ThePrimeagen/harpoon",
 		branch = "harpoon2",
-		event = "VeryLazy",
 		dependencies = {
 			{ "nvim-lua/plenary.nvim" },
 		},
 		config = function()
-			require("user.pluginconf.harpoon")
+			require("user.plugins.harpoon")
 		end,
 	},
 
@@ -384,7 +384,7 @@ local plugins = {
 	{
 		"andweeb/presence.nvim",
 		config = function()
-			require("user.pluginconf.presence")
+			require("user.plugins.presence")
 		end,
 	},
 
@@ -425,7 +425,7 @@ local plugins = {
 			cmd = "Copilot",
 			event = "InsertEnter",
 			config = function()
-				require("user.pluginconf.copilot")
+				require("user.plugins.copilot")
 			end,
 		},
 	},
@@ -439,7 +439,7 @@ local plugins = {
 	{
 		"rcarriga/nvim-notify",
 		config = function()
-			require("user.pluginconf.notify")
+			require("user.plugins.notify")
 		end,
 
 		lazy = false,
@@ -448,7 +448,7 @@ local plugins = {
 	{
 		"laytan/cloak.nvim",
 		config = function()
-			require("user.pluginconf.cloak")
+			require("user.plugins.cloak")
 		end,
 	},
 
@@ -467,14 +467,14 @@ local plugins = {
 			--   If not available, we use `mini` as the fallback
 		},
 		config = function()
-			require("user.pluginconf.noice")
+			require("user.plugins.noice")
 		end,
 	},
 
 	{
 		"stevearc/dressing.nvim",
 		config = function()
-			require("user.pluginconf.dressing")
+			require("user.plugins.dressing")
 		end,
 		event = "VeryLazy",
 	},
@@ -526,14 +526,6 @@ local plugins = {
 				post_hook = nil, -- Function to run after the scrolling animation ends
 				performance_mode = false, -- Disable "Performance Mode" on all buffers.
 			})
-		end,
-	},
-
-	{
-		"gen740/SmoothCursor.nvim",
-		enabled = false,
-		config = function()
-			require("user.pluginconf.smoothcursor")
 		end,
 	},
 

@@ -1,12 +1,12 @@
 local status_ok, telescope = pcall(require, "telescope")
 if not status_ok then
-  vim.notify("Harpoon not found", vim.log.levels.ERROR)
-  return
+	vim.notify("Harpoon not found", vim.log.levels.ERROR)
+	return
 end
 
 local h_status_ok, harpoon = pcall(require, "harpoon")
 if not h_status_ok then
-  return
+	return
 end
 
-telescope.load_extension "harpoon"
+telescope.load_extension("harpoon")

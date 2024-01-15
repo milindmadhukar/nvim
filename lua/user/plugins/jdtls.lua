@@ -1,8 +1,3 @@
-local status_ok, jdtls = pcall(require, "jdtls")
-if not status_ok then
-	vim.notify("Lightbulb not found", vim.log.levels.ERROR) --- @diagnostic disable-line
-	return
-end
 
 local config = {
 	-- The command that starts the language server

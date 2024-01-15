@@ -87,7 +87,7 @@ local mappings = {
 	["T"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics" },
 	["q"] = { "<cmd>lua require('user.functions').smart_quit()<CR>", "Quit" },
 	[";"] = { "<cmd>Alpha<CR>", "Dashboard" },
-	["/"] = { "<cmd>lua require(\"Comment.api\").locked('toggle.linewise.current')()<CR>", "Comment" },
+	["/"] = { "<Plug>(comment_toggle_linewise_current)", "Comment" },
 	["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
 	["f"] = {
 		"<cmd>Telescope find_files<cr>",
@@ -347,7 +347,7 @@ local vopts = {
 
 local vmappings = {
 	["/"] = {
-		"<ESC><CMD>lua require(\"Comment.api\").locked('comment.linewise')(vim.fn.visualmode())<CR>",
+		"<Plug>(comment_toggle_linewise_visual)",
 		"Comment",
 	},
 
