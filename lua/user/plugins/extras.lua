@@ -38,7 +38,6 @@ local M = {
 		end,
 	},
 
-
 	{
 		"wfxr/minimap.vim",
 		build = "cargo install --locked code-minimap",
@@ -106,7 +105,26 @@ local M = {
 		},
 	},
 
+	{
+		"eandrju/cellular-automaton.nvim",
+		event = "BufEnter",
+	},
 
+	{
+		"mawkler/modicator.nvim",
+		init = function()
+			-- These are required for Modicator to work
+			vim.o.cursorline = true
+			vim.o.number = true
+			vim.o.termguicolors = true
+		end,
+    event = "BufEnter",
+		opts = {},
+    config = function()
+      require("modicator").setup({
+      })
+    end,
+	},
 }
 
 return M

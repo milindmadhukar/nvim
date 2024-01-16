@@ -104,7 +104,7 @@ local mappings = {
 
 	["x"] = { "<cmd>lua require('user.functions').sourcefile()<CR>", "Source File" },
 
-  ["O"] = { "<cmd>Oil<cr>", "Oil" },
+	["O"] = { "<cmd>Oil<cr>", "Oil" },
 
 	Z = {
 		["a"] = { "<cmd>TZAtaraxis<cr>", "Toggle ataraxis mode" },
@@ -309,21 +309,21 @@ local mappings = {
 
 	h = {
 		name = "Harpoon",
-		a = { "<cmd>lua require('harpoon.mark').add_file()<CR>", "Add file" },
-		m = { "<cmd>lua require('harpoon.ui').toggle_quick_menu()<CR>", "Menu Toggle" },
+		a = { "<cmd>lua require('harpoon'):list():append()<CR>", "Add file" },
+		m = { "<cmd>lua require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())<CR>", "Menu Toggle" },
 		t = { "<cmd>Telescope harpoon marks<CR>", "Telescope Marks" },
-		n = { '<cmd>lua require("harpoon.ui").nav_next()<CR>', "Next Harpoon Mark" },
-		p = { '<cmd>lua require("harpoon.ui").nav_prev()<CR>', "Prev Harpoon Mark" },
-		["1"] = { '<cmd>lua require("harpoon.ui").nav_file(1)<CR>', "Go to file 1" },
-		["2"] = { '<cmd>lua require("harpoon.ui").nav_file(2)<CR>', "Go to file 2" },
-		["3"] = { '<cmd>lua require("harpoon.ui").nav_file(3)<CR>', "Go to file 3" },
-		["4"] = { '<cmd>lua require("harpoon.ui").nav_file(4)<CR>', "Go to file 4" },
-		["5"] = { '<cmd>lua require("harpoon.ui").nav_file(5)<CR>', "Go to file 5" },
-		["6"] = { '<cmd>lua require("harpoon.ui").nav_file(6)<CR>', "Go to file 6" },
-		["7"] = { '<cmd>lua require("harpoon.ui").nav_file(7)<CR>', "Go to file 7" },
-		["8"] = { '<cmd>lua require("harpoon.ui").nav_file(8)<CR>', "Go to file 8" },
-		["9"] = { '<cmd>lua require("harpoon.ui").nav_file(9)<CR>', "Go to file 9" },
-		["0"] = { '<cmd>lua require("harpoon.ui").nav_file(0)<CR>', "Go to file 0" },
+		n = { '<cmd>lua require("harpoon"):list():prev()<CR>', "Next Harpoon Mark" },
+		p = { '<cmd>lua require("harpoon"):list():next()<CR>', "Prev Harpoon Mark" },
+		["1"] = { '<cmd>lua require("harpoon"):list():select(1)<CR>', "Go to file 1" },
+		["2"] = { '<cmd>lua require("harpoon"):list():select(2)<CR>', "Go to file 2" },
+		["3"] = { '<cmd>lua require("harpoon"):list():select(3)<CR>', "Go to file 3" },
+		["4"] = { '<cmd>lua require("harpoon"):list():select(4)<CR>', "Go to file 4" },
+		["5"] = { '<cmd>lua require("harpoon"):list():select(5)<CR>', "Go to file 5" },
+		["6"] = { '<cmd>lua require("harpoon"):list():select(6)<CR>', "Go to file 6" },
+		["7"] = { '<cmd>lua require("harpoon"):list():select(7)<CR>', "Go to file 7" },
+		["8"] = { '<cmd>lua require("harpoon"):list():select(8)<CR>', "Go to file 8" },
+		["9"] = { '<cmd>lua require("harpoon"):list():select(9)<CR>', "Go to file 9" },
+		["0"] = { '<cmd>lua require("harpoon"):list():select(0)<CR>', "Go to file 0" },
 	},
 
 	o = {
@@ -369,7 +369,7 @@ local vmappings = {
 }
 
 function M.config()
-  local which_key = require("which-key")
+	local which_key = require("which-key")
 	which_key.setup(setup)
 	which_key.register(mappings, opts)
 	which_key.register(vmappings, vopts)
