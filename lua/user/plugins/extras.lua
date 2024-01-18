@@ -61,7 +61,7 @@ local M = {
 
 	{
 		"tamton-aquib/zone.nvim",
-		enabled = true,
+		enabled = false,
 		config = function()
 			require("zone").setup({
 				style = "dvd",

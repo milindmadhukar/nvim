@@ -25,6 +25,9 @@ function M.config()
 		},
 		highlight = { enable = true },
 		indent = { enable = true },
+		autotag = {
+			enable = true,
+		},
 	})
 end
 
