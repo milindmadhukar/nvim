@@ -17,7 +17,7 @@ Or run the following (make sure to read the script before running it.)
 bash <(curl -s https://raw.githubusercontent.com/milindmadhukar/nvim/master/install_neovim)
 ```
 
-## Install the config
+## Install the Config
 
 Make sure to remove or move your current `nvim` directory
 
@@ -83,6 +83,7 @@ We will also need `ripgrep` for Telescope to work:
 ## Fonts
 
 Install the icon Fonts
+
 ```bash
 mkdir -p ~/.fonts && cp fonts/* ~/.fonts && fc-cache -fv
 ```
