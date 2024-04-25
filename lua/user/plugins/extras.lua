@@ -125,6 +125,7 @@ local M = {
 			require("modicator").setup({})
 		end,
 	},
+  
 	{
 		"NStefan002/2048.nvim",
 		cmd = "Play2048",

@@ -8,7 +8,7 @@ local M = {
 			require("nvim-web-devicons")
 		end,
 	},
-
+  
 	{ "moll/vim-bbye", commit = "25ef93ac5a87526111f43e5110675032dbcacf56" },
 }
 
