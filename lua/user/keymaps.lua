@@ -26,7 +26,7 @@ keymap("n", "<C-j>", "<C-w>j", opts)
 keymap("n", "<C-k>", "<C-w>k", opts)
 keymap("n", "<C-l>", "<C-w>l", opts)
 
--- -- Try to use your arrows keys KEKW
+-- Try to use your arrows keys KEKW
 -- keymap('', '<up>', '<nop>', opts)
 -- keymap('', '<down>', '<nop>')
 -- keymap('', '<left>', '<nop>')
