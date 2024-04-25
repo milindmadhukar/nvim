@@ -21,7 +21,14 @@ function M.load(colorscheme)
 		end
 	end
 
-  local nightfox_colors = {"carbonfox", "dawnfox", "dayfox", "nightfox", "nordfox", "terafox", "duskfox"}
+	if colorscheme == "darkplus" then
+		local status_transparent_ok, _ = pcall(vim.cmd, "TransparentDisable")
+		if not status_transparent_ok then
+			return
+		end
+	end
+
+	local nightfox_colors = { "carbonfox", "dawnfox", "dayfox", "nightfox", "nordfox", "terafox", "duskfox" }
 
 	if require("user.functions").has_value(nightfox_colors, colorscheme) then
 		lualine_theme = "nightfox"
@@ -91,7 +98,6 @@ function M.load(colorscheme)
 		})
 	end
 
-	-- Check if a string starts with "tokyonight"
 	if colorscheme:sub(1, 10) == "tokyonight" then
 		lualine_theme = "tokyonight"
 		local status_transparent_ok, _ = pcall(vim.cmd, "TransparentEnable")

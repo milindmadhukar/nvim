@@ -13,7 +13,8 @@ local servers = {
   "tailwindcss",
   "sqlls",
   "jdtls",
-  "lemminx"
+  "lemminx",
+  "r_language_server",
   -- "rust_analyzer",
   -- "svelte",
 }

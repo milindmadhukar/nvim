@@ -1,5 +1,6 @@
 local M = {
 	"laytan/cloak.nvim",
+  ft = {"yaml", "env"},
 }
 
 function M.config()

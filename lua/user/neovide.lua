@@ -3,7 +3,9 @@ if not vim.g.neovide then
 end
 
 
-require("user.colorscheme").load("catppuccin")
+require("user.colorscheme").load("darkplus")
+
+vim.o.guifont = "Hack Nerd Font:h14"
 
 vim.g.neovide_scale_factor = 0.75
 vim.g.neovide_scroll_animation_length = 0.3
@@ -12,6 +14,7 @@ vim.g.neovide_padding_top = 0
 vim.g.neovide_padding_bottom = 0
 vim.g.neovide_padding_right = 0
 vim.g.neovide_padding_left = 0
+vim.g.neovide_window_blurred = true
 vim.g.neovide_floating_blur_amount_x = 2.0
 vim.g.neovide_floating_blur_amount_y = 2.0
 vim.g.neovide_transparency = 0.8

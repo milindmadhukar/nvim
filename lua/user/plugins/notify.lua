@@ -52,13 +52,21 @@ function M.config()
 			return
 		end
 
-    if msg:match("modicator.nvim: modicator requires `number` to be set. Run `:set number` or add `vim.o.number = true` to your init.lua") then
-      return
-    end
+		if
+			msg:match(
+				"modicator.nvim: modicator requires `number` to be set. Run `:set number` or add `vim.o.number = true` to your init.lua"
+			)
+		then
+			return
+		end
 
-    if msg:match("modicator.nvim: modicator requires `cursorline` to be set. Run `:set cursorline` or add `vim.o.cursorline = true` to your init.lua") then
-      return
-    end
+		if
+			msg:match(
+				"modicator.nvim: modicator requires `cursorline` to be set. Run `:set cursorline` or add `vim.o.cursorline = true` to your init.lua"
+			)
+		then
+			return
+		end
 
 		notify_filter(msg, ...)
 	end

@@ -114,11 +114,24 @@ local mappings = {
 	},
 
 	C = {
-		name = "Copilot",
+		name = "Copilot and ChatGPT",
 		t = { "<cmd>Copilot suggestion toggle_auto_trigger<cr>", "Toggle Copilot Sugesstions" },
 		d = { "<cmd>Copilot toggle<cr>", "Toggle Copilot" },
 		p = { "<cmd>Copilot panel<cr>", "Show Panel" },
-		s = { "<cmd>Copilot status<cr>", "Status" },
+		S = { "<cmd>Copilot status<cr>", "Status" },
+
+		c = { "<cmd>ChatGPT<cr>", "ChatGPT" },
+		C = { "<cmd>ChatGPTCompleteCode<cr>", "ChatGPT Complete Code" },
+		g = { "<cmd>ChatGPTRun grammar_correction<CR>", "Grammar Correction", mode = { "n", "v" } },
+		e = { "<cmd>ChatGPTEditWithInstruction<CR>", "Edit with instruction", mode = { "n", "v" } },
+		k = { "<cmd>ChatGPTRun keywords<CR>", "Keywords", mode = { "n", "v" } },
+		a = { "<cmd>ChatGPTRun add_tests<CR>", "Add Tests", mode = { "n", "v" } },
+		o = { "<cmd>ChatGPTRun optimize_code<CR>", "Optimize Code", mode = { "n", "v" } },
+		s = { "<cmd>ChatGPTRun summarize<CR>", "Summarize", mode = { "n", "v" } },
+		x = { "<cmd>ChatGPTRun explain_code<CR>", "Explain Code", mode = { "n", "v" } },
+		l = { "<cmd>ChatGPTRun code_readability_analysis<CR>", "Code Readability Analysis", mode = { "n", "v" } },
+
+		A = { "<cmd>ChatGPTActAs<cr>", "ChatGPT Act As" },
 	},
 
 	p = {

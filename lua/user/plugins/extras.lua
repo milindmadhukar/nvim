@@ -1,6 +1,7 @@
 local M = {
 	{
 		"rafcamlet/nvim-luapad",
+		cmd = { "Luapad", "Lua", "LuaRun" },
 	},
 
 	{
@@ -61,7 +62,7 @@ local M = {
 
 	{
 		"tamton-aquib/zone.nvim",
-		enabled = true,
+		enabled = false,
 		config = function()
 			require("zone").setup({
 				style = "dvd",
@@ -118,12 +119,17 @@ local M = {
 			vim.o.number = true
 			vim.o.termguicolors = true
 		end,
-    event = "BufEnter",
+		event = "BufEnter",
 		opts = {},
-    config = function()
-      require("modicator").setup({
-      })
-    end,
+		config = function()
+			require("modicator").setup({})
+		end,
+	},
+  
+	{
+		"NStefan002/2048.nvim",
+		cmd = "Play2048",
+		config = true,
 	},
 }
 
