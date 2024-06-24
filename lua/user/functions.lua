@@ -157,7 +157,4 @@ function M.has_value(tab, val)
 	return false
 end
 
--- use the function
-local function lol() end
-
 return M

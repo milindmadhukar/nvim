@@ -1,7 +1,6 @@
 require("user.plugins.pluginspec")
 
 spec("user.plugins.colorschemes")
-
 spec("user.plugins.essentials")
 spec("user.plugins.notify")
 spec("user.plugins.lsp")

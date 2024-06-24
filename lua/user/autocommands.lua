@@ -7,6 +7,17 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 })
 
+-- Manage kitty padding
+-- TODO: Leave padding is super weird, too big, fix this and we can use, maybe also check if kitty is running and then do this.
+--
+-- vim.api.nvim_create_autocmd("VimEnter", {
+-- 	command = ":silent !kitty @ set-spacing padding=0 margin=0",
+-- })
+--
+-- vim.api.nvim_create_autocmd("VimLeavePre", {
+-- 	command = ":silent !kitty @ set-spacing padding=20 margin=10",
+-- })
+
 -- Use 'q' to quit from common plugins
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "qf", "help", "man", "lspinfo", "spectre_panel" },

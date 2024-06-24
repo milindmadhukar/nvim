@@ -61,7 +61,7 @@ function M.config()
 		return
 	end
 
-	elescope.load_extension("noice")
+	telescope.load_extension("noice")
 end
 
 return M
