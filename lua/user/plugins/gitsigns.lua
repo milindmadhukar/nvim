@@ -1,5 +1,6 @@
 local M = {
 	"lewis6991/gitsigns.nvim",
+  enabled = false,
 	event = "BufEnter",
 	cmd = "Gitsigns",
 	init = function()

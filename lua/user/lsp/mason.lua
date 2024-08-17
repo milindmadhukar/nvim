@@ -12,9 +12,9 @@ local servers = {
   "marksman",
   "tailwindcss",
   "sqlls",
-  "jdtls",
-  "lemminx",
-  "r_language_server",
+  -- "lemminx",
+  -- "jdtls",
+  -- "r_language_server",
   -- "rust_analyzer",
   -- "svelte",
 }
