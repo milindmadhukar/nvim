@@ -1,0 +1,5 @@
+require "core.autocommands"
+require "core.options"
+require "core.filetypes"
+require "utils.globals"
+require "utils.neovide"
