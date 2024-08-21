@@ -78,57 +78,6 @@ M.treesitter = {
   },
 }
 
-M.mason = {
-  cmd = true,
-  -- Use names from mason.nvim
-  -- For example, if you want to install "tsserver" you should use "typescript-language-server" in the list below
-  automatic_installation = true,
-  pkgs = {
-    -- Lua
-    "lua-language-server",
-    "vim-language-server",
-    "stylua",
-
-    -- Web Development
-    "css-lsp",
-    "html-lsp",
-    "typescript-language-server",
-    "tailwindcss-language-server",
-    -- "eslint-lsp",
-    -- "deno",
-    -- "vue-language-server",
-    -- "emmet_language_server",
-
-    -- C/C++
-    "clangd",
-    -- "clang-format",
-
-    -- Json
-    "json-lsp",
-
-    -- Yaml
-    "yaml-language-server",
-
-    -- Markdown
-    "marksman",
-
-    -- Bash
-    "bash-language-server",
-
-    -- Python
-    "basedpyright",
-
-    -- Go
-    "gopls",
-
-    -- SQL
-    "sqls",
-
-    -- Java
-    -- "jdtls",
-  },
-}
-
 M.lsp = { signature = false }
 
 return M

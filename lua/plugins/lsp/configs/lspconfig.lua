@@ -1,52 +1,77 @@
-local M = {
-     "neovim/nvim-lspconfig",
-}
-
-function M.config()
-  -- load defaults i.e lua_lsp
-  require("nvchad.configs.lspconfig").defaults()
-
-  local lspconfig = require "lspconfig"
-
-  -- EXAMPLE
-local servers = {
-  "lua_ls",
-  "cssls",
-  "html",
-  "tsserver",
-  "pyright",
-  "bashls",
-  "jsonls",
-  "yamlls",
-  "clangd",
-  "gopls",
-  "marksman",
-  "tailwindcss",
-  "sqlls",
-  -- "lemminx",
-  -- "jdtls",
-  -- "r_language_server",
-  -- "rust_analyzer",
-  -- "svelte",
-}
-
-  local nvlsp = require "nvchad.configs.lspconfig"
-
-  -- lsps with default config
-  for _, lsp in ipairs(servers) do
-    lspconfig[lsp].setup {
-      on_attach = nvlsp.on_attach,
-      on_init = nvlsp.on_init,
-      capabilities = nvlsp.capabilities,
+---@type NvPluginSpec
+--  NOTE: LSP Configuration
+return {
+  "neovim/nvim-lspconfig",
+  init = function()
+    vim.keymap.set("n", "<leader>lh", function()
+      if vim.version().minor >= 10 then
+        vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
+      end
+    end, { desc = "LSP | Toggle Inlay Hints", silent = true })
+  end,
+  cmd = "LspInfo",
+  config = function()
+    local config = {
+      -- Enable virtual text
+      virtual_text = false,
+      update_in_insert = false,
+      underline = true,
+      severity_sort = true,
+      float = {
+        focusable = false,
+        style = "minimal",
+        border = "rounded",
+        source = "always",
+        header = "",
+        prefix = "",
+      },
     }
-end
 
--- configuring single server, example: typescript
--- lspconfig.tsserver.setup {
---   on_attach = nvlsp.on_attach,
---   on_init = nvlsp.on_init,
---   capabilities = nvlsp.capabilities,
--- }
-end
+    local signs = { Error = "", Warn = "", Hint = "󰌵", Info = "" }
 
-return M
+    if vim.version().minor >= 11 then
+      config.signs = {
+        text = {
+          [vim.diagnostic.severity.ERROR] = signs.Error,
+          [vim.diagnostic.severity.WARN] = signs.Warn,
+          [vim.diagnostic.severity.HINT] = signs.Hint,
+          [vim.diagnostic.severity.INFO] = signs.Info,
+        },
+        linehl = {
+          [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+          [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+          [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+          [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+        },
+        numhl = {
+          [vim.diagnostic.severity.ERROR] = "DiagnosticSignError",
+          [vim.diagnostic.severity.WARN] = "DiagnosticSignWarn",
+          [vim.diagnostic.severity.HINT] = "DiagnosticSignHint",
+          [vim.diagnostic.severity.INFO] = "DiagnosticSignInfo",
+        },
+      }
+    else
+      for type, icon in pairs(signs) do
+        local hl = "DiagnosticSign" .. type
+        vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = hl })
+      end
+      config.signs = { active = signs }
+    end
+
+    vim.diagnostic.config(config)
+
+    if vim.g.border_enabled then
+      -- NOTE: Enable border for LSP UI Windows (lspinfo)
+      require("lspconfig.ui.windows").default_options.border = "rounded"
+
+      -- NOTE: Enable border for LSP hover, signature help. But cannot use along with Noice's hover, signature help!
+
+      --   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
+      --     border = "rounded",
+      --   })
+      --   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
+      --     border = "rounded",
+      --   })
+    end
+  end,
+}

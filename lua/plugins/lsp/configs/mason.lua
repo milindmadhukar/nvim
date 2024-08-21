@@ -1,4 +1,25 @@
 -- NOTE: Package installer
+local servers = {
+  "lua_ls",
+  "cssls",
+  "html",
+  "tsserver",
+  "pyright",
+  "bashls",
+  "jsonls",
+  "yamlls",
+  "clangd",
+  "gopls",
+  "marksman",
+  "tailwindcss",
+  "sqlls",
+  -- "lemminx",
+  -- "jdtls",
+  -- "r_language_server",
+  -- "rust_analyzer",
+  -- "svelte",
+}
+
 local M = {
   "williamboman/mason.nvim",
   event = "User FilePost",
@@ -42,20 +63,14 @@ local M = {
         -- install_root_dir = path.concat { vim.fn.stdpath "config", "/lua/custom/mason" },
       }
 
-      local disabled_servers = {
-        "jdtls",
-        "rust_analyzer",
-        "tsserver",
+      mason_lspconfig.setup {
+        ensure_installed = servers,
+        automatic_installation = true,
       }
 
       mason_lspconfig.setup_handlers {
         -- Automatically configure the LSP installed
         function(server_name)
-          for _, name in pairs(disabled_servers) do
-            if name == server_name then
-              return
-            end
-          end
           local opts = {
             on_attach = on_attach,
             on_init = on_init,
