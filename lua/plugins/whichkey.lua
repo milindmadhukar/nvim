@@ -196,7 +196,7 @@ local mappings = {
 	s = {
 		name = "Search",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-		c = { "<cmd>Telescope colorscheme<cr>", "Colorscheme" },
+		c = { "<cmd>Telescope themes<cr>", "Colorscheme" },
 		h = { "<cmd>Telescope help_tags<cr>", "Help" },
 		i = { "<cmd>Telescope media_files<cr>", "Media" },
 		l = { "<cmd>Telescope resume<cr>", "Last Search" },
@@ -293,7 +293,7 @@ local mappings = {
 
 	o = {
 		name = "Other",
-		["t"] = { "<cmd>TransparentToggle<cr>", "Toggle Background Tranparency" },
+		["t"] = { "<cmd>lua require('base46').toggle_transparency()<cr>", "Toggle Background Tranparency" },
 		["c"] = { "<cmd>CodiNew javascript<cr>", "Javascript Scratchpad" },
 		["b"] = { "<cmd>lua require('barbecue.ui').toggle()<cr>", "Toggle Barbecue" },
 	},

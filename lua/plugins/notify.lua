@@ -32,9 +32,9 @@ function M.config()
 		icons = {
 			ERROR = " ",
 			WARN = " ",
-			INFO = "",
+			INFO = " ",
 			DEBUG = " ",
-			TRACE = " ",
+			TRACE = "󰴠 ",
 		},
 	})
 
