@@ -42,7 +42,7 @@ local M = {
 	{
 		"wfxr/minimap.vim",
 		build = "cargo install --locked code-minimap",
-		cmd = "MinimapToggle",
+		cmd = {"Minimap", "MinimapToggle", "MinimapClose", "MinimapRefresh"},
 	},
 
 	{

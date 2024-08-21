@@ -111,7 +111,7 @@ function M.handle_buffer_close()
 	end
 
 	if buffer_count == 1 then
-		vim.cmd("Alpha")
+		vim.cmd("Nvdash")
 		vim.cmd("bwipeout " .. current_bufnr)
 	else
 		vim.cmd("bdelete")

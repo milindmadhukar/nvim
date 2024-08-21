@@ -4,7 +4,7 @@ local M = {
 }
 
 function M.config()
-	vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree" }
+	vim.g.Illuminate_ftblacklist = { "alpha", "NvimTree", "nvdash" }
 	vim.api.nvim_set_keymap(
 		"n",
 		"<a-n>",

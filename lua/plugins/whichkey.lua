@@ -55,8 +55,8 @@ local mappings = {
 	["w"] = { "<cmd>w!<CR>", "Save" },
 	["T"] = { "<cmd>TroubleToggle workspace_diagnostics<cr>", "Trouble Diagnostics" },
 	["q"] = { "<cmd>lua require('user.functions').smart_quit()<CR>", "Quit" },
-	[";"] = { "<cmd>Alpha<CR>", "Dashboard" },
-	["c"] = { "<cmd>Bdelete!<CR>", "Close Buffer" },
+	[";"] = { "<cmd>Nvdash<CR>", "Dashboard" },
+	["c"] = { "<cmd>lua require('utils').handle_buffer_close()<cr>", "Close Buffer" },
 	["f"] = {
 		"<cmd>Telescope find_files<cr>",
 		"Find files",
