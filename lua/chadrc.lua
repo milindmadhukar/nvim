@@ -1,4 +1,5 @@
 -- NOTE: NvChad Related Options
+
 ---@type ChadrcConfig
 local M = {}
 
@@ -8,6 +9,22 @@ M.base46 = {
     "notify",
     "dap",
     "trouble",
+  },
+}
+
+
+-- BUG: Fix buttons
+M.nvdash = {
+  load_on_startup = true,
+  header = require("core.headers").mg,
+  buttons = {
+    { txt="  Find File", keys="f", cmd="Telescope find_files" },
+    { txt="󰈚  Recent Files", keys="r", cmd="Telescope oldfiles" },
+    { txt="  Find text", keys="t", cmd="Telescope live_grep" },
+    { txt="  Find Project", keys="p", cmd="Telescope projects" },
+    { txt="  New file", keys="e", cmd="ene <BAR> startinsert" },
+    { txt="  Configuration", keys="c", cmd="e ~/.config/nvim/init.lua" },
+    { txt="  Quit Neovim", keys="q", cmd="qa" },
   },
 }
 
@@ -22,6 +39,7 @@ M.ui = {
 
   tabufline = {
     enabled = true,
+    lazyload = false,
     order = { "treeOffset", "buffers", "tabs", "btns" },
     modules = {
       blank = function()
@@ -30,22 +48,6 @@ M.ui = {
       -- custom_btns = function()
       --   return " %#Normal#%@v:lua.ClickGit@  %#Normal#%@v:lua.RunCode@  %#Normal#%@v:lua.ClickSplit@  "
       -- end,
-    },
-  },
-
-
-  -- BUG: Fix buttons
-  nvdash = {
-    load_on_startup = true,
-    header = require("core.headers").mg,
-    buttons = {
-      { "  Find File", "f", "Telescope find_files" },
-      { "󰈚  Recent Files", "r", "Telescope oldfiles" },
-      { "  Find text", "t", "Telescope live_grep" },
-      { "  Find Project", "p", "Telescope projects" },
-      { "  New file", "e", "ene <BAR> startinsert" },
-      { "  Configuration", "c", "e ~/.config/nvim/init.lua" },
-      { "  Quit Neovim", "q", "qa" },
     },
   },
 }

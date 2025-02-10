@@ -197,7 +197,7 @@ local mappings = {
 	s = {
 		name = "Search",
 		b = { "<cmd>Telescope git_branches<cr>", "Checkout branch" },
-		c = { "<cmd>Telescope themes<cr>", "Colorscheme" },
+		c = { "<cmd>lua require('nvchad.themes').open({ icon = \"\", style=\"compact\" })<cr>", "Colorscheme" },
 		h = { "<cmd>Telescope help_tags<cr>", "Help" },
 		i = { "<cmd>Telescope media_files<cr>", "Media" },
 		l = { "<cmd>Telescope resume<cr>", "Last Search" },

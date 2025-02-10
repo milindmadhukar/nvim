@@ -1,4 +1,5 @@
-require "nvchad.mappings"
+-- NOTE: Maybce some useless mappings that are conflicting
+-- require "nvchad.mappings"
 
 local keymap = vim.keymap.set
 -- Silent keymap option

@@ -1,6 +1,6 @@
 local M = {
-"lukas-reineke/indent-blankline.nvim",
-  enabled = false,
+  "lukas-reineke/indent-blankline.nvim",
+  main = "ibl",
   event = "User FilePost",
   opts = {
     scope = {
