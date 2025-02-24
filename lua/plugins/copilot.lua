@@ -12,6 +12,7 @@ function M.config()
 		panel = {
 			enabled = true, -- NOTE: False as cmp is enabled
 			auto_refresh = false,
+
 			keymap = {
 				jump_prev = "[[",
 				jump_next = "]]",
