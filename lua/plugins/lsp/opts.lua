@@ -6,13 +6,13 @@ M.capabilities = cmp_nvim_lsp.default_capabilities()
 
 local function lsp_keymaps(bufnr)
   local opts = { noremap = true, silent = true }
-  local keymap = vim.api.nvim_buf_set_keymap
+  local buf_keymap = vim.api.nvim_buf_set_keymap
   --[[ keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts) ]]
-  keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
+  buf_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  buf_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  buf_keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  buf_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  buf_keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
 
   -- LspSaga
   -- keymap(bufnr, "n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
@@ -101,3 +101,4 @@ vim.api.nvim_create_user_command("Format", function(args)
 end, { range = true })
 
 return M
+
