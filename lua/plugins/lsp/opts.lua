@@ -4,24 +4,6 @@ local cmp_nvim_lsp = require "cmp_nvim_lsp"
 
 M.capabilities = cmp_nvim_lsp.default_capabilities()
 
-local function lsp_keymaps(bufnr)
-  local opts = { noremap = true, silent = true }
-  local buf_keymap = vim.api.nvim_buf_set_keymap
-  --[[ keymap(bufnr, "n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts) ]]
-  buf_keymap(bufnr, "n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
-  buf_keymap(bufnr, "n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
-  buf_keymap(bufnr, "n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
-  buf_keymap(bufnr, "n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
-  buf_keymap(bufnr, "n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", opts)
-
-  -- LspSaga
-  -- keymap(bufnr, "n", "K", "<cmd>Lspsaga hover_doc<CR>", opts)
-  -- keymap(bufnr, "n", "gd", "<cmd>Lspsaga preview_definition<CR>", opts
-  -- keymap(bufnr, "n", "gl", "<cmd>Lspsaga show_line_diagnostics<CR>", opts)
-  -- keymap(bufnr, "n", "gr", "<cmd>Lspsaga lsp_finder<CR>", opts)
-  -- keymap(bufnr, "n", "gs", "<cmd>Lspsaga signature_help<CR>", opts)
-end
-
 -- Highlight symbol under cursor
 local function lsp_highlight(client, bufnr)
   if client.supports_method "textDocument/documentHighlight" then
@@ -46,8 +28,17 @@ local function lsp_highlight(client, bufnr)
 end
 
 M.on_attach = function(client, bufnr)
-  lsp_keymaps(bufnr)
   lsp_highlight(client, bufnr)
+
+  local opts = { noremap = true, silent = true, buffer = bufnr }
+
+  keymap("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>", opts)
+  keymap("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>", opts)
+  keymap("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>", opts)
+  keymap("n", "gI", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts)
+  keymap("n", "gr", "<cmd>lua vim.lsp.buf.references()<CR>", opts)
+  keymap("n", "<leader>ca", "<cmd>lua vim.lsp.buf.code_action()<CR>", opts)
+  keymap("n", "<leader>rn", "<cmd>lua vim.lsp.buf.rename()<CR>", opts)
 
   if client.name == "typescript-language-server" then
     client.server_capabilities.document_formatting = false
@@ -86,6 +77,13 @@ M.on_init = function(client, _)
   end
 end
 
+-- Diagnostic keymaps
+local diagnostic_opts = { noremap = true, silent = true }
+keymap("n", "gl", "<cmd>lua vim.diagnostic.open_float()<CR>", diagnostic_opts)
+keymap("n", "[d", "<cmd>lua vim.diagnostic.goto_prev()<CR>", diagnostic_opts)
+keymap("n", "]d", "<cmd>lua vim.diagnostic.goto_next()<CR>", diagnostic_opts)
+keymap("n", "<leader>dl", "<cmd>lua vim.diagnostic.setloclist()<CR>", diagnostic_opts)
+
 vim.cmd([[ command! LspToggleAutoFormat execute 'lua require("user.functions").toggle_format_on_save()' ]])
 
 vim.api.nvim_create_user_command("Format", function(args)
@@ -101,4 +99,3 @@ vim.api.nvim_create_user_command("Format", function(args)
 end, { range = true })
 
 return M
-
