@@ -14,10 +14,6 @@ local servers = {
   "tailwindcss",
   "sqlls",
   "jdtls",
-  -- "lemminx", -- Uncomment and configure if needed
-  -- "r_language_server", -- Uncomment and configure if needed
-  -- "rust_analyzer", -- Uncomment and configure if needed
-  -- "svelte", -- Uncomment and configure if needed
 }
 
 local M = {
@@ -67,35 +63,23 @@ local M = {
             apply_language_filter = "<C-f>",
           },
         },
-        -- If you want to specify a custom install directory for Mason, uncomment this:
-        -- install_root_dir = require("mason-core.path").concat { vim.fn.stdpath "config", "/lua/custom/mason" },
       }
 
       -- Configure mason-lspconfig to ensure specified servers are installed
       mason_lspconfig.setup {
-        ensure_installed = servers,         -- List of servers to ensure are installed
-        automatic_installation = true,      -- Automatically install missing servers
-        -- The 'handlers' table is the new way to configure LSP servers
+        ensure_installed = servers,
+        automatic_installation = true,
         handlers = {
-          -- This function will be called for each LSP server that Mason installs and sets up.
-          -- It receives the server_name (e.g., "lua_ls", "pyright").
           function(server_name)
-            -- Start with a base set of options, including global on_attach, on_init, and capabilities
             local opts = {
               on_attach = global_on_attach,
               on_init = global_on_init,
               capabilities = global_capabilities,
             }
 
-            -- Attempt to load server-specific settings from 'plugins.lsp.settings.<server_name>'
-            -- For example, for 'lua_ls', it will try to load 'plugins.lsp.settings.lua_ls'
             local require_ok, server_specific_settings = pcall(require, "plugins.lsp.settings." .. server_name)
 
             if require_ok then
-              -- If server-specific settings exist, we need to merge them carefully.
-
-              -- Handle on_attach: Compose global and server-specific on_attach functions.
-              -- The global on_attach will run first, then the server-specific one.
               local original_server_on_attach = server_specific_settings.on_attach
               server_specific_settings.on_attach = function(client, bufnr)
                 if global_on_attach then
@@ -105,25 +89,14 @@ local M = {
                   original_server_on_attach(client, bufnr)
                 end
               end
-
-              -- Handle on_init: Compose global and server-specific on_init functions.
-              local original_server_on_init = server_specific_settings.on_init
-              server_specific_settings.on_init = function(client, initialize_params)
-                if global_on_init then
-                  global_on_init(client, initialize_params)
-                end
-                if original_server_on_init then
-                  original_server_on_init(client, initialize_params)
-                end
-              end
-
-              -- Merge other settings (like `settings` table, `root_dir`, etc.)
-              -- `vim.tbl_deep_extend("force", ...)` performs a deep merge,
-              -- with the second table's values taking precedence.
+              
+               -- IMPORTANT: deep_extend will overwrite opts.on_attach if present in settings. 
+               -- But since we redefined server_specific_settings.on_attach above to INCLUDE global_on_attach,
+               -- it should be safe.
+               
               opts = vim.tbl_deep_extend("force", opts, server_specific_settings)
             end
 
-            -- Finally, set up the LSP server using lspconfig with the combined options
             lspconfig[server_name].setup(opts)
           end,
         }
@@ -131,7 +104,6 @@ local M = {
     end,
   },
   opts = {
-    -- Define additional Mason registries if you use them (e.g., for Java LSPs)
     registries = {
       "github:nvim-java/mason-registry",
       "github:mason-org/mason-registry",
@@ -140,4 +112,3 @@ local M = {
 }
 
 return M
-

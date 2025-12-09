@@ -2,6 +2,7 @@
 --  NOTE: LSP Configuration
 return {
   "neovim/nvim-lspconfig",
+  event = { "BufReadPre", "BufNewFile" },
   init = function()
     vim.keymap.set("n", "<leader>lh", function()
       if vim.version().minor >= 10 then
@@ -9,7 +10,6 @@ return {
       end
     end, { desc = "LSP | Toggle Inlay Hints", silent = true })
   end,
-  cmd = "LspInfo",
   config = function()
     local config = {
       -- Enable virtual text
@@ -63,15 +63,6 @@ return {
     if vim.g.border_enabled then
       -- NOTE: Enable border for LSP UI Windows (lspinfo)
       require("lspconfig.ui.windows").default_options.border = "rounded"
-
-      -- NOTE: Enable border for LSP hover, signature help. But cannot use along with Noice's hover, signature help!
-
-      --   vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
-      --     border = "rounded",
-      --   })
-      --   vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, {
-      --     border = "rounded",
-      --   })
     end
   end,
 }
