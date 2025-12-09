@@ -1,40 +1,163 @@
 local M = {
-  "andweeb/presence.nvim",
+  "vyfor/cord.nvim",
+  build = ':Cord update',
+  event = "VeryLazy",
 }
 
--- FIXME: Seems broken?
-
-function M.config()
-  local client_id = {
-    default = "793271441293967371",
-    vs_code = "383226320970055681",
-    coc_nvim = "768090036633206815",
+function M.opts()
+  -- Fun quotes that rotate randomly
+  local coding_vibes = {
+    "🚀 Launching code into orbit",
+    "⚡ Channeling big brain energy",
+    "🔥 Cooking up some fire code",
+    "💎 Crafting digital masterpieces",
+    "🌊 Riding the code wave",
+    "🎯 Locked in and focused",
+    "🧠 Brain.exe is running",
+    "✨ Making magic happen",
+    "🎨 Painting with pixels",
+    "🏗️ Building the future",
   }
 
-  local presence = require("presence")
-
-  presence:setup({
-    -- General options
-    auto_update = true, -- Update activity based on autocmd events (if `false`, map or manually execute `:lua package.loaded.presence:update()`)
-    neovim_image_text = "✚✖", -- Text displayed when hovered over the Neovim image
-    main_image = "file", -- Main image display (either "neovim" or "file")
-    client_id = client_id.default, -- Use your own Discord application client id (not recommended)
-    log_level = nil, -- Log messages at or above this level (one of the following: "debug", "info", "warn", "error")
-    debounce_timeout = 20, -- Number of seconds to debounce events (or calls to `:lua package.loaded.presence:update(<filename>, true)`)
-    enable_line_number = false, -- Displays the current line number instead of the current project
-    blacklist = {}, -- A list of strings or Lua patterns that disable Rich Presence if the current file name, path, or workspace matches
-    buttons = true, -- Configure Rich Presence button(s), either a boolean to enable/disable, a static table (`{{ label = "<label>", url = "<url>" }, ...}`, or a function(buffer: string, repo_url: string|nil): table)
-    file_assets = {}, -- Custom file asset definitions keyed by file names and extensions (see default config at `lua/presence/file_assets.lua` for reference)
-
-    -- Rich Presence text options
-    editing_text = "Grinding %s",              -- Format string rendered when an editable file is loaded in the buffer (either string or function(filename: string): string)
-    file_explorer_text = "Finding hope in %s", -- Format string rendered when browsing a file explorer (either string or function(file_explorer_name: string): string)
-    git_commit_text = "Committing changes",    -- Format string rendered when committing changes in git (either string or function(filename: string): string)
-    plugin_manager_text = "Managing plugins",  -- Format string rendered when managing plugins (either string or function(plugin_manager_name: string): string)
-    reading_text = "Trying to understand %s",  -- Format string rendered when a read-only or unmodifiable file is loaded in the buffer (either string or function(filename: string): string)
-    workspace_text = "Crying over %s",         -- Format string rendered when in a git repository (either string or function(project_name: string|nil, filename: string): string)
-    line_number_text = "Feeling a %s out of %s", -- Format string rendered when `enable_line_number` is set to true (either string or function(line_number: number, line_count: number): string)
-  })
+  return {
+    enabled = true,
+    
+    editor = {
+      client = "neovim",
+      tooltip = "The Superior Text Editor",
+    },
+    
+    display = {
+      theme = "default",
+      flavor = "dark",
+      view = "full",
+      swap_fields = false,
+      swap_icons = false,
+    },
+    
+    timestamp = {
+      enabled = true,
+      reset_on_idle = false,
+      reset_on_change = false,
+    },
+    
+    idle = {
+      enabled = true,
+      timeout = 300000, -- 5 minutes
+      show_status = true,
+      smart_idle = true,
+      details = "💤 Taking a well-deserved break",
+      state = "Recharging the code batteries",
+      tooltip = "AFK - Back soon!",
+    },
+    
+    text = {
+      -- Dynamic workspace text with git branch info
+      workspace = function(opts)
+        if opts.workspace then
+          return string.format("🎯 Deep in %s", opts.workspace)
+        end
+        return "🌟 Crafting code"
+      end,
+      
+      -- Creative viewing text
+      viewing = function(opts)
+        local hour = tonumber(os.date("%H"))
+        local time_emoji = 
+          hour >= 22 and "🌙" or
+          hour >= 18 and "🌆" or
+          hour >= 12 and "☀️" or
+          hour >= 5 and "🌅" or
+          "🌃"
+        
+        return string.format("%s Reading %s", time_emoji, opts.filename)
+      end,
+      
+      -- Fancy editing text with cursor position
+      editing = function(opts)
+        local vibe = coding_vibes[math.random(#coding_vibes)]
+        return string.format("✍️ %s", opts.filename)
+      end,
+      
+      file_browser = function(opts)
+        return string.format("📁 Exploring files in %s", opts.name)
+      end,
+      
+      plugin_manager = "🔌 Tweaking the plugin arsenal",
+      
+      lsp = function(opts)
+        return string.format("🛠️ Configuring LSP magic in %s", opts.name)
+      end,
+      
+      vcs = function(opts)
+        return string.format("📝 Committing greatness in %s", opts.name)
+      end,
+      
+      debug = function(opts)
+        return string.format("🐛 Hunting bugs in %s", opts.name)
+      end,
+      
+      test = function(opts)
+        return string.format("🧪 Running experiments in %s", opts.name)
+      end,
+      
+      diagnostics = "🔍 Squashing errors like a pro",
+      
+      terminal = "⚡ Executing commands in the matrix",
+      
+      dashboard = "🏠 Home sweet home",
+    },
+    
+    -- Dynamic buttons with repository link
+    buttons = {
+      {
+        label = function(opts)
+          return opts.repo_url and "📂 View Repository" or "🌐 My Workspace"
+        end,
+        url = function(opts)
+          return opts.repo_url or "https://github.com"
+        end,
+      },
+    },
+    
+    -- Custom assets for additional file types
+    assets = {
+      ["init.lua"] = {
+        name = "Neovim Config",
+        icon = "lua",
+        tooltip = "Neovim Configuration",
+        type = "default",
+      },
+    },
+    
+    -- Hooks for enhanced functionality
+    hooks = {
+      -- Add Neovim version to small tooltip
+      post_activity = function(opts, activity)
+        local version = vim.version()
+        activity.assets.small_text = string.format(
+          "Neovim v%s.%s.%s",
+          version.major,
+          version.minor,
+          version.patch
+        )
+        
+        -- Add random vibe to state when editing
+        if not opts.is_idle and vim.bo.modifiable and not vim.bo.readonly then
+          activity.state = coding_vibes[math.random(#coding_vibes)]
+        end
+      end,
+      
+      -- Custom behavior on workspace change
+      workspace_change = function(opts)
+        -- You can add custom logic here
+        -- For example, notify when switching workspaces
+        if opts.workspace then
+          vim.notify(string.format("🎯 Switched to workspace: %s", opts.workspace), vim.log.levels.INFO)
+        end
+      end,
+    },
+  }
 end
 
 return M
