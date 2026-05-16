@@ -3,4 +3,7 @@ vim.filetype.add {
   extension = {
     ["templ"] = "templ",
   },
+  pattern = {
+    ["%.env%..*"] = "sh",
+  },
 }
