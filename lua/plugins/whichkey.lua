@@ -78,12 +78,12 @@ local mappings = {
 
   -- Git
   { "<leader>g", group = "Git" },
+  -- <leader>gg (lazygit) is defined by plugins/toggleterm.lua
   { "<leader>gG", "<cmd>Git<CR>", desc = "Fugitive Git" },
   { "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>", desc = "Reset Buffer" },
   { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
   { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
   { "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Diff" },
-  { "<leader>gg", "<cmd>FloatermToggle Lazygit<cr>", desc = "Lazygit" },
   { "<leader>gj", "<cmd>Gitsigns next_hunk<cr>", desc = "Next Hunk" },
   { "<leader>gk", "<cmd>Gitsigns prev_hunk<cr>", desc = "Prev Hunk" },
   { "<leader>gl", "<cmd>Gitsigns blame_line<cr>", desc = "Blame" },
@@ -150,15 +150,9 @@ local mappings = {
   { "<leader>t", group = "Trouble & Terminal" },
   { "<leader>tD", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Document Diagnostics" },
   { "<leader>tT", "<cmd>TodoTelescope<cr>", desc = "Todo list" },
-  { "<leader>td", "<cmd>FloatermToggle Lazydocker<cr>", desc = "Lazy Docker" },
-  { "<leader>tg", "<cmd>FloatermToggle Lazygit<cr>", desc = "Lazy Git" },
-  { "<leader>tH", "<cmd>FloatermToggle Htop<cr>", desc = "Htop" },
   { "<leader>tl", "<cmd>Trouble loclist toggle<cr>", desc = "Loclist" },
-  { "<leader>tn", "<cmd>FloatermToggle Node<cr>", desc = "Node" },
-  { "<leader>tp", "<cmd>FloatermToggle Python<cr>", desc = "Python" },
   { "<leader>tq", "<cmd>Trouble qflist toggle<cr>", desc = "Quickfix" },
   { "<leader>tr", "<cmd>Trouble lsp_references toggle<cr>", desc = "References" },
-  { "<leader>tt", "<cmd>FloatermToggle<cr>", desc = "Terminal" },
   { "<leader>ts", "<cmd>Trouble symbols toggle<cr>", desc = "Symbols" },
   { "<leader>tw", "<cmd>Trouble diagnostics toggle<cr>", desc = "Workspace Diagnostics" },
 }
