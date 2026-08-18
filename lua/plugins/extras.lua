@@ -13,21 +13,28 @@ local M = {
   {
     "folke/trouble.nvim",
     cmd = "Trouble",
+    -- opts is required: trouble v3 registers the :Trouble command from
+    -- setup(), which lazy only calls when a spec has opts/config.
+    opts = {},
   },
 
   {
+    -- Upstream now requires nvim 0.12 and lewis6991/async.nvim; without that
+    -- dependency every refactoring module fails with `module 'async' not found`.
+    -- plenary/treesitter are no longer dependencies, and setup() is optional.
     "ThePrimeagen/refactoring.nvim",
-    dependencies = {
-      { "nvim-lua/plenary.nvim" },
-      { "nvim-treesitter/nvim-treesitter" },
+    dependencies = { "lewis6991/async.nvim" },
+    cmd = "Refactor",
+    keys = {
+      { "<leader>R", mode = "n" },
+      { "<leader>r", mode = "x" },
     },
-    event = "BufEnter",
   },
 
   {
     "windwp/nvim-ts-autotag",
-    ft = { "html", "javascriptreact", "typescriptreact", "svelte", "tsx", "jsx" },
-    event = "InsertEnter",
+    ft = { "html", "xml", "javascriptreact", "typescriptreact", "svelte", "vue" },
+    opts = {},
   },
 
   {

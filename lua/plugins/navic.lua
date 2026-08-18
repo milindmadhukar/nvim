@@ -26,8 +26,11 @@ return {
     },
   },
   {
+    -- navbuddy registers no user command; it is driven by .open().
     "SmiteshP/nvim-navbuddy",
-    cmd = "NavBuddy",
+    keys = {
+      { "<leader>ln", function() require("nvim-navbuddy").open() end, desc = "LSP | NavBuddy" },
+    },
     dependencies = {
       "SmiteshP/nvim-navic",
       "MunifTanjim/nui.nvim",

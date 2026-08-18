@@ -11,6 +11,9 @@ local M = {
 		{
 			"leoluz/nvim-dap-go",
 			ft = "go",
+			-- opts is required or setup() never runs and the Go adapter is
+			-- never registered, breaking <leader>dg.
+			opts = {},
 		},
 
 		{

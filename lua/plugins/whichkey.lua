@@ -113,7 +113,6 @@ local mappings = {
   { "<leader>lk", "<cmd>lua vim.diagnostic.jump({ count = -1, severity = vim.diagnostic.severity.ERROR })<cr>", desc = "Prev Error" },
   { "<leader>ll", "<cmd>lua vim.lsp.codelens.run()<cr>", desc = "CodeLens Action" },
   { "<leader>lm", "<cmd>Mason<cr>", desc = "Mason" },
-  { "<leader>ln", "<cmd>NavBuddy<cr>", desc = "NavBuddy" },
   { "<leader>lq", "<cmd>lua vim.diagnostic.setloclist()<cr>", desc = "Quickfix" },
   { "<leader>lr", "<cmd>lua vim.lsp.buf.rename()<cr>", desc = "Rename" },
   { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document Symbols" },
@@ -125,10 +124,15 @@ local mappings = {
   { "<leader>og", "<cmd>Glow<cr>", desc = "Markdown preview (Glow)" },
   { "<leader>ot", "<cmd>lua require('base46').toggle_transparency()<cr>", desc = "Toggle Transparency" },
 
-  -- Refactoring (normal mode)
+  -- Refactoring (normal mode).
+  -- The API changed upstream: `refactoring.refactor("Extract Function")` and
+  -- `refactoring.debug.*` are gone, replaced by named functions on the main
+  -- module and a `refactoring.debug` submodule.
   { "<leader>R", group = "Refactoring" },
-  { "<leader>Rc", "<cmd>lua require('refactoring').debug.cleanup({})<CR>", desc = "Cleanup" },
-  { "<leader>Rp", "<cmd>lua require('refactoring').debug.printf({below = true})<CR>", desc = "Printf" },
+  { "<leader>Rc", "<cmd>lua require('refactoring.debug').cleanup({})<CR>", desc = "Cleanup debug prints" },
+  { "<leader>Rp", "<cmd>lua require('refactoring.debug').print_loc({below = true})<CR>", desc = "Print location" },
+  { "<leader>Rv", "<cmd>lua require('refactoring.debug').print_var({})<CR>", desc = "Print variable" },
+  { "<leader>Rr", "<cmd>lua require('refactoring').select_refactor()<CR>", desc = "Select refactor" },
 
   -- Search
   { "<leader>s", group = "Search" },
@@ -163,12 +167,12 @@ local vmappings = {
   mode = { "v" },
   { "<leader>S", "<cmd>lua require('utils.screenshot').generate_carbon_screenshot()<cr>", desc = "Take screenshot" },
   { "<leader>r", group = "Refactoring" },
-  { "<leader>rV", "<cmd>lua require('refactoring').debug.print_var({})<CR>", desc = "Print Debug Variables" },
-  { "<leader>re", "<Esc><Cmd>lua require('refactoring').refactor('Extract Function')<CR>", desc = "Extract Function" },
-  { "<leader>rf", "<Esc><Cmd>lua require('refactoring').refactor('Extract Function To File')<CR>", desc = "Extract function to file" },
-  { "<leader>ri", "<Esc><Cmd>lua require('refactoring').refactor('Inline Variable')<CR>", desc = "Inline Variable" },
-  { "<leader>rr", "<Esc><cmd>lua require('telescope').extensions.refactoring.refactors()<CR>", desc = "Telescope Refactor" },
-  { "<leader>rv", "<Esc><Cmd>lua require('refactoring').refactor('Extract Variable')<CR>", desc = "Extract Variable" },
+  { "<leader>rV", "<cmd>lua require('refactoring.debug').print_var({})<CR>", desc = "Print Debug Variable" },
+  { "<leader>re", "<cmd>Refactor extract_func<CR>", desc = "Extract Function" },
+  { "<leader>rf", "<cmd>Refactor extract_func_to_file<CR>", desc = "Extract function to file" },
+  { "<leader>ri", "<cmd>Refactor inline_var<CR>", desc = "Inline Variable" },
+  { "<leader>rr", "<cmd>lua require('refactoring').select_refactor()<CR>", desc = "Select Refactor" },
+  { "<leader>rv", "<cmd>Refactor extract_var<CR>", desc = "Extract Variable" },
 }
 
 function M.config()
