@@ -4,7 +4,7 @@
 -- step has been broken since 2023. :Glow (see extras.lua) covers previewing.
 return {
   "MeanderingProgrammer/render-markdown.nvim",
-  ft = { "markdown", "codecompanion" },
+  ft = { "markdown", "md" },
   dependencies = { "nvim-mini/mini.nvim" },
   opts = {},
 }
