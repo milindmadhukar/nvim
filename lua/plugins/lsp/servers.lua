@@ -6,6 +6,9 @@
 --
 -- Per-server overrides live in plugins/lsp/settings/<name>.lua and are merged
 -- on top of nvim-lspconfig's shipped defaults through vim.lsp.config().
+--
+-- jdtls is deliberately absent: nvim-jdtls (plugins/jdtls.lua) starts it per
+-- buffer, and mason-lspconfig v2 rejects it in ensure_installed.
 return {
   "lua_ls",
   "cssls",
@@ -20,5 +23,4 @@ return {
   "marksman",
   "tailwindcss",
   "sqlls",
-  "jdtls",
 }

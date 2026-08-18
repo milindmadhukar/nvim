@@ -135,11 +135,7 @@ return {
       vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled())
     end, { silent = true, desc = "LSP | Toggle inlay hints" })
 
-    -- jdtls is driven entirely by nvim-jdtls (see plugins/jdtls.lua), so it
-    -- must not be auto-started here or the two fight over the same buffer.
-    local enable = vim.tbl_filter(function(s)
-      return s ~= "jdtls"
-    end, servers)
-    vim.lsp.enable(enable)
+    -- servers.lua already excludes jdtls; nvim-jdtls starts it per buffer.
+    vim.lsp.enable(servers)
   end,
 }
