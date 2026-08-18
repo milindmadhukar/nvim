@@ -122,6 +122,9 @@ local mappings = {
   { "<leader>o", group = "Other" },
   { "<leader>oc", "<cmd>CodiNew javascript<cr>", desc = "Javascript Scratchpad" },
   { "<leader>og", "<cmd>Glow<cr>", desc = "Markdown preview (Glow)" },
+  { "<leader>oh", "<cmd>Huefy<cr>", desc = "Colour picker (minty Huefy)" },
+  { "<leader>ok", "<cmd>ShowkeysToggle<cr>", desc = "Toggle keycast (showkeys)" },
+  { "<leader>os", "<cmd>Shades<cr>", desc = "Colour shades (minty Shades)" },
   { "<leader>ot", "<cmd>lua require('base46').toggle_transparency()<cr>", desc = "Toggle Transparency" },
 
   -- Refactoring (normal mode).

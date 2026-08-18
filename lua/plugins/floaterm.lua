@@ -43,8 +43,8 @@ return {
     -- cramped window; this keeps a visible float margin while staying usable.
     size = { h = 90, w = 92 },
     terminals = {
-      { name = "Claude", cmd = "claude" },
-      { name = "Terminal" },
+      { name = "claude", cmd = "claude" },
+      { name = "terminal" },
     },
   },
 }
