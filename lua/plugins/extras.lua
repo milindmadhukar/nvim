@@ -31,30 +31,6 @@ local M = {
   },
 
   {
-    "iamcco/markdown-preview.nvim",
-    build = "cd app && npm install",
-    ft = "markdown",
-    init = function()
-      vim.g.mkdp_filetypes = { "markdown" }
-    end,
-  },
-
-  {
-    "OXY2DEV/markview.nvim",
-    -- lazy = false, -- Recommended
-    ft = "markdown", -- If you decide to lazy-load anyway
-
-    dependencies = {
-      -- You will not need this if you installed the
-      -- parsers manually
-      -- Or if the parsers are in your $RUNTIMEPATH
-      "nvim-treesitter/nvim-treesitter",
-
-      "nvim-tree/nvim-web-devicons"
-    }
-  },
-
-  {
     "wfxr/minimap.vim",
     build = "cargo install --locked code-minimap",
     cmd = { "Minimap", "MinimapToggle", "MinimapClose", "MinimapRefresh" },
@@ -70,43 +46,19 @@ local M = {
     cmd = "VimBeGood",
   },
 
-  { "rust-lang/rust.vim",       ft = "rust" },
-  { "simrat39/rust-tools.nvim", ft = "rust" }, -- TODO: Configure this
+  -- rust-tools.nvim was archived in 2024; rustaceanvim is its successor and
+  -- configures rust_analyzer itself (so it is absent from plugins/lsp/servers.lua).
+  {
+    "mrcjkb/rustaceanvim",
+    version = "^9",
+    ft = "rust",
+  },
 
   { "ellisonleao/glow.nvim",    config = true, cmd = "Glow" },
 
   {
-    "tamton-aquib/zone.nvim",
-    enabled = false,
-    config = function()
-      require("zone").setup({
-        style = "dvd",
-        after = 500, -- Idle timeout
-        exclude_filetypes = { "TelescopePrompt", "NvimTree", "neo-tree", "dashboard", "lazy", "alpha" },
-        -- More options to come later
-
-        treadmill = {
-          direction = "left",
-          headache = true,
-          tick_time = 30, -- Lower, the faster
-          -- Opts for Treadmill style
-        },
-        epilepsy = {
-          stage = "aura", -- "aura" or "ictal"
-          tick_time = 100,
-        },
-        dvd = {
-          -- text = {"line1", "line2", "line3", "etc"}
-          tick_time = 50,
-          -- Opts for Dvd style
-        },
-      })
-    end,
-  },
-
-  {
     "kawre/leetcode.nvim",
-    build = ":TSUpdate html",
+    cmd = "Leet",
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
       "nvim-telescope/telescope.nvim",

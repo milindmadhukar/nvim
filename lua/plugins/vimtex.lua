@@ -1,6 +1,12 @@
 return {
   {
     "lervag/vimtex",
+	-- There is no LaTeX toolchain installed here; without this guard vimtex
+	-- reports 2 ERRORs and 3 WARNINGs in :checkhealth on every machine that
+	-- lacks latexmk. Install texlive-binextra/biber/zathura to re-enable.
+	cond = function()
+		return vim.fn.executable("latexmk") == 1
+	end,
     lazy = false, -- we don't want to lazy load VimTeX
     -- tag = "v2.15", -- uncomment to pin to a specific release
     init = function()

@@ -5,7 +5,7 @@ return {
 				callSnippet = "Replace",
 			},
 			diagnostics = {
-				globals = { "vim" },
+				globals = { "vim", "hl" },
 			},
 			workspace = {
 				checkThirdParty = false,

@@ -1,6 +1,6 @@
 local M = {
 	"nvim-telescope/telescope.nvim",
-	lazy = false,
+	cmd = "Telescope",
 	dependencies = {
 		{ "nvim-telescope/telescope-ui-select.nvim", opt = true },
 	},
@@ -141,14 +141,6 @@ function M.config()
 
 	telescope.load_extension("ui-select")
 
-	vim.ui.select = function(items, opts, on_choice)
-		vim.cmd([[
-                PackerLoad telescope.nvim
-                PackerLoad telescope-ui-select.nvim
-            ]])
-		telescope.load_extension("ui-select")
-		vim.ui.select(items, opts, on_choice)
-	end
 end
 
 return M

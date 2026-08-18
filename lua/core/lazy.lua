@@ -2,6 +2,10 @@ return {
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
 
+  -- No plugin here needs luarocks; without this lazy reports a health ERROR
+  -- about the missing hererocks Lua 5.1 install.
+  rocks = { enabled = false },
+
   ui = {
     icons = {
       ft = "",

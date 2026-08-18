@@ -4,11 +4,14 @@ local M = {
 	dependencies = {
 		"nvim-lua/plenary.nvim",
 	},
+	keys = { "<leader>h" },
 }
 
-local conf = require("telescope.config").values
-
+-- NOTE: every telescope require lives inside this function on purpose.
+-- Requiring telescope.config at module scope ran during lazy's spec import and
+-- pulled telescope (and telescope-ui-select) into startup, costing ~9ms.
 local function toggle_telescope(harpoon_files)
+	local conf = require("telescope.config").values
 	local file_paths = {}
 	for _, item in ipairs(harpoon_files.items) do
 		table.insert(file_paths, item.value)
@@ -31,9 +34,9 @@ function M.config()
 
 	harpoon:setup()
 
-	-- vim.keymap.set("n", "<leader>ht", function()
-	-- 	toggle_telescope(harpoon:list())
-	-- end, { desc = "Harpoon telescope window" })
+	vim.keymap.set("n", "<leader>ht", function()
+		toggle_telescope(harpoon:list())
+	end, { desc = "Harpoon | Telescope window" })
 end
 
 return M

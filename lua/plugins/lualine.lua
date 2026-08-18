@@ -1,12 +1,6 @@
 local M = {
 	"nvim-lualine/lualine.nvim",
-	dependencies = {
-		{
-      "AndreM222/copilot-lualine",
-      config = function()
-      end
-    },
-	},
+	event = "VeryLazy",
 }
 
 local hide_in_width = function()
@@ -113,7 +107,7 @@ function M.config()
 			lualine_b = { branch, diagnostics },
 			lualine_c = { "filename" },
 			-- lualine_x = { diff }, -- , spaces}, -- , "encoding", "fileformat", filetype},
-			lualine_x = { diff, "copilot", lsp_client, filetype },
+			lualine_x = { diff, lsp_client, filetype },
 			lualine_y = { progress },
 			lualine_z = { location },
 		},

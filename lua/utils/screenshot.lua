@@ -17,7 +17,7 @@ local function urlencode(text)
 end
 
 function M.generate_carbon_screenshot()
-	local selection = require("user.functions").capture_selection()
+	local selection = require("utils").capture_selection()
 
 	if selection[1] == "" then
 		selection[1] = vim.fn.join(vim.fn.getline(1, "$"), "\n")

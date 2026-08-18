@@ -3,7 +3,7 @@ if not vim.g.neovide then
 end
 
 
-require("user.colorscheme").load("darkplus")
+-- colorscheme is driven by NvChad base46 (see lua/chadrc.lua)
 
 vim.o.guifont = "Hack Nerd Font:h14"
 

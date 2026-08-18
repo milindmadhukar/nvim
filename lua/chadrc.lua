@@ -54,31 +54,8 @@ M.ui = {
 
 M.cheatsheet = { theme = "grid" } -- simple/grid
 
-M.treesitter = {
-  ensure_installed = {
-    "javascript",
-    "typescript",
-    "go",
-    "python",
-    "c",
-    "cpp",
-    "dockerfile",
-    "rust",
-    "lua",
-    "cmake",
-    "markdown",
-    "bash",
-    "html",
-    "css",
-    "java",
-  },
-
-  highlight = { enable = true },
-  indent = { enable = true },
-  autotag = {
-    enable = true,
-  },
-}
+-- NOTE: treesitter config lives in lua/plugins/treesitter.lua.
+-- NvChad v2.5 never reads a chadrc treesitter key, so it was dead config here.
 
 M.lsp = { signature = false }
 

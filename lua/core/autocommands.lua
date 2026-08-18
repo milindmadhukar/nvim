@@ -31,23 +31,12 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 })
 
--- Remove statusline and tabline when in Alpha
-vim.api.nvim_create_autocmd({ "User" }, {
-	pattern = { "AlphaReady" },
-	callback = function()
-		vim.cmd([[
-      set showtabline=0 | autocmd BufUnload <buffer> set showtabline=2
-      set laststatus=0 | autocmd BufUnload <buffer> set laststatus=3
-    ]])
-	end,
-})
-
 vim.cmd("autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif")
 
 -- Highlight Yanked Text
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {
 	callback = function()
-		vim.highlight.on_yank({ higroup = "Visual", timeout = 200 })
+		vim.hl.on_yank({ higroup = "Visual", timeout = 200 })
 	end,
 })
 
@@ -70,24 +59,27 @@ vim.api.nvim_create_autocmd({ "BufWritePost" }, {
 	end,
 })
 
--- Organize imports on save for Go files
+-- Organize imports on save for Go files.
+-- Must be synchronous, so this uses buf_request_sync rather than
+-- vim.lsp.buf.code_action{apply=true}, which returns before BufWritePre ends.
+-- gopls answers source.organizeImports with a workspace edit, so the old
+-- vim.lsp.buf.execute_command fallback (removed in 0.11) is not needed.
 vim.api.nvim_create_autocmd("BufWritePre", {
 	pattern = "*.go",
 	callback = function()
-		local clients = vim.lsp.get_clients({ bufnr = 0, name = "gopls" })
-		if #clients == 0 then
+		local client = vim.lsp.get_clients({ bufnr = 0, name = "gopls" })[1]
+		if not client then
 			return
 		end
-		local client = clients[1]
-		local params = vim.lsp.util.make_range_params(nil, client.offset_encoding)
-		params.context = { only = { "source.organizeImports" } }
-		local result = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
-		for _, res in pairs(result or {}) do
-			for _, r in pairs(res.result or {}) do
-				if r.edit then
-					vim.lsp.util.apply_workspace_edit(r.edit, client.offset_encoding)
-				else
-					vim.lsp.buf.execute_command(r.command)
+
+		local params = vim.lsp.util.make_range_params(0, client.offset_encoding)
+		params.context = { only = { "source.organizeImports" }, diagnostics = {} }
+
+		local responses = vim.lsp.buf_request_sync(0, "textDocument/codeAction", params, 1000)
+		for _, response in pairs(responses or {}) do
+			for _, action in pairs(response.result or {}) do
+				if action.edit then
+					vim.lsp.util.apply_workspace_edit(action.edit, client.offset_encoding)
 				end
 			end
 		end

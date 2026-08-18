@@ -1,23 +1,24 @@
-local M = {
-  { "nvim-lua/plenary.nvim", commit = "9ac3e9541bbabd9d73663d757e4fe48a675bb054" }, -- Useful lua functions used by lots of plugins
+return {
+  -- Useful lua functions used by lots of plugins
+  { "nvim-lua/plenary.nvim" },
 
   {
-    "nvim-tree/nvim-web-devicons",
-    event = "VeryLazy",
+    -- Renamed from echasnovski/mini.nvim in 2026.
+    "nvim-mini/mini.nvim",
+    version = "*",
+    lazy = false,
+    priority = 100,
     config = function()
-      require("nvim-web-devicons")
+      -- Single icon provider: mini.icons serves plugins that ask for
+      -- nvim-web-devicons too, so the two are no longer loaded side by side.
+      require("mini.icons").setup()
+      require("mini.icons").mock_nvim_web_devicons()
     end,
   },
 
-  {
-    'echasnovski/mini.nvim',
-    version = '*',
-    dependencies = {
-      { 'echasnovski/mini.icons', version = false },
-    },
-  },
+  -- Kept only because NvChad's own specs list it as a dependency; mini.icons
+  -- mocks the module, so this never actually loads its own icon tables.
+  { "nvim-tree/nvim-web-devicons", lazy = true },
 
-  { "moll/vim-bbye",         commit = "25ef93ac5a87526111f43e5110675032dbcacf56" },
+  { "moll/vim-bbye", cmd = { "Bdelete", "Bwipeout" } },
 }
-
-return M

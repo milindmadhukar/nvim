@@ -1,11 +1,11 @@
 local M = {
 	"mfussenegger/nvim-dap",
-	commit = "56118cee6af15cb9ddba9d080880949d8eeb0c9f",
-	event = "BufEnter",
+	cmd = { "DapContinue", "DapToggleBreakpoint", "DapStepOver", "DapStepInto", "DapStepOut", "DapTerminate" },
+	keys = { "<leader>d" },
 	dependencies = {
 		{
 			"rcarriga/nvim-dap-ui",
-			commit = "4ce7b97dd8f50b4f672948a34bf8f3a56214fdb8",
+			dependencies = { "nvim-neotest/nvim-nio" },
 		},
 
 		{
