@@ -38,12 +38,6 @@ local M = {
   },
 
   {
-    "wfxr/minimap.vim",
-    build = "cargo install --locked code-minimap",
-    cmd = { "Minimap", "MinimapToggle", "MinimapClose", "MinimapRefresh" },
-  },
-
-  {
     "metakirby5/codi.vim",
     cmd = { "Codi", "CodiNew", "CodiSelect", "CodiExpand" },
   }, -- Interactive scratchpad,

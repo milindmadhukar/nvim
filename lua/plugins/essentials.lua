@@ -13,6 +13,20 @@ return {
       -- nvim-web-devicons too, so the two are no longer loaded side by side.
       require("mini.icons").setup()
       require("mini.icons").mock_nvim_web_devicons()
+
+      -- Replaces wfxr/minimap.vim, which shelled out to code-minimap through
+      -- `:w !cmd` and so tripped Neovim's "Press any key to continue" prompt
+      -- on every refresh. mini.map renders in-process, no external binary.
+      local map = require "mini.map"
+      map.setup {
+        integrations = {
+          map.gen_integration.builtin_search(),
+          map.gen_integration.diagnostic(),
+          map.gen_integration.gitsigns(),
+        },
+        symbols = { encode = map.gen_encode_symbols.dot "4x2" },
+        window = { winblend = 25, show_integration_count = false },
+      }
     end,
   },
 
