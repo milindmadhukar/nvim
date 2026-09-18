@@ -146,6 +146,8 @@ local mappings = {
   { "<leader>ok", "<cmd>ShowkeysToggle<cr>", desc = "Toggle keycast (showkeys)" },
   { "<leader>os", "<cmd>Shades<cr>", desc = "Colour shades (minty Shades)" },
   { "<leader>ot", "<cmd>lua require('base46').toggle_transparency()<cr>", desc = "Toggle Transparency" },
+  { "<leader>oy", "<cmd>Typr<cr>", desc = "Typing test (typr)" },
+  { "<leader>oY", "<cmd>TyprStats<cr>", desc = "Typing stats (typr)" },
 
   -- Refactoring (normal mode).
   -- The API changed upstream: `refactoring.refactor("Extract Function")` and

@@ -6,7 +6,7 @@ local M = {
 function M.config()
 	require("nvim-autopairs").setup({
 		check_ts = true,
-		disable_filetype = { "TelescopePrompt", "spectre_panel" },
+		disable_filetype = { "TelescopePrompt", "spectre_panel", "typr" },
 	})
 end
 
