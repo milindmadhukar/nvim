@@ -1,3 +1,4 @@
+require "core.env"
 require "core.autocommands"
 require "core.options"
 require "core.filetypes"
