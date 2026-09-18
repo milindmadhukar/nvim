@@ -6,8 +6,11 @@ local M = {
 
   {
     "tpope/vim-fugitive",
-    event = "VeryLazy",
-    cmd = "Git",
+    -- `event = "VeryLazy"` was here too, which sourced ~7k lines of vimscript
+    -- on every session whether or not fugitive was used. The command list is
+    -- what actually needs to exist up front; fugitive defines the rest itself
+    -- once loaded.
+    cmd = { "Git", "G", "Gdiffsplit", "Gvdiffsplit", "Gread", "Gwrite", "Gedit", "Ggrep", "Glgrep", "Gclog", "Gllog", "GBrowse", "GMove", "GRename", "GDelete", "GRemove" },
   },
 
   {
@@ -87,11 +90,10 @@ local M = {
       vim.o.number = true
       vim.o.termguicolors = true
     end,
-    event = "BufEnter",
+    -- `init` above already sets the three options modicator requires, so the
+    -- plugin itself only has to be around by the time a mode changes.
+    event = "VeryLazy",
     opts = {},
-    config = function()
-      require("modicator").setup({})
-    end,
   },
 
   {

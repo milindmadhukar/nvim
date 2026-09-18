@@ -1,6 +1,8 @@
 local M = {
   "folke/todo-comments.nvim",
-  event = "BufEnter",
+  -- BufReadPost, not BufEnter: BufEnter fires for the startup scratch buffer
+  -- and for nvdash, neither of which has comments to scan.
+  event = "BufReadPost",
 }
 
 function M.config()

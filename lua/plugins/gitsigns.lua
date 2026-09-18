@@ -1,7 +1,11 @@
 local M = {
   "lewis6991/gitsigns.nvim",
   enabled = true,
-  event = "BufEnter",
+  -- No `event` here on purpose. `event = "BufEnter"` used to sit alongside the
+  -- init hook below and fired first on every buffer, git repo or not, which
+  -- made the git-detection hook dead code and put ~11ms of gitsigns on the
+  -- startup path. The hook alone loads it -- scheduled, so off that path --
+  -- and only inside a repo.
   cmd = "Gitsigns",
   init = function()
     -- load gitsigns only when a git file is opened
