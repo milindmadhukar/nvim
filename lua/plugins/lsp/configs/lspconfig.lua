@@ -15,7 +15,7 @@ return {
     local servers = require "plugins.lsp.servers"
 
     -- ── Diagnostics ────────────────────────────────────────────────────────
-    local signs = { Error = "", Warn = "", Hint = "󰌵", Info = "" }
+    local signs = { Error = "", Warn = "", Hint = "󰌵", Info = "" }
 
     vim.diagnostic.config {
       virtual_text = false,
