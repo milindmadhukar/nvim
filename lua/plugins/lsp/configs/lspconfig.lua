@@ -7,6 +7,10 @@
 return {
   "neovim/nvim-lspconfig",
   event = { "BufReadPre", "BufNewFile" },
+  -- A dependency rather than a sibling spec: the config below requires
+  -- plugins/lsp/settings/{jsonls,yamlls}.lua synchronously, and those call
+  -- require "schemastore" at load time.
+  dependencies = { "b0o/SchemaStore.nvim" },
   config = function()
     local servers = require "plugins.lsp.servers"
 
