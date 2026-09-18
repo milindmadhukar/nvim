@@ -1,24 +1,10 @@
 #!/usr/bin/env bash
 
-set -eu pipefall
-
-# Function for dependency check
-dep_ch() {
-    for dep; do
-        if ! command -v "$dep" >/dev/null; then
-            terminate_script "Program \"$dep\" not found. Please install it."
-        fi
-    done
-}
+set -euo pipefail
 
 # Display error message in red to stderr
 error() {
-    printf "\33[2k\r\033[1;31m%s\033[0m\n" "$*" >&2
-}
-
-# Display an informational message (first argument in green, second in magenta)
-inf() {
-    printf "\33[2K\r\033[1;35m%s \033[1;35m%s\033[0m\n" "$1" "$2"
+    printf "\33[2K\r\033[1;31m%s\033[0m\n" "$*" >&2
 }
 
 # Function to terminate script if error occurs
@@ -27,23 +13,39 @@ terminate_script() {
     exit 1
 }
 
-function __invalid__prefix__handler() {
-  inf "" "Error! Invalid value for NEOVIM_INSTALL_PREFIX: [$INSTALL_PREFIX]"
+# Display an informational message (first argument in green, second in magenta)
+inf() {
+    printf "\33[2K\r\033[1;32m%s \033[1;35m%s\033[0m\n" "$1" "$2"
+}
+
+# Function for dependency check
+dep_ch() {
+    for dep; do
+        if ! command -v "$dep" >/dev/null 2>&1; then
+            terminate_script "Program \"$dep\" not found. Please install it."
+        fi
+    done
+}
+
+__invalid__prefix__handler() {
+  inf "" "Error! Invalid value for NEOVIM_INSTALL_PREFIX: [$NEOVIM_INSTALL_PREFIX]"
   inf "" "Please verify that the folder exists and re-run the installer!"
   exit 1
 }
 
-function build_from_source() {
-  dep_ch "gcc" "cmake" || true
+build_from_source() {
+  dep_ch git make cmake gcc
+
+  local CURRENT_DIR NEOVIM_DIR BUILD_TYPE opt
   CURRENT_DIR="$(pwd)"
   NEOVIM_DIR="$HOME/.config/nvim/neovim"
 
   inf "" "Please choose a build type"
   PS3='Please enter your choice: '
-  options=("Nightly (RelWithDebInfo)" "Release (Default)" "exit script")
+  local options=("Nightly (RelWithDebInfo)" "Release (Default)" "exit script")
   select opt in "${options[@]}"; do
     case $opt in
-      "Nightly (RelWithDebInfo)")
+    "Nightly (RelWithDebInfo)")
       BUILD_TYPE="RelWithDebInfo"
       break
       ;;
@@ -62,39 +64,103 @@ function build_from_source() {
     esac
   done
 
-
-  #checks if neovim directory already exists, pull new changes else clone
+  # checks if neovim directory already exists, pull new changes else clone
   if [ -d "$NEOVIM_DIR" ]; then
-    cd "$NEOVIM_DIR" || terminate_script "Error: neovim directory not found exiting script ..."
-    git pull
-    cd "$CURRENT_DIR" || terminate_script "Error: not able to change directory to \"$CURRENT_DIR\""
+    inf "" "Updating the existing Neovim checkout in $NEOVIM_DIR .."
+    git -C "$NEOVIM_DIR" pull --ff-only ||
+      terminate_script "Error: could not update \"$NEOVIM_DIR\". Remove it and re-run the installer."
+    # a stale build tree keeps the old CMAKE_BUILD_TYPE around, so start clean
+    make -C "$NEOVIM_DIR" distclean || true
   else
     git clone https://github.com/neovim/neovim.git "$NEOVIM_DIR"
   fi
 
-  #checks for file existance
-  [ -e /usr/local/bin/nvim ] && sudo rm -f /usr/local/bin/nvim
-  [ -e /usr/local/share/nvim/ ] && sudo rm -rf /usr/local/share/nvim/
+  # checks for file existence
+  if [ -e /usr/local/bin/nvim ]; then
+    sudo rm -f /usr/local/bin/nvim
+  fi
+  if [ -d /usr/local/share/nvim/ ]; then
+    sudo rm -rf /usr/local/share/nvim/
+  fi
 
-  cd "$NEOVIM_DIR" 2>/dev/null || terminate_script "Error: neovim directory not found exiting script ..."
+  cd "$NEOVIM_DIR" || terminate_script "Error: neovim directory not found exiting script ..."
 
   make CMAKE_BUILD_TYPE="$BUILD_TYPE"
-
   sudo make install
-  cd "$CURRENT_DIR" || terminate_script "Error: not able to change directory to \"$CURRENT_DIR\""
-  rm -rf "$NEOVIM_DIR"
 
-  exit
+  cd "$CURRENT_DIR" || terminate_script "Error: not able to change directory to \"$CURRENT_DIR\""
+
+  inf "" "Installation complete!"
+  inf "" "The Neovim sources are kept in $NEOVIM_DIR for faster re-installs."
+  exit 0
 }
 
-function install_from_release() {
+# Prints the sha256 checksum of the file passed as $1
+sha256_of() {
+  if command -v sha256sum >/dev/null 2>&1; then
+    sha256sum "$1" | awk '{print $1}'
+  elif command -v shasum >/dev/null 2>&1; then
+    shasum -a 256 "$1" | awk '{print $1}'
+  elif command -v openssl >/dev/null 2>&1; then
+    openssl dgst -sha256 "$1" | awk '{print $NF}'
+  fi
+}
 
-  declare -r NEOVIM_INSTALL_PREFIX="${INSTALL_PREFIX:-"$HOME/.local"}"
-  declare RELEASE_VER
+# Prints the sha256 checksum GitHub recorded for the asset named $2 of the
+# release JSON document at $1. The per-asset .sha256sum files that older
+# Neovim releases shipped no longer exist, so the digest comes from the API.
+release_sha_of() {
+  local api_url="$1" asset="$2" json
+  json="$(curl -fsSL "$api_url")" || return 0
+
+  if command -v jq >/dev/null 2>&1; then
+    printf '%s' "$json" |
+      jq -r --arg a "$asset" '.assets[] | select(.name == $a) | .digest // ""' |
+      sed 's/^sha256://' || true
+    return 0
+  fi
+
+  # jq-less fallback: squash the document, break it before every "name" key so
+  # each asset lands on its own line, then read the digest off our asset's line.
+  # (the newline in the sed replacement is escaped for BSD sed on macOS)
+  printf '%s' "$json" | tr -d ' \n' | sed 's/"name":/\
+"name":/g' |
+    grep -F "\"name\":\"$asset\"" |
+    grep -o 'sha256:[0-9a-f]\{64\}' | head -n1 | sed 's/^sha256://' || true
+}
+
+# Copies the tree at $1 into the prefix $2. Unlike "cp -r", a destination
+# sub-directory that is really a symlink (e.g. a stow-managed
+# ~/.local/share/applications) is written *through* rather than erroring out
+# with "cannot overwrite non-directory", and is never replaced by a real
+# directory the way bsdtar would.
+install_tree() {
+  local src="$1" dest="$2" rel
+
+  while IFS= read -r rel; do
+    if [ -L "$dest/$rel" ]; then
+      if [ ! -d "$dest/$rel" ]; then
+        terminate_script "Error: $dest/${rel#./} is a broken symlink. Fix or remove it and re-run the installer."
+      fi
+      inf "" "Note: ${rel#./} is a symlink, installing into $(readlink "$dest/$rel")"
+    fi
+    mkdir -p "$dest/$rel"
+  done < <(cd "$src" && find . -type d)
+
+  while IFS= read -r rel; do
+    cp -Pp "$src/$rel" "$dest/$rel"
+  done < <(cd "$src" && find . ! -type d)
+}
+
+install_from_release() {
+  dep_ch curl tar
+
+  declare -r NEOVIM_INSTALL_PREFIX="${NEOVIM_INSTALL_PREFIX:-${INSTALL_PREFIX:-"$HOME/.local"}}"
+  declare RELEASE_VER opt
 
   inf "" "Please choose a release version:"
   PS3='Please enter your choice: '
-  options=("latest" "nightly")
+  local options=("latest" "nightly")
   select opt in "${options[@]}"; do
     case $opt in
     "latest")
@@ -113,36 +179,44 @@ function install_from_release() {
     esac
   done
 
-  declare ARCHIVE_NAME
-  declare RELEASE_NAME
-  declare OS
+  declare ARCHIVE_NAME OS ARCH
 
   OS="$(uname -s)"
+  case "$(uname -m)" in
+  x86_64 | amd64)
+    ARCH="x86_64"
+    ;;
+  arm64 | aarch64)
+    ARCH="arm64"
+    ;;
+  *)
+    inf "" "$(uname -m) architecture is not supported currently"
+    exit 1
+    ;;
+  esac
 
-  if [ "$OS" == "Linux" ]; then
-    ARCHIVE_NAME="nvim-linux64"
-    RELEASE_NAME="nvim-linux64"
-  elif [ "$OS" == "Darwin" ]; then
-    ARCHIVE_NAME="nvim-macos"
-    # for some reason the archive has a different name
-    RELEASE_NAME="nvim-osx64"
+  if [ "$OS" = "Linux" ]; then
+    ARCHIVE_NAME="nvim-linux-$ARCH"
+  elif [ "$OS" = "Darwin" ]; then
+    ARCHIVE_NAME="nvim-macos-$ARCH"
   else
     inf "" "$OS platform is not supported currently"
     exit 1
   fi
 
-  if [[ "${RELEASE_VER}" == "latest" ]]; then
-    declare -r RELEASE_URL="https://github.com/neovim/neovim/releases/${RELEASE_VER}/download/${ARCHIVE_NAME}.tar.gz"
+  declare RELEASE_URL API_URL
+  if [ "$RELEASE_VER" = "latest" ]; then
+    RELEASE_URL="https://github.com/neovim/neovim/releases/latest/download/${ARCHIVE_NAME}.tar.gz"
+    API_URL="https://api.github.com/repos/neovim/neovim/releases/latest"
   else
-    declare -r RELEASE_URL="https://github.com/neovim/neovim/releases/download/${RELEASE_VER}/${ARCHIVE_NAME}.tar.gz"
+    RELEASE_URL="https://github.com/neovim/neovim/releases/download/${RELEASE_VER}/${ARCHIVE_NAME}.tar.gz"
+    API_URL="https://api.github.com/repos/neovim/neovim/releases/tags/${RELEASE_VER}"
   fi
-  declare -r CHECKSUM_URL="$RELEASE_URL.sha256sum"
+  readonly RELEASE_URL API_URL
 
   DOWNLOAD_DIR="$(mktemp -d)"
   readonly DOWNLOAD_DIR
-
-  RELEASE_SHA="$(curl -Ls "$CHECKSUM_URL" | awk '{print $1}')"
-  readonly RELEASE_SHA
+  trap 'rm -rf "$DOWNLOAD_DIR"' EXIT
 
   if [ ! -d "$NEOVIM_INSTALL_PREFIX" ]; then
     mkdir -p "$NEOVIM_INSTALL_PREFIX" || __invalid__prefix__handler
@@ -156,9 +230,17 @@ function install_from_release() {
   inf "" "Download complete!"
 
   inf "" "Verifying the installation.."
-  DOWNLOADED_SHA="$(openssl dgst -sha256 "$DOWNLOAD_DIR/$ARCHIVE_NAME.tar.gz" | awk '{print $2}')"
+  RELEASE_SHA="$(release_sha_of "$API_URL" "$ARCHIVE_NAME.tar.gz")"
+  DOWNLOADED_SHA="$(sha256_of "$DOWNLOAD_DIR/$ARCHIVE_NAME.tar.gz")"
+  readonly RELEASE_SHA DOWNLOADED_SHA
 
-  if [ "$RELEASE_SHA" != "$DOWNLOADED_SHA" ]; then
+  if [ -z "$RELEASE_SHA" ] || [ -z "$DOWNLOADED_SHA" ]; then
+    if [ "${NEOVIM_SKIP_CHECKSUM:-0}" = "1" ]; then
+      inf "" "Warning: skipping checksum verification (NEOVIM_SKIP_CHECKSUM=1)."
+    else
+      terminate_script "Error! Could not determine the checksum for $ARCHIVE_NAME.tar.gz. Re-run with NEOVIM_SKIP_CHECKSUM=1 to install anyway."
+    fi
+  elif [ "$RELEASE_SHA" != "$DOWNLOADED_SHA" ]; then
     inf "" "Error! checksum mismatch."
     inf "" "Expected: $RELEASE_SHA but got: $DOWNLOADED_SHA"
     exit 1
@@ -166,19 +248,22 @@ function install_from_release() {
   inf "" "Verification complete!"
 
   inf "" "Installing Neovim.."
-  pushd "$DOWNLOAD_DIR"
-  tar -xzf "$DOWNLOAD_DIR/$ARCHIVE_NAME.tar.gz"
-  popd
+  tar -xzf "$DOWNLOAD_DIR/$ARCHIVE_NAME.tar.gz" -C "$DOWNLOAD_DIR"
+
+  RELEASE_NAME="$ARCHIVE_NAME"
   if [ ! -d "$DOWNLOAD_DIR/$RELEASE_NAME" ]; then
-    # fallback to archive name
-    RELEASE_NAME="$ARCHIVE_NAME"
+    # fallback to whatever single directory the archive extracted to
+    RELEASE_NAME="$(find "$DOWNLOAD_DIR" -mindepth 1 -maxdepth 1 -type d -exec basename {} \; | head -n1)"
   fi
-  # https://dev.to/ackshaey/macos-vs-linux-the-cp-command-will-trip-you-up-2p00
-  cp -r "$DOWNLOAD_DIR/$RELEASE_NAME/." "$NEOVIM_INSTALL_PREFIX"
+  if [ -z "$RELEASE_NAME" ] || [ ! -d "$DOWNLOAD_DIR/$RELEASE_NAME" ]; then
+    terminate_script "Error: could not find the extracted Neovim directory."
+  fi
+
+  install_tree "$DOWNLOAD_DIR/$RELEASE_NAME" "$NEOVIM_INSTALL_PREFIX"
   inf "" "Installation complete!"
   inf "" "Now you can run $NEOVIM_INSTALL_PREFIX/bin/nvim"
 
-  exit
+  exit 0
 }
 
 inf "" "Please choose an installation method:"
@@ -207,5 +292,3 @@ select opt in "${options[@]}"; do
     ;;
   esac
 done
-
-
