@@ -89,23 +89,143 @@ function M.toggle_format_on_save()
 	end
 end
 
-function M.handle_buffer_close()
-	local current_bufnr = vim.api.nvim_get_current_buf()
-	local buffer_count = 0
-	local buffers = vim.api.nvim_list_bufs()
+-- Closing a buffer, the way an editor with a tab bar is expected to do it:
+-- the window keeps its place, and unsaved work gets a dialog rather than a
+-- silent refusal.
+--
+-- Plain `:bdelete` cannot be used. When the buffer being deleted is the only
+-- one a window holds, Neovim closes that window rather than picking a
+-- replacement -- and with nvim-tree open the tree is then the last window
+-- standing, which trips the rule in core/autocommands.lua that quits Neovim.
+-- Closing a buffer took the whole editor down with it. So every window showing
+-- the buffer is moved off it first, and only then is the buffer deleted.
 
-	for _, bufnr in ipairs(buffers) do
-		if vim.fn.buflisted(bufnr) == 1 then
-			buffer_count = buffer_count + 1
+-- What a window showing `bufnr` should display instead: the neighbour in the
+-- tabline's own order, so closing follows the row of buffers the user is
+-- looking at, then the window's alternate, then anything else that is listed.
+local function replacement_buffer(bufnr)
+	for index, buf in ipairs(vim.t.bufs or {}) do
+		if buf == bufnr then
+			local neighbour = vim.t.bufs[index + 1] or vim.t.bufs[index - 1]
+
+			if neighbour and vim.api.nvim_buf_is_valid(neighbour) then
+				return neighbour
+			end
 		end
 	end
 
-	if buffer_count == 1 then
-		vim.cmd("Nvdash")
-		vim.cmd("bwipeout " .. current_bufnr)
-	else
-		vim.cmd("bdelete")
+	local alternate = vim.fn.bufnr("#")
+
+	if alternate ~= -1 and alternate ~= bufnr and vim.fn.buflisted(alternate) == 1 then
+		return alternate
 	end
+
+	for _, other in ipairs(vim.api.nvim_list_bufs()) do
+		if other ~= bufnr and vim.fn.buflisted(other) == 1 then
+			return other
+		end
+	end
+end
+
+local function listed_buffer_count()
+	local count = 0
+
+	for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+		if vim.fn.buflisted(bufnr) == 1 then
+			count = count + 1
+		end
+	end
+
+	return count
+end
+
+---@param bufnr integer
+---@param force boolean|nil discard unsaved changes (the user has said so)
+local function close_buffer(bufnr, force)
+	-- On the way out of the last buffer, land on the dashboard instead of an
+	-- empty window.
+	if listed_buffer_count() <= 1 and not pcall(vim.cmd, "Nvdash") then
+		vim.cmd("enew")
+	end
+
+	local replacement = replacement_buffer(bufnr)
+
+	for _, win in ipairs(vim.api.nvim_list_wins()) do
+		if vim.api.nvim_win_get_buf(win) == bufnr then
+			vim.api.nvim_win_call(win, function()
+				vim.cmd(replacement and ("buffer " .. replacement) or "enew")
+			end)
+		end
+	end
+
+	local ok, err = pcall(vim.api.nvim_buf_delete, bufnr, { force = force == true })
+
+	if not ok then
+		vim.notify(tostring(err), vim.log.levels.ERROR)
+	end
+
+	vim.cmd("redrawtabline")
+end
+
+-- Write `bufnr` and call `on_written` if it got as far as disk. A buffer that
+-- has never been saved has no path to write to, so it gets asked for one --
+-- the "save as" half of the dialog.
+local function write_buffer(bufnr, on_written)
+	local function write(path)
+		local ok, err = pcall(function()
+			vim.api.nvim_buf_call(bufnr, function()
+				vim.cmd(path and ("write " .. vim.fn.fnameescape(path)) or "write")
+			end)
+		end)
+
+		if not ok then
+			vim.notify(tostring(err), vim.log.levels.ERROR)
+			return
+		end
+
+		on_written()
+	end
+
+	if vim.api.nvim_buf_get_name(bufnr) ~= "" then
+		write()
+		return
+	end
+
+	vim.ui.input({ prompt = "Save as: ", completion = "file" }, function(path)
+		if path and path ~= "" then
+			write(path)
+		end
+	end)
+end
+
+function M.handle_buffer_close()
+	local current_bufnr = vim.api.nvim_get_current_buf()
+
+	-- Nothing to close from a sidebar or the dashboard; those are not buffers the
+	-- user opened, and deleting them is how nvim-tree ends up alone in a tab.
+	if not vim.bo[current_bufnr].buflisted then
+		return
+	end
+
+	if not vim.bo[current_bufnr].modified then
+		close_buffer(current_bufnr)
+		return
+	end
+
+	local name = vim.fn.fnamemodify(vim.api.nvim_buf_get_name(current_bufnr), ":t")
+	local choices = { "Save and close", "Close without saving", "Cancel" }
+
+	vim.ui.select(choices, {
+		prompt = ("%s has unsaved changes"):format(name ~= "" and name or "This buffer"),
+	}, function(_, index)
+		if index == 1 then
+			write_buffer(current_bufnr, function()
+				close_buffer(current_bufnr)
+			end)
+		elseif index == 2 then
+			close_buffer(current_bufnr, true)
+		end
+	end)
 end
 
 function M.export_neorg_to_md()
