@@ -34,7 +34,12 @@ local options = {
   wrap = true, -- display lines as one long line
   scrolloff = 8, -- is one of my fav
   sidescrolloff = 8,
-  guifont = "monospace:h17", -- the font used in graphical neovim applications
+  -- Default for GUI frontends that are not Neovide (nvim-qt, goneovim, ...).
+  -- Under Neovide this is deliberately overwritten: utils/neovide.lua loads
+  -- after core.options and sets h12 to match Ghostty's `font-size`, with
+  -- `neovide_scale_factor` pinned at 1.0 so that is the size you get.
+  -- Irrelevant in a terminal, which uses the terminal emulator's own font.
+  guifont = "JetBrainsMono Nerd Font:h17",
   foldmethod = "manual", -- folding set to "expr" for treesitter based folding
   foldexpr = "", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
   hidden = true, -- required to keep multiple buffers and open multiple buffers
