@@ -61,7 +61,12 @@ function M.config()
 				preview_cutoff = 120,
 			},
 
-			file_ignore_patterns = { "node_modules" },
+			-- `.workspaces/` is where `ws` assembles worktrees. A worktree is a
+			-- second checkout of a repo you already have, so without this every
+			-- result appears once per workspace on top of the primary checkout.
+			-- ~/.ignore covers ripgrep and fd; this covers the pickers that do
+			-- not go through them.
+			file_ignore_patterns = { "node_modules", "%.workspaces/" },
 			winblend = 0,
 			border = {},
 			borderchars = { "─", "│", "─", "│", "╭", "╮", "╯", "╰" },

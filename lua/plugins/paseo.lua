@@ -31,13 +31,23 @@ return {
   -- VeryLazy keeps all of that off the startup path anyway.
   event = "VeryLazy",
 
-  -- <leader>a was the only free top-level letter. `ar` (review) and `aq` (hunk
-  -- quickfix) are the Phase 1 keys; `ae`/`aa` (explain/ask) arrive with the
-  -- agent bridge in Phase 2, and `aw` (workspaces) in Phase 4. Only keys whose
-  -- commands exist are bound -- an entry for a subcommand that is not there yet
-  -- reads like a promise and errors like a bug.
+  -- <leader>a was the only free top-level letter. Only keys whose subcommands
+  -- exist are bound -- an entry for something not built yet reads like a
+  -- promise and errors like a bug.
   keys = {
     { "<leader>a", "", desc = "+Agent / Review" },
+    { "<leader>aa", "<cmd>Paseo changes<cr>", desc = "Changed files" },
+    { "<leader>ae", "<cmd>Paseo explain<cr>", desc = "Explain this hunk" },
+    { "<leader>ae", "<cmd>Paseo explain visual<cr>", mode = "v", desc = "Explain this selection" },
+    { "<leader>ak", "<cmd>Paseo ask<cr>", desc = "Ask about this hunk" },
+    { "<leader>ak", "<cmd>Paseo ask visual<cr>", mode = "v", desc = "Ask about this selection" },
+    { "<leader>af", "<cmd>Paseo explain file<cr>", desc = "Explain this file" },
+    { "<leader>at", "<cmd>Paseo agent<cr>", desc = "Agents / sidecar status" },
+    { "<leader>aw", "<cmd>Paseo workspaces<cr>", desc = "Workspaces" },
+    { "<leader>aq", "<cmd>Paseo hunks<cr>", desc = "Hunks → quickfix" },
+    { "<leader>ar", "<cmd>Paseo review<cr>", desc = "Diff panel (per repo)" },
+    { "<leader>au", "<cmd>Paseo review unified<cr>", desc = "Diff panel (unified)" },
+    { "<leader>as", "<cmd>Paseo stage<cr>", desc = "Stage hunk under quickfix cursor" },
     { "<leader>aR", "<cmd>Paseo repos<cr>", desc = "Repos in this unit of work" },
     { "<leader>aH", "<cmd>Paseo health<cr>", desc = "Health" },
   },

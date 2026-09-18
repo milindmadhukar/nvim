@@ -77,8 +77,25 @@ return {
       },
     },
 
+    -- A `ws` workspace is a unit of work, not a "recent project": its members
+    -- are worktrees of repos that are already in the list, so letting them in
+    -- fills the picker with near-duplicates of everything you actually work on.
+    -- Absolute, and anchored at $HOME on purpose: project.nvim runs a
+    -- relative pattern through `expand_excluded()`, which anchors it to the
+    -- cwd -- so `*/.workspaces/*` only excluded workspaces under whichever
+    -- project Neovim happened to start in. `*` crosses slashes in its glob
+    -- translation, so one pattern covers every project.
+    exclude_dirs = { vim.fn.expand "~" .. "/*/.workspaces/*" },
+
     -- chdir quietly; the statusline and nvim-tree already show where you are.
     silent_chdir = true,
-    scope_chdir = "global",
+
+    -- Tab-scoped, not global.
+    --
+    -- paseo.nvim's diff panel is per-tab and `tcd`s each tab into one member
+    -- repo -- that is the only arrangement in which a workspace can show more
+    -- than one repo's diff at once. A global chdir on every buffer switch
+    -- repoints all of them at whichever repo was touched last.
+    scope_chdir = "tab",
   },
 }
