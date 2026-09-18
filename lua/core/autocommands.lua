@@ -1,5 +1,43 @@
 require "nvchad.autocmds"
 
+-- Open nvdash on an empty startup buffer.
+--
+-- This replaces NvChad's own hook (ui/lua/nvchad/au.lua:5-14), which chadrc
+-- disables via nvdash.load_on_startup = false. Upstream captures the startup
+-- scratch buffer, opens nvdash, then deletes that buffer *unconditionally* --
+-- all inside a vim.schedule(). Anything that disposes of the scratch buffer
+-- before that tick runs (`nvim +Telescope find_files`, a -c command that opens
+-- a file, a session restorer) leaves the delete pointing at a dead id, and it
+-- throws "Invalid buffer id: N" from nvim_buf_delete.
+--
+-- Same behaviour, but the buffer is revalidated before being deleted.
+vim.schedule(function()
+	local buf = vim.api.nvim_get_current_buf()
+
+	if not vim.api.nvim_buf_is_valid(buf) then
+		return
+	end
+
+	-- Only take over a genuinely empty start: no unsaved edits, and either no
+	-- file name at all or `nvim <dir>`.
+	if vim.api.nvim_get_option_value("modified", { buf = buf }) then
+		return
+	end
+
+	local name = vim.api.nvim_buf_get_name(buf)
+	if name ~= "" and vim.fn.isdirectory(name) ~= 1 then
+		return
+	end
+
+	require("nvchad.nvdash").open()
+
+	-- open() switches away from `buf`; only drop it if it is still around and is
+	-- not the buffer nvdash just landed on.
+	if buf ~= vim.api.nvim_get_current_buf() and vim.api.nvim_buf_is_valid(buf) then
+		pcall(vim.api.nvim_buf_delete, buf, { force = true, unload = false })
+	end
+end)
+
 -- Set wrap and spell in markdown and gitcommit
 vim.api.nvim_create_autocmd({ "FileType" }, {
 	pattern = { "markdown", "gitcommit" },

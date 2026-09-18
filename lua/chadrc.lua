@@ -79,19 +79,28 @@ M.base46 = {
   },
 }
 
-
--- BUG: Fix buttons
+-- nvdash runs each `cmd` as a literal `:` command string, so these have to be
+-- real commands -- a function value is silently concatenated and breaks the
+-- button. "Find Project" pointed at `Telescope projects`, an extension that no
+-- plugin in this config ever provided; plugins/project.lua now supplies it.
 M.nvdash = {
-  load_on_startup = true,
+  -- Deliberately false: core/autocommands.lua opens nvdash on startup instead.
+  -- NvChad's own hook (ui/lua/nvchad/au.lua:5-14) races against anything that
+  -- disposes of the startup scratch buffer and throws "Invalid buffer id".
+  load_on_startup = false,
   header = require("core.headers").mg,
   buttons = {
-    { txt="  Find File", keys="f", cmd="Telescope find_files" },
-    { txt="󰈚  Recent Files", keys="r", cmd="Telescope oldfiles" },
-    { txt="  Find text", keys="t", cmd="Telescope live_grep" },
-    { txt="  Find Project", keys="p", cmd="Telescope projects" },
-    { txt="  New file", keys="e", cmd="ene <BAR> startinsert" },
-    { txt="  Configuration", keys="c", cmd="e ~/.config/nvim/init.lua" },
-    { txt="  Quit Neovim", keys="q", cmd="qa" },
+    { txt = "  Find File", keys = "f", cmd = "Telescope find_files" },
+    { txt = "󰈚  Recent Files", keys = "r", cmd = "Telescope oldfiles" },
+    { txt = "  Find text", keys = "t", cmd = "Telescope live_grep" },
+    { txt = "  Find Project", keys = "p", cmd = "Telescope projects" },
+    { txt = "  New file", keys = "e", cmd = "ene <BAR> startinsert" },
+    -- Resolved at load time rather than hardcoding ~/.config/nvim, which is a
+    -- stow symlink into the dotfiles repo and not where the file really lives.
+    { txt = "  Configuration", keys = "c", cmd = "edit " .. vim.fn.stdpath "config" .. "/init.lua" },
+    -- Through :Quit so a stray `q` on the dashboard asks first, like every
+    -- other way out of the editor does (see utils/quit.lua).
+    { txt = "  Quit Neovim", keys = "q", cmd = "Quit qall" },
   },
 }
 
