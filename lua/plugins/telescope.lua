@@ -2,7 +2,17 @@ local M = {
 	"nvim-telescope/telescope.nvim",
 	cmd = "Telescope",
 	dependencies = {
-		{ "nvim-telescope/telescope-ui-select.nvim", opt = true },
+		-- Provides the `projects` extension backing `:Telescope projects`.
+		{ "DrKJeff16/project.nvim" },
+		-- Compiled fzf sorter. Telescope's pure-Lua sorter is the bottleneck on
+		-- large repos; this replaces it. Needs `make` and a C compiler at install
+		-- time -- if the build fails, the pcall loop below just skips the extension.
+		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
+		-- Persistent, cwd-scoped prompt history for the <C-n>/<C-p> mappings
+		-- below. Without it telescope's history is in-memory and dies with the
+		-- session. sqlite.lua is its backing store.
+		{ "nvim-telescope/telescope-smart-history.nvim" },
+		{ "kkharji/sqlite.lua" },
 	},
 }
 
@@ -12,6 +22,13 @@ function M.config()
 
 	telescope.setup({
 		defaults = {
+			-- Backing store for telescope-smart-history. Loading the
+			-- `smart_history` extension installs the handler that scopes
+			-- recall to the current working directory.
+			history = {
+				path = vim.fn.stdpath("data") .. "/telescope_history.sqlite3",
+				limit = 100,
+			},
 
 			prompt_prefix = " ",
 			selection_caret = " ",
@@ -126,21 +143,23 @@ function M.config()
 			-- builtin picker
 		},
 		extensions = {
-			["ui-select"] = {
-				require("telescope.themes").get_dropdown({
-					-- even more opts
-				}),
+			fzf = {
+				fuzzy = true,
+				override_generic_sorter = true,
+				override_file_sorter = true,
+				case_mode = "smart_case",
 			},
-			-- Your extension configuration goes here:
-			-- extension_name = {
-			--   extension_config_key = value,
-			-- }
-			-- please take a look at the readme of the extension you want to configure
 		},
 	})
 
-	telescope.load_extension("ui-select")
-
+	-- pcall so a missing/failed extension degrades to "that picker is gone"
+	-- instead of taking the whole telescope config down with it.
+	for _, ext in ipairs({ "fzf", "smart_history", "projects" }) do
+		local ok, err = pcall(telescope.load_extension, ext)
+		if not ok then
+			vim.notify("telescope: failed to load extension '" .. ext .. "'\n" .. tostring(err), vim.log.levels.WARN)
+		end
+	end
 end
 
 return M

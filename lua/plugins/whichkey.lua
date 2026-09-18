@@ -154,6 +154,7 @@ local mappings = {
   { "<leader>sh", "<cmd>Telescope help_tags<cr>", desc = "Help" },
   { "<leader>sk", "<cmd>Telescope keymaps<cr>", desc = "Keymaps" },
   { "<leader>sl", "<cmd>Telescope resume<cr>", desc = "Last Search" },
+  { "<leader>sp", "<cmd>Telescope projects<cr>", desc = "Projects" },
   { "<leader>sr", "<cmd>Telescope oldfiles<cr>", desc = "Recent File" },
 
   -- Trouble & Terminal
