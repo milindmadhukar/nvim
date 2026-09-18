@@ -50,14 +50,6 @@ local M = {
     cmd = "VimBeGood",
   },
 
-  -- rust-tools.nvim was archived in 2024; rustaceanvim is its successor and
-  -- configures rust_analyzer itself (so it is absent from plugins/lsp/servers.lua).
-  {
-    "mrcjkb/rustaceanvim",
-    version = "^9",
-    ft = "rust",
-  },
-
   { "ellisonleao/glow.nvim",    config = true, cmd = "Glow" },
 
   {

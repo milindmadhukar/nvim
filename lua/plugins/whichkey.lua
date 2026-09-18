@@ -55,6 +55,11 @@ local mappings = {
   { "<leader>.", "<cmd>lua Snacks.scratch()<cr>", desc = "Scratch buffer" },
   { "<leader>,", "<cmd>lua Snacks.scratch.select()<cr>", desc = "Scratch buffers" },
 
+  -- Rust / Cargo. Only the group label is global; the keys under it are
+  -- buffer-local and are registered by the LspAttach autocmd in M.config --
+  -- rust_mappings for .rs buffers, crates_mappings for Cargo.toml.
+  { "<leader>C", group = "Rust / Cargo" },
+
   -- Buffers (NvChad tabufline; bufferline.nvim was removed)
   { "<leader>b", group = "Buffers" },
   { "<leader>bb", "<cmd>lua require('nvchad.tabufline').prev()<cr>", desc = "Previous" },
@@ -195,11 +200,135 @@ local vmappings = {
   { "<leader>rv", "<cmd>Refactor extract_var<CR>", desc = "Extract Variable" },
 }
 
+-- Buffer-local mappings. These are not part of `mappings` above because they
+-- must only exist in the buffers they apply to, and because :RustLsp is only
+-- defined once rust-analyzer has attached. Both sets are registered from the
+-- LspAttach autocmd in M.config, keyed on the client name. The plugins
+-- themselves are configured in plugins/rust.lua.
+
+-- Rust source files (rustaceanvim).
+local rust_mappings = {
+  { "<leader>CD", "<cmd>RustLsp openDocs<cr>", desc = "Open docs.rs" },
+  { "<leader>CE", "<cmd>RustLsp renderDiagnostic<cr>", desc = "Render diagnostic (cargo-style)" },
+  { "<leader>CL", "<cmd>RustAnalyzer restart<cr>", desc = "Restart rust-analyzer" },
+  { "<leader>Cr", "<cmd>RustLsp! runnables<cr>", desc = "Rerun last runnable" },
+  { "<leader>CT", "<cmd>RustLsp! testables<cr>", desc = "Rerun last testable" },
+  { "<leader>Ce", "<cmd>RustLsp explainError<cr>", desc = "Explain error" },
+  { "<leader>Cj", "<cmd>RustLsp joinLines<cr>", desc = "Join lines" },
+  { "<leader>Ck", "<cmd>RustLsp flyCheck<cr>", desc = "Fly check" },
+  { "<leader>Cm", "<cmd>RustLsp expandMacro<cr>", desc = "Expand macro" },
+  { "<leader>Co", "<cmd>RustLsp openCargo<cr>", desc = "Open Cargo.toml" },
+  { "<leader>Cp", "<cmd>RustLsp parentModule<cr>", desc = "Parent module" },
+  { "<leader>CR", "<cmd>RustLsp runnables<cr>", desc = "Runnables" },
+  { "<leader>Cs", "<cmd>RustLsp ssr<cr>", desc = "Structural search/replace", mode = { "n", "v" } },
+  { "<leader>Ct", "<cmd>RustLsp testables<cr>", desc = "Testables" },
+  { "<leader>Cy", "<cmd>RustLsp syntaxTree<cr>", desc = "Syntax tree" },
+}
+
+-- Overrides of the global LSP keys: rust-analyzer groups its code actions and
+-- attaches hover actions, and vim.lsp.buf.* flattens both away. Kept separate
+-- from rust_mappings because these are only registered once rust-analyzer has
+-- attached -- :RustLsp does not exist before that, and hijacking K in a rust
+-- buffer with no client would turn a harmless no-op into an error.
+local rust_lsp_overrides = {
+  { "K", "<cmd>RustLsp hover actions<cr>", desc = "Hover actions" },
+  { "<leader>ca", "<cmd>RustLsp codeAction<cr>", desc = "Code Action (grouped)" },
+  { "<leader>la", "<cmd>RustLsp codeAction<cr>", desc = "Code Action (grouped)" },
+}
+
+-- Cargo.toml (crates.nvim). K is left alone on purpose: crates.nvim runs an
+-- in-process language server that answers hover, so the global K already gives
+-- the crate popup.
+local crates_mappings = {
+  { "<leader>CA", "<cmd>lua require('crates').upgrade_all_crates()<cr>", desc = "Upgrade all" },
+  { "<leader>CC", "<cmd>lua require('crates').open_crates_io()<cr>", desc = "Open crates.io" },
+  { "<leader>CD", "<cmd>lua require('crates').open_documentation()<cr>", desc = "Open docs.rs" },
+  { "<leader>CH", "<cmd>lua require('crates').open_homepage()<cr>", desc = "Open homepage" },
+  { "<leader>CR", "<cmd>lua require('crates').open_repository()<cr>", desc = "Open repository" },
+  { "<leader>CU", "<cmd>lua require('crates').upgrade_crate()<cr>", desc = "Upgrade crate" },
+  { "<leader>CU", "<cmd>lua require('crates').upgrade_crates()<cr>", desc = "Upgrade selected crates", mode = "v" },
+  { "<leader>Ca", "<cmd>lua require('crates').update_all_crates()<cr>", desc = "Update all" },
+  { "<leader>Cd", "<cmd>lua require('crates').show_dependencies_popup()<cr>", desc = "Dependencies" },
+  { "<leader>Cf", "<cmd>lua require('crates').show_features_popup()<cr>", desc = "Features" },
+  { "<leader>Cr", "<cmd>lua require('crates').reload()<cr>", desc = "Reload" },
+  { "<leader>Ct", "<cmd>lua require('crates').toggle()<cr>", desc = "Toggle extra info" },
+  { "<leader>Cu", "<cmd>lua require('crates').update_crate()<cr>", desc = "Update crate" },
+  { "<leader>Cu", "<cmd>lua require('crates').update_crates()<cr>", desc = "Update selected crates", mode = "v" },
+  { "<leader>Cv", "<cmd>lua require('crates').show_versions_popup()<cr>", desc = "Versions" },
+  {
+    "<leader>Cx",
+    "<cmd>lua require('crates').expand_plain_crate_to_inline_table()<cr>",
+    desc = "Expand to inline table",
+  },
+}
+
+-- Which buffer-local spec belongs to which LSP client.
+local by_client = {
+  ["rust-analyzer"] = rust_lsp_overrides,
+  ["crates.nvim"] = crates_mappings,
+}
+
 function M.config()
   local wk = require "which-key"
   wk.setup(setup)
   wk.add(mappings)
   wk.add(vmappings)
+
+  -- `buffer` is an inheriting spec field, so the whole nested list lands as
+  -- buffer-local mappings.
+  --
+  -- The deepcopy is load-bearing: which-key's parser writes the resolved buffer
+  -- number back onto the spec entries it is handed (mappings.lua, `if
+  -- mapping.buffer == 0 or mapping.buffer == true`). Passing the shared table
+  -- would bake the *first* buffer's number into it, and every later buffer
+  -- would silently re-register against that one instead of itself.
+  --
+  -- vim.schedule is load-bearing too: plugins/lsp/configs/lspconfig.lua binds K
+  -- and <leader>ca from its own LspAttach autocmd, and after which-key has
+  -- loaded wk.add applies mappings immediately. Deferring by a tick guarantees
+  -- the Rust overrides are set last and therefore win.
+  local function attach(buf, spec)
+    vim.schedule(function()
+      if vim.api.nvim_buf_is_valid(buf) then
+        wk.add { buffer = buf, vim.deepcopy(spec) }
+      end
+    end)
+  end
+
+  -- Filetype is the primary trigger, so the group is populated the moment the
+  -- buffer exists. LspAttach alone was not enough: rust-analyzer does not
+  -- attach to a buffer with no file on disk, which left <leader>C dead on a
+  -- newly created .rs file, on :enew + set ft=rust, and on any .rs outside a
+  -- cargo project. crates.nvim's functions never needed a client at all.
+  vim.api.nvim_create_autocmd("FileType", {
+    group = vim.api.nvim_create_augroup("user_wk_rust", { clear = true }),
+    pattern = "rust",
+    callback = function(ev)
+      attach(ev.buf, rust_mappings)
+    end,
+  })
+
+  vim.api.nvim_create_autocmd({ "BufReadPost", "BufNewFile" }, {
+    group = vim.api.nvim_create_augroup("user_wk_crates", { clear = true }),
+    pattern = "Cargo.toml",
+    callback = function(ev)
+      attach(ev.buf, crates_mappings)
+    end,
+  })
+
+  -- Applied on attach so the K / <leader>ca / <leader>la overrides land after
+  -- lspconfig.lua's LspAttach handler has bound the generic LSP versions. For
+  -- Cargo.toml this re-applies crates_mappings, which is harmless.
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("user_wk_lsp_attach", { clear = true }),
+    callback = function(ev)
+      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+      local spec = client and by_client[client.name]
+      if spec then
+        attach(ev.buf, spec)
+      end
+    end,
+  })
 end
 
 return M

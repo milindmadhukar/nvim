@@ -31,6 +31,7 @@ local parsers = {
   "python",
   "query",
   "regex",
+  "ron",
   "rust",
   "sql",
   "templ",
