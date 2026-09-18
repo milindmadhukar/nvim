@@ -38,8 +38,9 @@ local options = {
   foldmethod = "manual", -- folding set to "expr" for treesitter based folding
   foldexpr = "", -- set to "nvim_treesitter#foldexpr()" for treesitter based folding
   hidden = true, -- required to keep multiple buffers and open multiple buffers
-  title = true, -- set the title of window to the value of the titlestring
-  titlestring = "Neovim", -- what the title of the window will be set to
+  -- `title`/`titlestring` are set in utils/title.lua: the title is built from
+  -- the project and the current file so windows can be told apart in a
+  -- switcher, which a constant "Neovim" never was.
   linebreak = true,
 }
 
