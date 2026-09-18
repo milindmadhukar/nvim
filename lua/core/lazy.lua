@@ -2,6 +2,17 @@ return {
   defaults = { lazy = true },
   install = { colorscheme = { "nvchad" } },
 
+  -- Plugins being worked on locally are loaded from ~/Code/<name> instead of
+  -- being cloned into lazy's plugin dir. A spec opts in with `dev = true`
+  -- (plugins/floaterm.lua), or automatically if its owner matches `patterns`.
+  -- `fallback` means a missing checkout still gets fetched from GitHub rather
+  -- than breaking startup.
+  dev = {
+    path = "~/Code",
+    patterns = { "milindmadhukar" },
+    fallback = true,
+  },
+
   -- No plugin here needs luarocks; without this lazy reports a health ERROR
   -- about the missing hererocks Lua 5.1 install.
   rocks = { enabled = false },
