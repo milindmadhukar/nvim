@@ -120,7 +120,9 @@ function M.config()
 			lualine_z = {},
 		},
 		tabline = {},
-		extensions = { "toggleterm" },
+		-- toggleterm.nvim was replaced by nvzone/floaterm, which lualine has no
+		-- extension for; the old entry pointed at a plugin that is not installed.
+		extensions = { "nvim-tree", "trouble", "lazy", "mason", "quickfix" },
 	})
 end
 

@@ -128,6 +128,19 @@ M.ui = {
   },
 }
 
+-- NvChad's built-in terminal (`nvchad.term`, the successor to nvterm) reads its
+-- defaults from here. The split terminals are wired up in utils/term.lua; only
+-- the geometry and window options live in this table.
+M.term = {
+  startinsert = true,
+  base46_colors = true,
+  winopts = { number = false, relativenumber = false, signcolumn = "no" },
+  -- Fractions of the editor. The bottom terminal gets a third of the height;
+  -- the right-hand one a bit more than a third of the width, which is about
+  -- what a shell needs before output starts wrapping awkwardly.
+  sizes = { sp = 0.3, vsp = 0.4, ["bo sp"] = 0.3, ["bo vsp"] = 0.4 },
+}
+
 M.cheatsheet = { theme = "grid" } -- simple/grid
 
 -- NOTE: treesitter config lives in lua/plugins/treesitter.lua.

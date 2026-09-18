@@ -93,6 +93,13 @@ keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
 
+-- Leave terminal mode without the <C-\><C-n> gymnastics.
+keymap("t", "<C-x>", "<C-\\><C-n>", term_opts)
+
+-- The split terminals are on <leader>th / <leader>tv (whichkey), the same keys
+-- this config used for them under toggleterm. Nothing is bound here: the
+-- <A-*> namespace is resizing and moving text, and the arrows are resizing.
+-- From inside a terminal, <C-x> above gets you back to normal mode first.
 
 -- References --
 -- vim-illuminate bound these to its next/prev reference; snacks.words walks

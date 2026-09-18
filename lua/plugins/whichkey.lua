@@ -159,6 +159,13 @@ local mappings = {
 
   -- Trouble & Terminal
   { "<leader>t", group = "Trouble & Terminal" },
+  -- Split terminals (nvchad.term, via utils/term.lua). th/tv are the keys this
+  -- config gave the horizontal and vertical terminals back when toggleterm
+  -- provided them (`ToggleTerm direction=horizontal` / `=vertical`); same keys,
+  -- same names, different engine. The float and the tool terminals -- tf, tt,
+  -- tg, td, tH -- are lazy keys on plugins/floaterm.lua.
+  { "<leader>th", "<cmd>lua require('utils.term').toggle('bottom')<cr>", desc = "Horizontal" },
+  { "<leader>tv", "<cmd>lua require('utils.term').toggle('right')<cr>", desc = "Vertical" },
   { "<leader>tD", "<cmd>Trouble diagnostics toggle filter.buf=0<cr>", desc = "Document Diagnostics" },
   { "<leader>tT", "<cmd>TodoTelescope<cr>", desc = "Todo list" },
   { "<leader>tl", "<cmd>Trouble loclist toggle<cr>", desc = "Loclist" },
