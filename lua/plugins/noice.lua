@@ -1,7 +1,11 @@
 local M =  {
   "folke/noice.nvim",
-  lazy = false,
-  dependencies = { { "MunifTanjim/nui.nvim" }, { "rcarriga/nvim-notify" } },
+  -- VeryLazy, not lazy=false: noice + nui is ~4ms and nothing it replaces
+  -- (cmdline, messages, LSP progress) can happen before the UI is up. The
+  -- only thing given up is capturing messages emitted during startup itself.
+  event = "VeryLazy",
+  -- nvim-notify is gone; snacks.notifier renders notifications now.
+  dependencies = { { "MunifTanjim/nui.nvim" } },
   opts = {
     cmdline = {
       enabled = true, -- enables the Noice cmdline UI
@@ -25,7 +29,9 @@ local M =  {
     },
     routes = {
       {
-        view = "notify",
+        -- Was the nvim-notify backend; "mini" is noice's own unobtrusive
+        -- bottom-right view and needs no extra plugin.
+        view = "mini",
         filter = { event = "msg_showmode" },
       },
       {
@@ -75,7 +81,7 @@ local M =  {
       message = {
         -- Messages shown by lsp servers
         enabled = true,
-        view = "notify",
+        view = "mini",
         opts = {},
       },
       -- defaults for hover and signature help
@@ -90,6 +96,10 @@ local M =  {
         },
       },
     },
+    -- snacks.notifier owns vim.notify. Both plugins want to replace it, and
+    -- whichever ran last used to win; this settles it.
+    notify = { enabled = false },
+
     presets = {
       -- you can enable a preset by setting it to true, or a table that will override the preset config
       -- you can also add custom presets that you can enable/disable with enabled=true

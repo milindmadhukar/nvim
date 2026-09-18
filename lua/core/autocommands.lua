@@ -86,22 +86,9 @@ vim.api.nvim_create_autocmd("BufWritePre", {
 	end,
 })
 
-vim.api.nvim_create_autocmd({ "VimEnter" }, {
-	callback = function()
-		vim.cmd("hi link illuminatedWord LspReferenceText")
-	end,
-})
-
--- Disable illuminate when file too big
-vim.api.nvim_create_autocmd({ "BufWinEnter" }, {
-	callback = function()
-		local line_count = vim.api.nvim_buf_line_count(0)
-		if line_count >= 5000 then
-			-- TODO: Maybe turn off highlighting too
-			vim.cmd("IlluminatePauseBuf")
-		end
-	end,
-})
+-- vim-illuminate's highlight link and its 5000-line bail-out lived here.
+-- snacks.words highlights through the LSP's own LspReference* groups, and
+-- snacks.bigfile handles backing off on huge files.
 
 -- Autocommand that runs before a colorscheme is set
 -- vim.api.nvim_create_autocmd({ "ColorSchemePre" }, {

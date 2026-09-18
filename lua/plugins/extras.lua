@@ -68,9 +68,9 @@ local M = {
       "nvim-telescope/telescope.nvim",
       "nvim-lua/plenary.nvim", -- required by telescope
       "MunifTanjim/nui.nvim",
-
-      -- optional
-      "rcarriga/nvim-notify",
+      -- nvim-notify was listed here as leetcode's optional notification
+      -- backend. leetcode never requires it directly -- it just calls
+      -- vim.notify, which snacks.notifier answers now.
     },
     opts = {
       -- configuration goes here

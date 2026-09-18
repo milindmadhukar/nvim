@@ -38,7 +38,7 @@ local mappings = {
   { "<leader>F", "<cmd>Telescope live_grep theme=ivy<cr>", desc = "Find Text" },
   { "<leader>H", "<cmd>nohlsearch<CR>", desc = "Clear highlighting" },
   { "<leader>L", "<cmd>Lazy<cr>", desc = "Lazy Menu" },
-  { "<leader>N", "<cmd>Telescope notify<cr>", desc = "Notifications" },
+  { "<leader>N", "<cmd>lua Snacks.notifier.show_history()<cr>", desc = "Notifications" },
   { "<leader>O", "<cmd>Oil<cr>", desc = "Oil" },
   { "<leader>S", "<cmd>lua require('utils.screenshot').generate_carbon_screenshot()<cr>", desc = "Take screenshot" },
   { "<leader>T", "<cmd>Trouble diagnostics toggle<cr>", desc = "Trouble Diagnostics" },
@@ -49,7 +49,11 @@ local mappings = {
   { "<leader>q", "<cmd>lua require('utils').smart_quit()<CR>", desc = "Quit" },
   { "<leader>w", "<cmd>w!<CR>", desc = "Save" },
   { "<leader>x", "<cmd>lua require('utils').sourcefile()<CR>", desc = "Source File" },
-  { "<leader>z", "<cmd>ZenMode<cr>", desc = "Toggle Zen Mode" },
+  { "<leader>z", "<cmd>lua Snacks.zen()<cr>", desc = "Toggle Zen Mode" },
+  { "<leader>Z", "<cmd>lua Snacks.zen.zoom()<cr>", desc = "Zoom this window" },
+  -- Scratch buffers are per-cwd and per-filetype, and persist between sessions.
+  { "<leader>.", "<cmd>lua Snacks.scratch()<cr>", desc = "Scratch buffer" },
+  { "<leader>,", "<cmd>lua Snacks.scratch.select()<cr>", desc = "Scratch buffers" },
 
   -- Buffers (NvChad tabufline; bufferline.nvim was removed)
   { "<leader>b", group = "Buffers" },
@@ -79,7 +83,9 @@ local mappings = {
   -- Git
   { "<leader>g", group = "Git" },
   -- <leader>gg (lazygit) is defined by plugins/toggleterm.lua
+  { "<leader>gB", "<cmd>lua Snacks.gitbrowse()<cr>", desc = "Open in browser", mode = { "n", "v" } },
   { "<leader>gG", "<cmd>Git<CR>", desc = "Fugitive Git" },
+  { "<leader>gL", "<cmd>lua Snacks.git.blame_line()<cr>", desc = "Blame line (full commit)" },
   { "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>", desc = "Reset Buffer" },
   { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
   { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
@@ -102,6 +108,7 @@ local mappings = {
 
   -- LSP
   { "<leader>l", group = "LSP" },
+  { "<leader>lF", "<cmd>lua Snacks.rename.rename_file()<cr>", desc = "Rename file (updates imports)" },
   { "<leader>lR", "<cmd>LspRestart<cr>", desc = "Restart LSP" },
   { "<leader>lS", "<cmd>Telescope lsp_dynamic_workspace_symbols<cr>", desc = "Workspace Symbols" },
   { "<leader>la", "<cmd>lua vim.lsp.buf.code_action()<CR>", desc = "Code Action" },

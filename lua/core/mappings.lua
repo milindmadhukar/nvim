@@ -92,3 +92,15 @@ keymap("t", "<C-h>", "<C-\\><C-N><C-w>h", term_opts)
 keymap("t", "<C-j>", "<C-\\><C-N><C-w>j", term_opts)
 keymap("t", "<C-k>", "<C-\\><C-N><C-w>k", term_opts)
 keymap("t", "<C-l>", "<C-\\><C-N><C-w>l", term_opts)
+
+
+-- References --
+-- vim-illuminate bound these to its next/prev reference; snacks.words walks
+-- the same LSP document highlights.
+keymap("n", "<A-n>", function()
+	Snacks.words.jump(1, true)
+end, { silent = true, desc = "Next reference" })
+
+keymap("n", "<A-p>", function()
+	Snacks.words.jump(-1, true)
+end, { silent = true, desc = "Previous reference" })
