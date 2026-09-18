@@ -31,7 +31,39 @@ vim.api.nvim_create_autocmd({ "FileType" }, {
 	end,
 })
 
-vim.cmd("autocmd BufEnter * ++nested if winnr('$') == 1 && bufname() == 'NvimTree_' . tabpagenr() | quit | endif")
+-- Close Neovim when nvim-tree is the only thing left. `winnr('$')` counts
+-- floating windows, so the vimscript one-liner this replaces also fired when a
+-- float was dismissed over a lone tree -- closing a picker, a menu or floaterm
+-- took the whole editor with it. utils.quit ignores floats, and asks first.
+local nvimtree_quit_snoozed = false
+
+vim.api.nvim_create_autocmd("BufEnter", {
+	nested = true,
+	callback = function()
+		local quit = require("utils.quit")
+
+		if vim.bo.filetype ~= "NvimTree" then
+			-- Back in a real buffer: arm the rule again.
+			if not quit.is_prompting() then
+				nvimtree_quit_snoozed = false
+			end
+
+			return
+		end
+
+		-- Declining the prompt hands focus back to the tree, which fires this
+		-- autocmd again; without the snooze that is an unclosable loop.
+		if nvimtree_quit_snoozed or not quit.would_exit() then
+			return
+		end
+
+		quit.confirm("quit", {
+			on_cancel = function()
+				nvimtree_quit_snoozed = true
+			end,
+		})
+	end,
+})
 
 -- Highlight Yanked Text
 vim.api.nvim_create_autocmd({ "TextYankPost" }, {

@@ -104,3 +104,47 @@ end, { silent = true, desc = "Next reference" })
 keymap("n", "<A-p>", function()
 	Snacks.words.jump(-1, true)
 end, { silent = true, desc = "Previous reference" })
+
+-- Quitting --
+-- Every route out of the editor goes past a confirmation first; closing a
+-- split, a tab or a float still happens instantly, and an explicit `!` still
+-- means "do not ask me". See utils/quit.lua.
+vim.api.nvim_create_user_command("Quit", function(o)
+	require("utils.quit").request(o.args)
+end, { nargs = 1, desc = "Quit, confirming first when it would close Neovim" })
+
+-- `:q` and friends type-expand into the command above. The guard keeps the
+-- abbreviation to the start of a real `:` command, so `:g/quit/d` and the like
+-- are untouched.
+local function quit_abbrev(lhs, cmd)
+	vim.cmd(
+		string.format(
+			"cnoreabbrev <expr> %s (getcmdtype() == ':' && getcmdpos() == %d) ? 'Quit %s' : '%s'",
+			lhs,
+			#lhs + 1,
+			cmd,
+			lhs
+		)
+	)
+end
+
+quit_abbrev("q", "quit")
+quit_abbrev("quit", "quit")
+quit_abbrev("qa", "qall")
+quit_abbrev("qall", "qall")
+quit_abbrev("quita", "qall")
+quit_abbrev("quitall", "qall")
+quit_abbrev("wq", "wq")
+quit_abbrev("wqa", "wqall")
+quit_abbrev("wqall", "wqall")
+quit_abbrev("x", "xit")
+quit_abbrev("xa", "xall")
+quit_abbrev("xall", "xall")
+
+keymap("n", "ZZ", function()
+	require("utils.quit").request("xit")
+end, opts)
+
+keymap("n", "ZQ", function()
+	require("utils.quit").request("quit")
+end, opts)
