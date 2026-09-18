@@ -97,6 +97,10 @@ function M.config()
 					["<M-q>"] = actions.send_selected_to_qflist + actions.open_qflist,
 					["<C-l>"] = actions.complete_tag,
 					["<C-_>"] = actions.which_key, -- keys from pressing <C-/>
+
+					["<M-n>"] = function(prompt_bufnr)
+						require("utils.gui").from_telescope(prompt_bufnr)
+					end,
 				},
 
 				n = {
@@ -130,6 +134,10 @@ function M.config()
 
 					["q"] = actions.close,
 					["?"] = actions.which_key,
+
+					["<M-n>"] = function(prompt_bufnr)
+						require("utils.gui").from_telescope(prompt_bufnr)
+					end,
 				},
 			},
 		},

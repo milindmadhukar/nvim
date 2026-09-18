@@ -125,6 +125,14 @@ local mappings = {
   { "<leader>ls", "<cmd>Telescope lsp_document_symbols<cr>", desc = "Document Symbols" },
   { "<leader>lw", "<cmd>Telescope diagnostics<cr>", desc = "Workspace Diagnostics" },
 
+  -- Neovide (works from terminal nvim too -- it launches the GUI)
+  { "<leader>n", group = "Neovide" },
+  { "<leader>nn", "<cmd>lua require('utils.gui').here()<cr>", desc = "New window (cwd)" },
+  { "<leader>nf", "<cmd>lua require('utils.gui').file()<cr>", desc = "New window with this file" },
+  { "<leader>np", "<cmd>lua require('utils.gui').project()<cr>", desc = "New window at project root" },
+  { "<leader>nd", "<cmd>lua require('utils.gui').prompt()<cr>", desc = "New window in directory..." },
+  { "<leader>nr", "<cmd>lua require('utils.gui').recent()<cr>", desc = "New window in recent project (telescope)" },
+
   -- Other
   { "<leader>o", group = "Other" },
   { "<leader>oc", "<cmd>CodiNew javascript<cr>", desc = "Javascript Scratchpad" },
