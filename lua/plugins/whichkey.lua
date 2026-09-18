@@ -86,24 +86,57 @@ local mappings = {
   { "<leader>dr", "<cmd>lua require'dap'.repl.toggle()<cr>", desc = "Toggle Repl" },
   { "<leader>ds", "<cmd>lua require'dap'.continue()<cr>", desc = "Start" },
 
-  -- Git
+  -- Git.
+  --
+  -- This whole group was registered TWICE until 2026-09 -- here, and again in
+  -- a `wk.add` inside plugins/gitsigns.lua's config -- and the two copies had
+  -- already drifted. This is now the only place <leader>g lives. Everything
+  -- goes through `<cmd>Gitsigns ...<cr>`, which lazy-loads the plugin via its
+  -- `cmd = "Gitsigns"` spec exactly as a `require` would.
+  --
+  -- next_hunk/prev_hunk are deprecated upstream in favour of
+  -- `nav_hunk <direction>`; nav_hunk also puts the cursor on `hunk.added.start`,
+  -- which is the one line a delete hunk occupies, so <leader>gs straight after
+  -- <leader>gj always has something to stage.
   { "<leader>g", group = "Git" },
-  -- <leader>gg (lazygit) is defined by plugins/toggleterm.lua
+  -- <leader>gg (lazygit) is defined by plugins/floaterm.lua
   { "<leader>gB", "<cmd>lua Snacks.gitbrowse()<cr>", desc = "Open in browser", mode = { "n", "v" } },
+  { "<leader>gD", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Diff this file vs HEAD" },
   { "<leader>gG", "<cmd>Git<CR>", desc = "Fugitive Git" },
   { "<leader>gL", "<cmd>lua Snacks.git.blame_line()<cr>", desc = "Blame line (full commit)" },
+  -- The float. Kept because it is the only preview that survives moving the
+  -- cursor off the hunk; <leader>gp is the one to reach for by default.
+  { "<leader>gP", "<cmd>Gitsigns preview_hunk<cr>", desc = "Preview hunk (float)" },
   { "<leader>gR", "<cmd>Gitsigns reset_buffer<cr>", desc = "Reset Buffer" },
+  { "<leader>gS", "<cmd>Gitsigns stage_buffer<cr>", desc = "Stage buffer" },
   { "<leader>gb", "<cmd>Telescope git_branches<cr>", desc = "Checkout branch" },
   { "<leader>gc", "<cmd>Telescope git_commits<cr>", desc = "Checkout commit" },
-  { "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>", desc = "Diff" },
-  { "<leader>gj", "<cmd>Gitsigns next_hunk<cr>", desc = "Next Hunk" },
-  { "<leader>gk", "<cmd>Gitsigns prev_hunk<cr>", desc = "Prev Hunk" },
+  -- The diff *panel*, not diffthis: it is the supported way to see deleted
+  -- lines, `gu` inside it switches to a unified view, and it stages from the
+  -- panel. It resolves its repo from getcwd() and is per-tab by design.
+  { "<leader>gd", "<cmd>Gitsigns diff<cr>", desc = "Diff panel" },
+  { "<leader>gj", "<cmd>Gitsigns nav_hunk next<cr>", desc = "Next Hunk" },
+  { "<leader>gk", "<cmd>Gitsigns nav_hunk prev<cr>", desc = "Prev Hunk" },
   { "<leader>gl", "<cmd>Gitsigns blame_line<cr>", desc = "Blame" },
   { "<leader>go", "<cmd>Telescope git_status<cr>", desc = "Open changed file" },
-  { "<leader>gp", "<cmd>Gitsigns preview_hunk<cr>", desc = "Preview Hunk" },
+  -- Inline, via virtual lines. This is the surface that shows a deletion --
+  -- `toggle_deleted()` and `show_deleted` are both deprecated.
+  { "<leader>gp", "<cmd>Gitsigns preview_hunk_inline<cr>", desc = "Preview hunk (inline)" },
   { "<leader>gr", "<cmd>Gitsigns reset_hunk<cr>", desc = "Reset Hunk" },
-  { "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", desc = "Stage Hunk" },
+  -- A toggle, not a one-way door: signs_staged_enable makes stage_hunk retry
+  -- with `staged = true` on an already-staged hunk.
+  { "<leader>gs", "<cmd>Gitsigns stage_hunk<cr>", desc = "Stage/unstage Hunk" },
   { "<leader>gu", "<cmd>Gitsigns undo_stage_hunk<cr>", desc = "Undo Stage Hunk" },
+
+  -- Hunk motions and text object, on the standard bracket pair. `]c`/`[c` are
+  -- Vim's own and only work inside a diff; these work in any attached buffer.
+  { "]h", "<cmd>Gitsigns nav_hunk next<cr>", desc = "Next git hunk" },
+  { "[h", "<cmd>Gitsigns nav_hunk prev<cr>", desc = "Prev git hunk" },
+  { "]H", "<cmd>Gitsigns nav_hunk last<cr>", desc = "Last git hunk" },
+  { "[H", "<cmd>Gitsigns nav_hunk first<cr>", desc = "First git hunk" },
+  -- `dih`, `vih`, `=ih`. Operator-pending and visual only -- `ih` in normal
+  -- mode is `i` followed by `h`.
+  { "ih", "<cmd>Gitsigns select_hunk<cr>", desc = "Git hunk", mode = { "o", "x" } },
 
   -- Harpoon
   { "<leader>h", group = "Harpoon" },
@@ -220,6 +253,12 @@ local mappings = {
 local vmappings = {
   mode = { "v" },
   { "<leader>S", "<cmd>lua require('utils.screenshot').generate_carbon_screenshot()<cr>", desc = "Take screenshot" },
+  -- Stage/reset exactly the selected lines. These have to use `:` rather than
+  -- `<cmd>`: `<cmd>` runs the command with no range, so a visual selection
+  -- would silently stage the whole hunk instead of the lines you marked.
+  { "<leader>gs", ":Gitsigns stage_hunk<CR>", desc = "Stage selection" },
+  { "<leader>gr", ":Gitsigns reset_hunk<CR>", desc = "Reset selection" },
+
   { "<leader>r", group = "Refactoring" },
   { "<leader>rV", "<cmd>lua require('refactoring.debug').print_var({})<CR>", desc = "Print Debug Variable" },
   { "<leader>re", "<cmd>Refactor extract_func<CR>", desc = "Extract Function" },

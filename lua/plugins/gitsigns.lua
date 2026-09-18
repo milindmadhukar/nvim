@@ -24,20 +24,14 @@ local M = {
   end,
 }
 
-M.config = function()
-  local wk = require("which-key")
-  wk.add({
-    { "<leader>gj", "<cmd>lua require 'gitsigns'.next_hunk({navigation_message = false})<cr>", desc = "Next Hunk" },
-    { "<leader>gk", "<cmd>lua require 'gitsigns'.prev_hunk({navigation_message = false})<cr>", desc = "Prev Hunk" },
-    { "<leader>gp", "<cmd>lua require 'gitsigns'.preview_hunk()<cr>",                          desc = "Preview Hunk" },
-    { "<leader>gr", "<cmd>lua require 'gitsigns'.reset_hunk()<cr>",                            desc = "Reset Hunk" },
-    { "<leader>gl", "<cmd>lua require 'gitsigns'.blame_line()<cr>",                            desc = "Blame" },
-    { "<leader>gR", "<cmd>lua require 'gitsigns'.reset_buffer()<cr>",                          desc = "Reset Buffer" },
-    { "<leader>gs", "<cmd>lua require 'gitsigns'.stage_hunk()<cr>",                            desc = "Stage Hunk" },
-    { "<leader>gu", "<cmd>lua require 'gitsigns'.undo_stage_hunk()<cr>",                       desc = "Undo Stage Hunk" },
-    { "<leader>gd", "<cmd>Gitsigns diffthis HEAD<cr>",                                         desc = "Git Diff" },
-  })
+-- NOTE: the keymaps used to live here too, in a `wk.add` inside `config`, AND
+-- in plugins/whichkey.lua -- the same nine `<leader>g` keys registered twice,
+-- with the two copies already drifting (this one still called the deprecated
+-- `next_hunk`/`prev_hunk`). whichkey.lua is now the single home for them: its
+-- versions go through `<cmd>Gitsigns ...<cr>`, and `cmd = "Gitsigns"` above
+-- means that lazy-loads the plugin just as well as a `require` would.
 
+M.config = function()
   require("gitsigns").setup({
     signs = {
       add          = { text = '┃' },
@@ -55,11 +49,38 @@ M.config = function()
       changedelete = { text = '~' },
       untracked    = { text = '┆' },
     },
+    -- Staged hunks get their own signs. Worth knowing this also makes the
+    -- stage key a stage/unstage *toggle*: stage_hunk retries with
+    -- `staged = true` when the hunk under the cursor is already staged
+    -- (actions.lua:318), so <leader>gs on a staged hunk unstages it.
     signs_staged_enable = true,
     signcolumn = true,
     numhl = false,
     linehl = false,
-    word_diff = false,
+
+    -- Intra-line highlighting. On a one-character change this shows the
+    -- character rather than a whole line marked "changed", which removes the
+    -- need to open a diff for most change hunks. Requires
+    -- `diff_opts.internal = true`, which is the default.
+    word_diff = true,
+
+    -- `diff_opts` is deep-extended, so this adds linematch without dropping
+    -- the defaults gitsigns derives from 'diffopt'. linematch pairs changed
+    -- lines within a hunk instead of emitting a block delete followed by a
+    -- block add, so far fewer hunks read as unexplained deletions.
+    diff_opts = { linematch = 60 },
+
+    -- Send `:Gitsigns setqflist`/`setloclist` through trouble's window.
+    trouble = true,
+
+    -- NOTE: deliberately NOT enabling always-on deleted lines.
+    -- `show_deleted` and `toggle_deleted()` are both deprecated upstream
+    -- (config.lua:455, actions.lua:241), and persistent virtual lines desync
+    -- the visual position of a line from its real number -- which matters
+    -- because a delete hunk occupies exactly one line for staging purposes.
+    -- The supported surfaces are `preview_hunk_inline()` (<leader>gp) and
+    -- `:Gitsigns diff --diff=unified` (<leader>gd).
+
     watch_gitdir = {
       follow_files = true,
     },
