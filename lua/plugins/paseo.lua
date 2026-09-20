@@ -123,6 +123,24 @@ return {
   end,
 
   opts = {
+    workspaces = {
+      -- Switch THIS Neovim, rather than spawning a window per workspace.
+      --
+      -- Spawning was the plugin's own behaviour until 2026-09, when it moved
+      -- out to this key and defaulted to "tab" -- a new tab page, `tcd`'d in.
+      -- "tcd" goes one further and reuses the current tab, which is what
+      -- <C-r> ("review it here") has always done, so <CR> and <C-r> now land
+      -- you in the same place and differ only in what they then open.
+      --
+      -- The cost is real and is the reason the spawn existed: the buffers,
+      -- LSP clients and jumplist of the workspace you just left stay in this
+      -- tab, pointing into it. Use "tab" to pay one tab for keeping them
+      -- apart; `utils.gui` is still one line away if the window comes back:
+      --
+      --   open = function(ws) require("utils.gui").spawn { cwd = ws.directory } end,
+      open = "tcd",
+    },
+
     ui = {
       float = {
         -- The same box floaterm opens (plugins/floaterm.lua: size = { h = 90,
