@@ -33,6 +33,10 @@ return {
     -- The chat is the primary surface: the whole point is not to open the
     -- Paseo app.
     { "<leader>aa", "<cmd>Paseo chat<cr>", desc = "Chat" },
+    -- The two surfaces by name, as well as <C-f> from inside the chat: `aa`
+    -- reopens wherever you last were, and these two say which.
+    { "<leader>ad", "<cmd>Paseo dash<cr>", desc = "Dashboard (full screen)" },
+    { "<leader>ab", "<cmd>Paseo sidebar<cr>", desc = "Sidebar (beside the code)" },
     { "<leader>ae", "<cmd>Paseo explain<cr>", desc = "Explain this hunk" },
     { "<leader>ak", "<cmd>Paseo ask<cr>", desc = "Ask about this hunk" },
     { "<leader>af", "<cmd>Paseo ask file<cr>", desc = "Ask about this file" },
@@ -42,6 +46,9 @@ return {
     { "<leader>ae", "<cmd>Paseo explain visual<cr>", mode = "v", desc = "Explain this selection" },
     { "<leader>ak", "<cmd>Paseo ask visual<cr>", mode = "v", desc = "Ask about this selection" },
     { "<leader>aQ", "<cmd>Paseo qfask<cr>", desc = "Ask about everything in the quickfix list" },
+    -- Reads the clipboard, falls back to a path. Wayland is already covered:
+    -- `wl-paste` is what the plugin shells out to.
+    { "<leader>ai", "<cmd>Paseo image<cr>", desc = "Attach an image" },
 
     -- Review.
     --
@@ -95,9 +102,13 @@ return {
     { "<leader>aw", "<cmd>Paseo workspaces<cr>", desc = "Workspaces" },
     { "<leader>aW", "<cmd>Paseo wcreate<cr>", desc = "New workspace" },
     { "<leader>aS", "<cmd>Paseo sessions<cr>", desc = "Sessions in this workspace" },
+    -- Terminals are a surface of their own now (a rail of names beside a
+    -- terminal), not something you reach through the dashboard.
+    { "<leader>aT", "<cmd>Paseo term<cr>", desc = "Terminals in this workspace" },
     -- Session controls: the row under the composer in the Paseo app.
     { "<leader>ap", "<cmd>Paseo mode<cr>", desc = "Permission mode" },
     { "<leader>ah", "<cmd>Paseo thinking<cr>", desc = "Thinking level" },
+    { "<leader>aP", "<cmd>Paseo plan<cr>", desc = "Toggle plan mode" },
     { "<leader>az", "<cmd>Paseo fast<cr>", desc = "Toggle fast mode" },
     { "<leader>am", "<cmd>Paseo switchmodel<cr>", desc = "Model (this session)" },
     { "<leader>aM", "<cmd>Paseo model<cr>", desc = "Model (new agents)" },
@@ -142,6 +153,36 @@ return {
     },
 
     ui = {
+      -- Frame language. "plate" is the current default and the reason the
+      -- dashboard stopped looking like a stack of boxes: no frame per card,
+      -- depth from background elevation and padding instead. "rule" keeps a
+      -- hairline under each title; "rounded" and "square" are the old look.
+      style = "plate",
+
+      -- Motion. Two effects, neither of which changes a section's height: the
+      -- context bar eases towards its new value instead of jumping, and a tool
+      -- card tints as it settles to ok or failed.
+      --
+      -- 60fps under Neovide, 30 elsewhere. Every frame is one extmark
+      -- overwrite -- cheap locally, not free over ssh, and this config is
+      -- stowed onto boxes I only ever reach that way.
+      animate = {
+        bars = true,
+        flash = true,
+        fps = vim.g.neovide and 60 or 30,
+      },
+
+      -- Colours are DERIVED from the colorscheme and re-derived on
+      -- `ColorScheme`, so catppuccin-mocha is already what the dashboard is
+      -- drawn in. `theme = { PaseoAgent = { fg = … } }` overrides a group
+      -- without being clobbered by that re-derivation.
+
+      terminal = {
+        -- Beside the shell and one entry per provider the daemon reports,
+        -- which it reads live.
+        presets = { "lazygit", "lazydocker" },
+      },
+
       float = {
         -- The same box floaterm opens (plugins/floaterm.lua: size = { h = 90,
         -- w = 92 }), so <C-\> and <leader>aa put a window in the same place
