@@ -41,14 +41,55 @@ return {
     -- because a <cmd> mapping fires while visual mode is still active.
     { "<leader>ae", "<cmd>Paseo explain visual<cr>", mode = "v", desc = "Explain this selection" },
     { "<leader>ak", "<cmd>Paseo ask visual<cr>", mode = "v", desc = "Ask about this selection" },
-    { "<leader>aQ", "<cmd>Paseo qfask<cr>", desc = "Ask about every hunk in the quickfix list" },
+    { "<leader>aQ", "<cmd>Paseo qfask<cr>", desc = "Ask about everything in the quickfix list" },
 
     -- Review.
-    { "<leader>ac", "<cmd>Paseo changes<cr>", desc = "Changed files" },
-    { "<leader>aq", "<cmd>Paseo hunks<cr>", desc = "Hunks → quickfix" },
-    { "<leader>as", "<cmd>Paseo stage<cr>", desc = "Stage hunk under quickfix cursor" },
-    { "<leader>ar", "<cmd>Paseo review<cr>", desc = "Diff panel (per repo)" },
-    { "<leader>au", "<cmd>Paseo review unified<cr>", desc = "Diff panel (unified)" },
+    --
+    -- These are OURS now, not the plugin's. paseo.nvim dropped :Paseo
+    -- changes/hunks/stage/review in 2026-09 -- none of it was about Paseo --
+    -- and kept `paseo.repos` + `paseo.git` as the data layer utils/review.lua
+    -- is built on. See `:help paseo-git`.
+    --
+    -- They stay on THIS spec's `keys` rather than moving to whichkey.lua so
+    -- that pressing one loads paseo.nvim first; utils/review.lua requires
+    -- `paseo.git` at its top.
+    {
+      "<leader>ac",
+      function()
+        require("utils.review").changes()
+      end,
+      desc = "Changed files (workspace)",
+    },
+    {
+      "<leader>aq",
+      function()
+        require("utils.review").hunks()
+      end,
+      desc = "Hunks → quickfix",
+    },
+    {
+      "<leader>as",
+      function()
+        require("utils.review").stage()
+      end,
+      desc = "Stage hunk under quickfix cursor",
+    },
+    -- <leader>gd is the single-repo `:Gitsigns diff`. These are the workspace
+    -- version: one panel per member repo, one tab each.
+    {
+      "<leader>ar",
+      function()
+        require("utils.review").panel {}
+      end,
+      desc = "Diff panel (per repo)",
+    },
+    {
+      "<leader>au",
+      function()
+        require("utils.review").panel { unified = true }
+      end,
+      desc = "Diff panel (unified)",
+    },
 
     -- Workspaces and plumbing.
     { "<leader>aw", "<cmd>Paseo workspaces<cr>", desc = "Workspaces" },
@@ -65,6 +106,21 @@ return {
     { "<leader>aR", "<cmd>Paseo repos<cr>", desc = "Repos in this unit of work" },
     { "<leader>aH", "<cmd>Paseo health<cr>", desc = "Health" },
   },
+
+  -- The workspace picker's <C-r> ("review it here") no longer builds a list
+  -- itself: it tcd's into the workspace, invalidates the repo cache, and fires
+  -- this. What "review" means is ours to decide -- see `:help paseo-ref` and
+  -- `:help paseo-git`.
+  init = function()
+    vim.api.nvim_create_autocmd("User", {
+      pattern = "PaseoReview",
+      group = vim.api.nvim_create_augroup("user_paseo_review", { clear = true }),
+      callback = function()
+        require("utils.review").hunks()
+      end,
+      desc = "paseo: <C-r> in the workspace picker -> hunk quickfix list",
+    })
+  end,
 
   opts = {
     ui = {
